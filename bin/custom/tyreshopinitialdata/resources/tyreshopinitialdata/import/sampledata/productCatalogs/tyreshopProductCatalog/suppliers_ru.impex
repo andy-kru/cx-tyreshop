@@ -1,0 +1,40 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Suppliers
+# German Localisation
+
+# Macros / Replacement Parameter definitions
+$productCatalog=tyreshopProductCatalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+# Language
+$lang=ru
+
+
+
+# Create Categories
+UPDATE Category;code[unique=true];$catalogVersion;name[lang=en];description[lang=en]
+               ;brands;;Brands;Brands
+               ;brand_1;;Nokian;Nokian шины
+               ;brand_2;;Amtel;Amtel шины
+               ;brand_3;;Antares;Antares шины
+               ;brand_4;;BFGoodrich;BFGoodrich шины
+               ;brand_5;;Barum;Barum шины
+               ;brand_6;;Continental;Continental шины
+               ;brand_7;;Cooper;Cooper шины
+               ;brand_8;;Cordiant;Cordiant шины
+                ;brand_9;;Davanti;Davanti шины
+                ;brand_10;;Dayton;Dayton шины
+                ;brand_11;;Aurora;Aurora шины
+                ;brand_12;;Barum;Barum шины
+                ;brand_13;;Cordiant;Cordiant шины
+                ;brand_14;;Michelin;Michelin шины

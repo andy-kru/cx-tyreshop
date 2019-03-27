@@ -1,0 +1,61 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Product Localisations
+ 
+# Macros / Replacement Parameter definitions
+$productCatalog=tyreshopProductCatalog
+$productCatalogName=Tyre Shop Product Catalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+# Language
+$lang=en
+
+# Update allProducts with localisations
+UPDATE Product;code[unique=true];$catalogVersion;name[lang=$lang];summary[lang=$lang];description[lang=$lang]
+;100000;;Nokian Nordman SX2 205/55R16 91H
+;100001;;Nokian Nordman RS2 205/55R16 94R
+;100002;;Nokian Hakka Green 2 205/55R16 94H
+;100003;;Amtel Planet 2P 175/70R13 82H
+;100004;;Amtel NordMaster K-239 175/65R14 82Q
+;100005;;Amtel Planet FT-705 225/45R17 91W
+;100006;;Antares Ingens A1 225/60R18 100V
+;100007;;Antares Majoris R1 225/55R18 98V
+;100008;;BFGoodrich g-Force Winter 2 195/65R15 95T
+;100009;;BFGoodrich g-Grip 165/70R14 81T
+;100010;;BFGoodrich g-Force Winter 2 205/55R16 94H
+;100011;;Barum Polaris 5 205/55R16 91T
+;100012;;Barum Bravuris 3 HM 205/55R16 91V
+;100013;;Barum Bravuris 5 HM 205/55R16 91V
+;100014;;Continental WinterContact TS 860 205/55R16 91T
+;100015;;Continental PremiumContact 6 205/55R16 91H
+;100016;;Continental ContiPremiumContact 2 205/55R16 91V
+;100017;;Cooper WeatherMaster WSC 225/65R17 102T
+;100018;;Cooper Zeon 4XS Sport 255/50R19 107W
+;100019;;Cooper Discoverer STT PRO 315/75R16 127/124K
+;100020;;Cordiant Polar 2 205/55R16 91T
+;100021;;Cordiant Road Runner 205/55R16 94H
+;100022;;Cordiant Sport 3 205/55R16 91V
+;100023;;Davanti Wintoura 165/70R14 81T
+;100024;;Davanti Wintoura 175/70R14 88T
+;100025;;Davanti Wintoura 185/60R14 82T
+;100026;;Dayton Touring 2 205/55R16 91V
+;100027;;Aurora UF02 235/75R17.5
+;100028;;Aurora UF02 245/70R17.5
+;100029;;Aurora UF20 295/80R22.5
+;100030;;Barum BD 200 R 315/80R22.5 156/150L
+;100031;;Barum BF 200 R 315/60R22.5 152/148L
+;100032;;Cordiant Professional FR-1 295/80R22.5 152/148M
+;100033;;Cordiant Professional FL-1 295/60R22.5 150/147L
+;100034;;Cordiant Professional VM-1 315/80R22.5 156/150K
+;100035;;Michelin City Grip 130/70-12 62P R TL REINF
+;100036;;Michelin City Grip 110/90-13 56P F TL
+;100037;;Michelin City Grip 120/70-15 56S F TL

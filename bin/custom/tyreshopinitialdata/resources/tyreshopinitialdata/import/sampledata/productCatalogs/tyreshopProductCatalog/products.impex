@@ -1,0 +1,64 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Products
+
+# Macros / Replacement Parameter definitions
+$productCatalog=tyreshopProductCatalog
+$productCatalogName=Tyre Shop Product Catalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$supercategories=supercategories(code, $catalogVersion)
+$baseProduct=baseProduct(code,$catalogVersion)
+$approved=approvalstatus(code)[default='check']
+
+# Insert Products
+INSERT_UPDATE Product;code[unique=true];$supercategories;manufacturerName;manufacturerAID;unit(code);ean;variantType(code);$catalogVersion;$approved
+;100000;brand_1, 2, 12;Nokian
+;100001;brand_1, 3, 12;Nokian
+;100002;brand_1, 2, 12;Nokian
+;100003;brand_2, 2, 12;Amtel
+;100004;brand_2, 3, 12;Amtel
+;100005;brand_2, 2, 12;Amtel
+;100006;brand_3, 2, 12;Antares
+;100007;brand_3, 3, 12;Antares
+;100008;brand_4, 3, 12;BFGoodrich
+;100009;brand_4, 2, 12;BFGoodrich
+;100010;brand_4, 3, 12;BFGoodrich
+;100011;brand_5, 3, 12;Barum
+;100012;brand_5, 2, 12;Barum
+;100013;brand_5, 2, 12;Barum
+;100014;brand_6, 3, 12;Continental
+;100015;brand_6, 2, 12;Continental
+;100016;brand_6, 2, 12;Continental
+;100017;brand_7, 3, 12;Cooper
+;100018;brand_7, 2, 12;Cooper
+;100019;brand_7, 2, 12;Cooper
+;100020;brand_8, 3, 12;Cordiant
+;100021;brand_8, 2, 12;Cordiant
+;100022;brand_8, 2, 12;Cordiant
+;100023;brand_9, 3, 12;Davanti
+;100024;brand_9, 3, 12;Davanti
+;100025;brand_9, 3, 12;Davanti
+;100026;brand_10, 2, 12;Dayton
+;100027;brand_11, 4, 11;Aurora
+;100028;brand_11, 4, 11;Aurora
+;100029;brand_11, 4, 11;Aurora
+;100030;brand_12, 4, 11;Barum
+;100031;brand_12, 4, 11;Barum
+;100032;brand_13, 4, 11;Cordiant
+;100033;brand_13, 4, 11;Cordiant
+;100034;brand_13, 4, 11;Cordiant
+;100035;brand_14, 4, 13;Michelin
+;100036;brand_14, 4, 13;Michelin
+;100037;brand_14, 4, 13;Michelin
+
+
+
