@@ -1,0 +1,48 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Supplier Media
+
+# Macros / Replacement Parameter definitions
+$productCatalog=tyreshopProductCatalog
+$productCatalogName=Tyre Shop Product Catalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$thumbnail=thumbnail(code, $catalogVersion)
+$siteResource=jar:com.reply.tyreshop.initialdata.setup.InitialDataSystemSetup&/tyreshopinitialdata/import/sampledata/productCatalogs/$productCatalog
+
+INSERT_UPDATE Media;code[unique=true];realfilename;@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator];mime[default='image/jpeg'];$catalogVersion
+                   ;/thumbs/Amtel.jpg;Amtel.jpg;$siteResource/images/thumbs/Amtel.jpg
+                   ;/thumbs/Antares.jpg;Antares.jpg;$siteResource/images/thumbs/Antares.jpg
+                   ;/thumbs/Aurora.jpg;Aurora.jpg;$siteResource/images/thumbs/Aurora.jpg
+                   ;/thumbs/Barum.jpg;Barum.jpg;$siteResource/images/thumbs/Barum.jpg
+                   ;/thumbs/BFGoodrich.jpg;BFGoodrich.jpg;$siteResource/images/thumbs/BFGoodrich.jpg
+                   ;/thumbs/Continental.jpg;Continental.jpg;$siteResource/images/thumbs/Continental.jpg
+                   ;/thumbs/Cooper.jpg;Cooper.jpg;$siteResource/images/thumbs/Cooper.jpg
+                   ;/thumbs/Cordiant.jpg;Cordiant.jpg;$siteResource/images/thumbs/Cordiant.jpg
+                   ;/thumbs/Davanti.jpg;Davanti.jpg;$siteResource/images/thumbs/Davanti.jpg
+                   ;/thumbs/Dayton.jpg;Dayton.jpg;$siteResource/images/thumbs/Dayton.jpg
+                   ;/thumbs/Michelin.jpg;Michelin.jpg;$siteResource/images/thumbs/Michelin.jpg
+                   ;/thumbs/Nokian.jpg;Nokian.jpg;$siteResource/images/thumbs/Nokian.jpg
+
+UPDATE Category;code[unique=true];$thumbnail;allowedPrincipals(uid)[default='customergroup'];$catalogVersion
+               ;nokianBrand;/thumbs/Nokian.jpg
+               ;amtelBrand;/thumbs/Amtel.jpg
+               ;antaresBrand;/thumbs/Antares.jpg
+               ;bfGoodrichBrand;/thumbs/BFGoodrich.jpg
+               ;barumBrand;/thumbs/Barum.jpg
+               ;continentalBrand;/thumbs/Continental.jpg
+               ;cooperBrand;/thumbs/Cooper.jpg
+               ;cordiantBrand;/thumbs/Cordiant.jpg
+               ;davantiBrand;/thumbs/Davanti.jpg
+               ;daytonBrand;/thumbs/Dayton.jpg
+               ;auroraBrand;/thumbs/Aurora.jpg
+               ;michelinBrand;/thumbs/Michelin.jpg
+
