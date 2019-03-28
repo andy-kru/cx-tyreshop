@@ -11,17 +11,16 @@
 # ImpEx for SOLR Configuration
 
 # Macros / Replacement Parameter definitions
-$indexedType=__INDEXED_TYPE__
-$facetSearchConfigName=__FACET_SEARCH_CONFIG_NAME__
-$contentCatalogName=__CONTENT_CATALOG_NAME__
-
+$indexedType=tyreshopProductType
 $solrIndexedType=solrIndexedType(identifier[default=$indexedType])[unique=true]
+$facetSearchConfigName=tyreshopIndex
+$contentCatalogName=tyreshopContentCatalog
 $contentCatalogVersion=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalogName]),CatalogVersion.version[default=Staged])[default=$contentCatalogName:Staged]
-$productCatalog=__PRODUCT_CATALOG_NAME__
+$productCatalog=tyreshopProductCatalog
 $productCatalogVersion=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$productCatalog]),CatalogVersion.version[default=Staged])[default=$productCatalog:Staged]
 
 # Language
-$lang=en
+$lang=ru
 
 UPDATE SolrIndexedProperty;name[unique=true];$solrIndexedType;displayName[lang=$lang]
 

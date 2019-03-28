@@ -551,4 +551,15 @@
 		<property name="itemCleanupHooks" ref="csTicketRetentionHooks"/>
 		<property name="ticketBusinessService" ref="ticketBusinessService"/>
 	</bean>
+
+	<bean id="tyreshopCategorySource" parent="abstractCategorySource">
+	</bean>
+
+	<bean id="tyreshopCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
+		<property name="categorySource" ref="tyreshopCategorySource" />
+	</bean>
+
+	<bean id="bookstoreCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
+		<property name="categorySource" ref="tyreshopCategorySource" />
+	</bean>
 </beans>
