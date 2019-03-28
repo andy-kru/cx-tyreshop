@@ -23,18 +23,16 @@ $lang=ru
 
 # Create Categories
 UPDATE Category;code[unique=true];$catalogVersion;name[lang=en];description[lang=en]
-               ;brands;;Brands;Brands
-               ;brand_1;;Nokian;Nokian шины
-               ;brand_2;;Amtel;Amtel шины
-               ;brand_3;;Antares;Antares шины
-               ;brand_4;;BFGoodrich;BFGoodrich шины
-               ;brand_5;;Barum;Barum шины
-               ;brand_6;;Continental;Continental шины
-               ;brand_7;;Cooper;Cooper шины
-               ;brand_8;;Cordiant;Cordiant шины
-                ;brand_9;;Davanti;Davanti шины
-                ;brand_10;;Dayton;Dayton шины
-                ;brand_11;;Aurora;Aurora шины
-                ;brand_12;;Barum;Barum шины
-                ;brand_13;;Cordiant;Cordiant шины
-                ;brand_14;;Michelin;Michelin шины
+               ;brands;;Brands;Бренды
+               ;nokianBrand;;Nokian;Nokian шины
+               ;amtelBrand;;Amtel;Amtel шины
+               ;antaresBrand;;Antares;Antares шины
+               ;bfGoodrichBrand;;BFGoodrich;BFGoodrich шины
+               ;barumBrand;;Barum;Barum шины
+               ;continentalBrand;;Continental;Continental шины
+               ;cooperBrand;;Cooper;Cooper шины
+               ;cordiantBrand;;Cordiant;Cordiant шины
+               ;davantiBrand;;Davanti;Davanti шины
+               ;daytonBrand;;Dayton;Dayton шины
+               ;auroraBrand;;Aurora;Aurora шины
+               ;michelinBrand;;Michelin;Michelin шины

@@ -23,11 +23,11 @@ $lang=ru
 
 # Create Categories
 UPDATE Category;code[unique=true];$catalogVersion;name[lang=$lang]
-;1;;Сезон
-;2;;Летний сезон
-;3;;Зимний сезон
-;4;;Все сезоны
-;10;;Тип транспорта
-;11;;Грузовой
-;12;;Легковой
-;13;;Мотоцикл
+               ;seasons;;Сезоны
+               ;summerSeason;;Летний сезон
+               ;winterSeason;;Зимний сезон
+               ;allSeasons;;Все сезоны
+               ;typeTyres;;Тип шин
+               ;truckTyres;;Грузовые шины
+               ;carTyres;;Легковые шины
+               ;motoTyres;;Мотошины

@@ -21,18 +21,16 @@ $lang=en
 
 # Create Categories
 UPDATE Category;code[unique=true];$catalogVersion;name[lang=en];description[lang=en]
-;brands;;Brands;Brands
-;brand_1;;Nokian;Nokian Tyres
-;brand_2;;Amtel;Amtel Tyres
-;brand_3;;Antares;Antares Tyres
-;brand_4;;BFGoodrich;BFGoodrich Tyres
-;brand_5;;Barum;Barum Tyres
-;brand_6;;Continental;Continental Tyres
-;brand_7;;Cooper;Cooper Tyres
-;brand_8;;Cordiant;Cordiant Tyres
-;brand_9;;Davanti;Davanti Tyres
-;brand_10;;Dayton;Dayton Tyres
-;brand_11;;Aurora;Aurora Tyres
-;brand_12;;Barum;Barum Tyres
-;brand_13;;Cordiant;Cordiant Tyres
-;brand_14;;Michelin;Michelin Tyres
+               ;brands;;Brands;Brands
+               ;nokianBrand;;Nokian;Nokian Tyres
+               ;amtelBrand;;Amtel;Amtel Tyres
+               ;antaresBrand;;Antares;Antares Tyres
+               ;bfGoodrichBrand;;BFGoodrich;BFGoodrich Tyres
+               ;barumBrand;;Barum;Barum Tyres
+               ;continentalBrand;;Continental;Continental Tyres
+               ;cooperBrand;;Cooper;Cooper Tyres
+               ;cordiantBrand;;Cordiant;Cordiant Tyres
+               ;davantiBrand;;Davanti;Davanti Tyres
+               ;daytonBrand;;Dayton;Dayton Tyres
+               ;auroraBrand;;Aurora;Aurora Tyres
+               ;michelinBrand;;Michelin;Michelin Tyres
