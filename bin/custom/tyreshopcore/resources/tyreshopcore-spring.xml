@@ -559,7 +559,7 @@
 		<property name="categorySource" ref="tyreshopCategorySource" />
 	</bean>
 
-	<bean id="bookstoreCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
+	<bean id="tyreshopCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
 		<property name="categorySource" ref="tyreshopCategorySource" />
 	</bean>
 </beans>

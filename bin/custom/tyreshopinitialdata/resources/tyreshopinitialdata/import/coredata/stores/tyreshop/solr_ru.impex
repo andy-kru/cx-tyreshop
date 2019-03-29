@@ -20,7 +20,6 @@ $lang=ru
 
 # Solr Indexed Property
 UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
-                          ;$solrIndexedType;brand;"Бренд"
                           ;$solrIndexedType;category;"Категория"
                           ;$solrIndexedType;code;"Код"
                           ;$solrIndexedType;name;"Название"
