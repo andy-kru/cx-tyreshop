@@ -19,18 +19,16 @@ $superCategories=superCategories(code, $catalogVersion)
 
 # Create Supplier Categories
 INSERT_UPDATE Category;code[unique=true];$superCategories;allowedPrincipals(uid)[default='customergroup'];$catalogVersion
-;brands;;
-;brand_1;brands
-;brand_2;brands
-;brand_3;brands
-;brand_4;brands
-;brand_5;brands
-;brand_6;brands
-;brand_7;brands
-;brand_8;brands
-;brand_9;brands
-;brand_10;brands
-;brand_11;brands
-;brand_12;brands
-;brand_13;brands
-;brand_14;brands
+                      ;brands;;
+                      ;nokianBrand;brands
+                      ;amtelBrand;brands
+                      ;antaresBrand;brands
+                      ;bfGoodrichBrand;brands
+                      ;barumBrand;brands
+                      ;continentalBrand;brands
+                      ;cooperBrand;brands
+                      ;cordiantBrand;brands
+                      ;davantiBrand;brands
+                      ;daytonBrand;brands
+                      ;auroraBrand;brands
+                      ;michelinBrand;brands
