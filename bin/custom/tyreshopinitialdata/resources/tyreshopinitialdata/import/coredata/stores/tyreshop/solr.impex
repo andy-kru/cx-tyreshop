@@ -1,0 +1,125 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+#
+# Import the Solr configuration for the Tyreshop store
+#
+$productCatalog=tyreshopProductCatalog
+$catalogVersions=catalogVersions(catalog(id),version);
+$facetSearchConfigName=tyreshopIndex
+$facetSearchConfigDescription=Tyreshop Solr Index
+$searchIndexNamePrefix=tyreshop
+$solrIndexedType=tyreshopProductType
+$indexBaseSite=tyreshop
+$indexLanguages=en,ru
+$indexCurrencies=BYN,USD
+
+#
+# Setup the indexed types, their properties, and the update queries
+#
+
+# Declare the indexed type Product
+INSERT_UPDATE SolrIndexedType;identifier[unique=true];type(code);variant;sorts(&sortRefID)
+;$solrIndexedType;Product;false;sortRef1,sortRef2
+
+INSERT_UPDATE SolrFacetSearchConfig;name[unique=true];description;indexNamePrefix;languages(isocode);currencies(isocode);solrServerConfig(name);solrSearchConfig(description);solrIndexConfig(name);solrIndexedTypes(identifier);enabledLanguageFallbackMechanism;$catalogVersions
+;$facetSearchConfigName;$facetSearchConfigDescription;$searchIndexNamePrefix;$indexLanguages;$indexCurrencies;Default;Default;Default;$solrIndexedType;true;$productCatalog:Online,$productCatalog:Staged
+
+UPDATE BaseSite;uid[unique=true];solrFacetSearchConfiguration(name)
+;$indexBaseSite;$facetSearchConfigName
+
+# Define price range set
+INSERT_UPDATE SolrValueRangeSet;name[unique=true];qualifier;type;solrValueRanges(&rangeValueRefID)
+;tyreshopPriceRangeBYN;BYN;double;rangeRefBYN1,rangeRefBYN2,rangeRefBYN3,rangeRefBYN4
+;tyreshopPriceRangeUSD;USD;double;rangeRefUSD1,rangeRefUSD2,rangeRefUSD3,rangeRefUSD4
+
+# Define price ranges
+INSERT_UPDATE SolrValueRange;&rangeValueRefID;solrValueRangeSet(name)[unique=true];name[unique=true];from;to
+;rangeRefBYN1;tyreshopPriceRangeBYN;   0 руб.-99.99 руб.;  0; 99.99
+;rangeRefBYN2;tyreshopPriceRangeBYN;100 руб.-199.99 руб.;100;199.99
+;rangeRefBYN3;tyreshopPriceRangeBYN;200 руб.-299.99 руб.;200;299.99
+;rangeRefBYN4;tyreshopPriceRangeBYN;   300 руб.-400 руб.;300;   400
+
+;rangeRefUSD1;tyreshopPriceRangeUSD;   $0-$49.99;  0; 49.99
+;rangeRefUSD2;tyreshopPriceRangeUSD;  $50-$99.99; 50; 99.99
+;rangeRefUSD3;tyreshopPriceRangeUSD;$100-$149.99;100;149.99
+;rangeRefUSD4;tyreshopPriceRangeUSD;   $150-$200;150;   200
+
+
+# Non-facet properties
+INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);sortableType(code);currency[default=false];localized[default=false];multiValue[default=false];useForSpellchecking[default=false];useForAutocomplete[default=false];fieldValueProvider;valueProviderParameter
+
+# Category fields
+INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);localized[default=false];multiValue[default=true];categoryField[default=true];useForSpellchecking[default=false];useForAutocomplete[default=false];fieldValueProvider;ftsPhraseQuery[default=false];ftsPhraseQueryBoost;ftsQuery[default=false];ftsQueryBoost;ftsFuzzyQuery[default=false];ftsFuzzyQueryBoost
+;$solrIndexedType; allCategories   	;string ;false;;;    ;   ;categoryCodeValueProvider					;    ;  ;    ;  ;    ;
+;$solrIndexedType; categoryName     ;text   ;true;;;true;true;tyreshopCategoryNameValueProvider     ;true;40;true;20;true;10
+
+# Category facets
+INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);multiValue[default=true];facet[default=true];facetType(code);facetSort(code);priority;visible;categoryField[default=true];fieldValueProvider;facetDisplayNameProvider;topValuesProvider
+;$solrIndexedType; categoryPath  	;string;;;Refine		;Alpha;-9999;false;false;categoryPathValueProvider;
+;$solrIndexedType; category      	;string;;;Refine		;Alpha; 6000;true;;tyreshopCategoryCodeValueProvider;categoryFacetDisplayNameProvider;defaultTopValuesProvider
+
+# Other facet properties
+INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);sortableType(code);currency[default=false];localized[default=false];multiValue[default=false];facet[default=true];facetType(code);facetSort(code);priority;visible;useForSpellchecking[default=false];useForAutocomplete[default=false];fieldValueProvider;facetDisplayNameProvider;customFacetSortProvider;topValuesProvider;rangeSets(name)
+;$solrIndexedType; price        	;double ;	 ;true ;     ;     ;     ;MultiSelectOr ;Alpha ; 4000;true;     ;     ;productPriceValueProvider 	;;;defaultTopValuesProvider;electronicsPriceRangeBYN,electronicsPriceRangeUSD
+
+# Create the queries that will be used to extract data for Solr
+INSERT_UPDATE SolrIndexerQuery;solrIndexedType(identifier)[unique=true];identifier[unique=true];type(code);injectCurrentDate[default=true];injectCurrentTime[default=true];injectLastIndexTime[default=true];query;user(uid)
+;$solrIndexedType;$searchIndexNamePrefix-fullQuery;full;;;false;"
+SELECT {PK} FROM {Product}";anonymous
+
+;$solrIndexedType;$searchIndexNamePrefix-updateQuery;update;;;;"
+SELECT DISTINCT tbl.pk, tbl.code FROM (
+	{{
+		SELECT DISTINCT {p:PK} AS pk, {p:code} AS code
+		FROM {Product AS p LEFT JOIN CustomerReview AS cr ON {cr:product}={p:PK} }
+		WHERE {p:modifiedtime} >= ?lastIndexTime OR {cr:modifiedtime} >= ?lastIndexTime
+	}}
+	UNION
+	{{
+		SELECT {p:PK}  AS pk, {p:code} AS code FROM {Product AS p} WHERE {p:code} IN (
+			{{
+				SELECT DISTINCT {sl:productCode} FROM {StockLevel AS sl} WHERE {sl:modifiedtime} >= ?lastIndexTime
+			}}
+		)
+	}}
+) tbl ORDER BY tbl.code
+";anonymous
+
+# Define the available sorts
+INSERT_UPDATE SolrSort;&sortRefID;indexedType(identifier)[unique=true];code[unique=true];useBoost
+;sortRef1;$solrIndexedType;price-asc;false
+;sortRef2;$solrIndexedType;price-desc;false
+
+# Define the sort fields
+INSERT_UPDATE SolrSortField;sort(indexedType(identifier),code)[unique=true];fieldName[unique=true];ascending[unique=true]
+;$solrIndexedType:price-asc;priceValue;true
+;$solrIndexedType;price-desc;priceValue;false
+
+# Search query template
+INSERT_UPDATE SolrSearchQueryTemplate ; name[unique=true] ; indexedType(identifier)[unique=true] ; ftsQueryBuilder            ; enableHighlighting[default=true]
+                                      ; DEFAULT           ; $solrIndexedType                     ; defaultFreeTextQueryBuilder;
+
+# Non-facet search query properties
+INSERT_UPDATE SolrSearchQueryProperty ; indexedProperty(name, solrIndexedType(identifier))[unique=true] ; searchQueryTemplate(name, indexedType(identifier))[unique=true][default=DEFAULT:$solrIndexedType] ; facet ; ftsPhraseQuery[default=false] ; ftsPhraseQueryBoost ; ftsQuery[default=false] ; ftsQueryBoost ; ftsFuzzyQuery[default=false] ; ftsFuzzyQueryBoost ; ftsWildcardQuery[default=false] ; ftsWildcardQueryType(code)[default=POSTFIX] ; ftsWildcardQueryBoost ; ftsWildcardQueryMinTermLength ; includeInResponse[default=true] ; useForHighlighting[default=false]
+
+# Category search query fields
+INSERT_UPDATE SolrSearchQueryProperty;indexedProperty(name, solrIndexedType(identifier))[unique=true];searchQueryTemplate(name, indexedType(identifier))[unique=true][default=DEFAULT:$solrIndexedType];facet;ftsPhraseQuery[default=false];ftsPhraseQueryBoost;ftsQuery[default=false];ftsQueryBoost;ftsFuzzyQuery[default=false];ftsFuzzyQueryBoost;includeInResponse[default=true]
+                                     ;allCategories:$solrIndexedType 	 ;    ;   ;    ;  ;    ;  ;    ;  ;
+                                     ;categoryName:$solrIndexedType       ;    ;   ;true;40;true;20;true;10;
+
+# Category search query facets
+INSERT_UPDATE SolrSearchQueryProperty;indexedProperty(name, solrIndexedType(identifier))[unique=true];searchQueryTemplate(name, indexedType(identifier))[unique=true][default=DEFAULT:$solrIndexedType];facet[default=true];facetType(code);includeInResponse[default=true];facetDisplayNameProvider;facetSortProvider;facetTopValuesProvider
+                                     ;categoryPath:$solrIndexedType 	;;;Refine;;;
+                                     ;category:$solrIndexedType 		;;;Refine;;categoryFacetDisplayNameProvider;defaultTopValuesProvider
+
+# Other search query facets
+INSERT_UPDATE SolrSearchQueryProperty;indexedProperty(name, solrIndexedType(identifier))[unique=true];facet[default=true];facetType(code);priority;facetDisplayNameProvider;facetSortProvider;facetTopValuesProvider;includeInResponse[default=true];searchQueryTemplate(name, indexedType(identifier))[unique=true][default=DEFAULT:$solrIndexedType]
+                                     ;price:$solrIndexedType										 ;					 ;MultiSelectOr	 ;4000	  ;						   							;				 			  ;defaultTopValuesProvider	;;

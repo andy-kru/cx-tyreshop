@@ -13,13 +13,20 @@
 #
 
 # Index Type
-$solrIndexedType=
+$solrIndexedType=tyreshopProductType
 
 # Language
-$lang=en
+$lang=ru
 
 # Solr Indexed Property
 UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
+                          ;$solrIndexedType;category;"Категория"
+                          ;$solrIndexedType;code;"Код"
+                          ;$solrIndexedType;name;"Название"
+                          ;$solrIndexedType;price;"Цена"
+
 
 # Define the available sorts
 UPDATE SolrSort;indexedType(identifier)[unique=true];code[unique=true];name[lang=$lang];useBoost
+               ;$solrIndexedType;price-asc;"Цена (сначала дешёвые)"
+               ;$solrIndexedType;price-desc;"Цена (сначала дорогие)"
