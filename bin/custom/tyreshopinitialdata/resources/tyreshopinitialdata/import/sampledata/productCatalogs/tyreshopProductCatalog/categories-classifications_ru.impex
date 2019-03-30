@@ -1,0 +1,23 @@
+$productCatalog=tyreshopProductCatalog
+$productCatalogName=Tyre Shop Product Catalog
+$classificationCatalog=tyreshopClassificationCatalog
+
+$classCatalogVersion=catalogversion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true,default='$classificationCatalog:1.0']
+$classSystemVersion=systemVersion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true]
+
+# Language
+$lang=ru
+
+# Insert Classifications
+UPDATE ClassificationClass;code[unique=true];$classCatalogVersion;name[lang=$lang]
+;carclassification;;Width & Height & Diameter & Season & LoadIndex & SpeedIndex;
+;truckclassification;;Width & Height & Diameter
+;motoclassification;;Width & Height & Diameter
+# Insert Classification Attributes
+UPDATE ClassificationAttribute;code[unique=true];$classSystemVersion;name[lang=$lang]
+;Width, 100;;Ширина
+;Height, 101;;Высота
+;Diameter, 102;;Диаметр
+;Season, 103;;Сезон
+;LoadIndex, 104;;Индекс нагрузки
+;SpeedIndex, 105;;Индекс скорости

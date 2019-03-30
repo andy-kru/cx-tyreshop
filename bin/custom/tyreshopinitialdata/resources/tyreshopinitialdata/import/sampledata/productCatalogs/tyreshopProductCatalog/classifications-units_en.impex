@@ -8,13 +8,18 @@
 # Information and shall use it only in accordance with the terms of the
 # license agreement you entered into with SAP.
 # -----------------------------------------------------------------------
-#
-# Import the Product Catalog and Classification Catalog
-#
+# ImpEx for Importing Units
+# English Localisation
+
+# Macros / Replacement Parameter definitions
+$classificationCatalog=tyreshopClassificationCatalog
+
+$systemVersion=systemVersion(catalog(id[default='$classificationCatalog']),version[default='1.0'])
 
 # Language
 $lang=en
 
-# Create Catalog
-UPDATE Catalog;id[unique=true];name[lang=$lang]
-;tyreshopProductCatalog;Tyre Shop Product Catalog
+UPDATE ClassificationAttributeUnit;code[unique=true];name[lang=$lang];$systemVersion[unique=true]
+;100;Percent
+;101;Millimeter
+;102;Diameter

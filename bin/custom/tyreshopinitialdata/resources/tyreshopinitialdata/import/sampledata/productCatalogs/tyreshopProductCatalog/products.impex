@@ -1,64 +1,75 @@
-# -----------------------------------------------------------------------
-# [y] hybris Platform
-#
-# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
-#
-# This software is the confidential and proprietary information of SAP
-# ("Confidential Information"). You shall not disclose such Confidential
-# Information and shall use it only in accordance with the terms of the
-# license agreement you entered into with SAP.
-# -----------------------------------------------------------------------
-# ImpEx for Importing Products
-
-# Macros / Replacement Parameter definitions
 $productCatalog=tyreshopProductCatalog
-$productCatalogName=Tyre Shop Product Catalog
 
 $catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$prices=europe1prices[translator=de.hybris.platform.europe1.jalo.impex.Europe1PricesTranslator]
+$baseProduct=baseProduct(code, catalogVersion(catalog(id[default='$productCatalog']),version[default='Staged']))
+$approved=approvalstatus(code)[default='approved']
 $supercategories=supercategories(code, $catalogVersion)
-$baseProduct=baseProduct(code,$catalogVersion)
-$approved=approvalstatus(code)[default='check']
 
-# Insert Products
 INSERT_UPDATE Product;code[unique=true];$supercategories;manufacturerName;manufacturerAID;unit(code);ean;variantType(code);$catalogVersion;$approved
-                     ;100000;nokianBrand, summerSeason, carTyres;Nokian
-                     ;100001;nokianBrand, winterSeason, carTyres;Nokian
-                     ;100002;nokianBrand, summerSeason, carTyres;Nokian
-                     ;100003;amtelBrand, summerSeason, carTyres;Amtel
-                     ;100004;amtelBrand, winterSeason, carTyres;Amtel
-                     ;100005;amtelBrand, summerSeason, carTyres;Amtel
-                     ;100006;antaresBrand, summerSeason, carTyres;Antares
-                     ;100007;antaresBrand, winterSeason, carTyres;Antares
-                     ;100008;bfGoodrichBrand, winterSeason, carTyres;BFGoodrich
-                     ;100009;bfGoodrichBrand, summerSeason, carTyres;BFGoodrich
-                     ;100010;bfGoodrichBrand, winterSeason, carTyres;BFGoodrich
-                     ;100011;barumBrand, winterSeason, carTyres;Barum
-                     ;100012;barumBrand, summerSeason, carTyres;Barum
-                     ;100013;barumBrand, summerSeason, carTyres;Barum
-                     ;100014;continentalBrand, summerSeason, carTyres;Continental
-                     ;100015;continentalBrand, summerSeason, carTyres;Continental
-                     ;100016;continentalBrand, summerSeason, carTyres;Continental
-                     ;100017;cooperBrand, winterSeason, carTyres;Cooper
-                     ;100018;cooperBrand, summerSeason, carTyres;Cooper
-                     ;100019;cooperBrand, summerSeason, carTyres;Cooper
-                     ;100020;cordiantBrand, winterSeason, carTyres;Cordiant
-                     ;100021;cordiantBrand, summerSeason, carTyres;Cordiant
-                     ;100022;cordiantBrand, summerSeason, carTyres;Cordiant
-                     ;100023;davantiBrand, winterSeason, carTyres;Davanti
-                     ;100024;davantiBrand, winterSeason, carTyres;Davanti
-                     ;100025;davantiBrand, winterSeason, carTyres;Davanti
-                     ;100026;daytonBrand, summerSeason, carTyres;Dayton
-                     ;100027;auroraBrand, allSeasons, truckTyres;Aurora
-                     ;100028;auroraBrand, allSeasons, truckTyres;Aurora
-                     ;100029;auroraBrand, allSeasons, truckTyres;Aurora
-                     ;100030;barumBrand, allSeasons, truckTyres;Barum
-                     ;100031;barumBrand, allSeasons, truckTyres;Barum
-                     ;100032;cordiantBrand, allSeasons, truckTyres;Cordiant
-                     ;100033;cordiantBrand, allSeasons, truckTyres;Cordiant
-                     ;100034;cordiantBrand, allSeasons, truckTyres;Cordiant
-                     ;100035;michelinBrand, allSeasons, motoTyres;Michelin
-                     ;100036;michelinBrand, allSeasons, motoTyres;Michelin
-                     ;100037;michelinBrand, allSeasons, motoTyres;Michelin
+                     ;100000;nokianBrand, carTyres;Nokian;;;;TyreSizeVariantProduct
+                     ;100001;nokianBrand, carTyres;Nokian;;;;TyreSizeVariantProduct
+                     ;100002;amtelBrand, carTyres;Amtel;;;;TyreSizeVariantProduct
+                     ;100003;amtelBrand, carTyres;Amtel;;;;TyreSizeVariantProduct
+                     ;100004;antaresBrand, carTyres;Antares;;;;TyreSizeVariantProduct
+                     ;100005;antaresBrand, carTyres;Antares;;;;TyreSizeVariantProduct
+                     ;100006;bfGoodrichBrand, carTyres;BFGoodrich;;;;TyreSizeVariantProduct
+                     ;100007;bfGoodrichBrand, carTyres;BFGoodrich;;;;TyreSizeVariantProduct
+                     ;100008;barumBrand, carTyres;Barum;;;;TyreSizeVariantProduct
+                     ;100009;barumBrand, carTyres;Barum;;;;TyreSizeVariantProduct
+                     ;100010;continentalBrand, carTyres;Continental;;;;TyreSizeVariantProduct
+                     ;100011;continentalBrand, carTyres;Continental;;;;TyreSizeVariantProduct
+                     ;100012;continentalBrand, carTyres;Continental;;;;TyreSizeVariantProduct
+                     ;100013;cooperBrand, carTyres;Cooper;;;;TyreSizeVariantProduct
+                     ;100014;cooperBrand, carTyres;Cooper;;;;TyreSizeVariantProduct
+                     ;100015;cooperBrand, carTyres;Cooper;;;;TyreSizeVariantProduct
+                     ;100016;cordiantBrand, carTyres;Cordiant;;;;TyreSizeVariantProduct
+                     ;100017;cordiantBrand, carTyres;Cordiant;;;;TyreSizeVariantProduct
+                     ;100018;cordiantBrand, carTyres;Cordiant;;;;TyreSizeVariantProduct
+                     ;100019;davantiBrand, carTyres;Davanti;;;;TyreSizeVariantProduct
+                     ;100020;daytonBrand, carTyres;Dayton;;;;TyreSizeVariantProduct
+                     ;100021;auroraBrand, truckTyres;Aurora;;;;TyreSizeVariantProduct
+                     ;100022;barumBrand, truckTyres;Barum;;;;TyreSizeVariantProduct
+                     ;100023;barumBrand, truckTyres;Barum;;;;TyreSizeVariantProduct
+                     ;100024;cordiantBrand, truckTyres;Cordiant;;;;TyreSizeVariantProduct
+                     ;100025;michelinBrand, motoTyres;Michelin;;;;TyreSizeVariantProduct
 
-
-
+INSERT_UPDATE TyreSizeVariantProduct;code[unique=true];$baseProduct;ean;unit(code);supercategories(code,$catalogVersion);size;$approved;$catalogVersion
+;100000_91H;100000;;;nokianBrand, summerSeason, carTyres;SX2 205/55R16 91H
+;100000_94R;100000;;;nokianBrand, winterSeason, carTyres;RS2 205/55R16 94R
+;100001_94H;100001;;;nokianBrand, summerSeason, carTyres;205/55R16 94H
+;100002_82H;100002;;;amtelBrand, summerSeason, carTyres;175/70R13 82H
+;100002_91W;100002;;;amtelBrand, winterSeason, carTyres;225/45R17 91W
+;100003_82Q;100003;;;amtelBrand, summerSeason, carTyres;175/65R14 82Q
+;100004_100V;100004;;;antaresBrand, summerSeason, carTyres;225/60R18 100V
+;100005_98V;100005;;;antaresBrand, winterSeason, carTyres;225/55R18 98V
+;100006_95T;100006;;;bfGoodrichBrand, winterSeason, carTyres;195/65R15 95T
+;100006_94H;100006;;;bfGoodrichBrand, winterSeason, carTyres;205/55R16 94H
+;100007_81T;100007;;;bfGoodrichBrand, summerSeason, carTyres;165/70R14 81T
+;100008_91T;100008;;;barumBrand, winterSeason, carTyres;205/55R16 91T
+;100009_3HM;100009;;;barumBrand, summerSeason, carTyres;205/55R16 91V
+;100009_5HM;100009;;;barumBrand, summerSeason, carTyres;205/55R16 91V
+;100010_91T;100010;;;continentalBrand, winterSeason, carTyres;205/55R16 91T
+;100011_91H;100011;;;continentalBrand, summerSeason, carTyres;205/55R16 91H
+;100012_91V;100012;;;continentalBrand, summerSeason, carTyres;205/55R16 91V
+;100013_102T;100013;;;cooperBrand, winterSeason, carTyres;225/65R17 102T
+;100014_107W;100014;;;cooperBrand, summerSeason, carTyres;255/50R19 107W
+;100015_124K;100015;;;cooperBrand, summerSeason, carTyres;315/75R16 127/124K
+;100016_91T;100016;;;cordiantBrand, winterSeason, carTyres;205/55R16 91T
+;100017_94H;100017;;;cordiantBrand, summerSeason, carTyres;205/55R16 94H
+;100018_91V;100018;;;cordiantBrand, summerSeason, carTyres;205/55R16 91V
+;100019_81T;100019;;;davantiBrand, winterSeason, carTyres;165/70R14 81T
+;100019_88T;100019;;;davantiBrand, winterSeason, carTyres;175/70R14 88T
+;100019_82T;100019;;;davantiBrand, winterSeason, carTyres;185/60R14 82T
+;100020_91V;100020;;;daytonBrand, summerSeason, carTyres;205/55R16 91V
+;100021_75R;100021;;;auroraBrand, allSeasons, truckTyres;235/75R17.5
+;100021_70R;100021;;;auroraBrand, allSeasons, truckTyres;245/70R17.5
+;100021_80R;100021;;;auroraBrand, allSeasons, truckTyres;295/80R22.5
+;100022_150L;100022;;;barumBrand, allSeasons, truckTyres;315/80R22.5 156/150L
+;100023_148L;100023;;;barumBrand, allSeasons, truckTyres;315/60R22.5 152/148L
+;100024_148M;100024;;;cordiantBrand, allSeasons, truckTyres;295/80R22.5 152/148M
+;100024_147L;100024;;;cordiantBrand, allSeasons, truckTyres;295/60R22.5 150/147L
+;100024_150K;100024;;;cordiantBrand, allSeasons, truckTyres;315/80R22.5 156/150K
+;100025_62P;100025;;;michelinBrand, allSeasons, motoTyres;130/70-12 62P R TL REINF
+;100025_56P;100025;;;michelinBrand, allSeasons, motoTyres;110/90-13 56P F TL
+;100025_56S;100025;;;michelinBrand, allSeasons, motoTyres;120/70-15 56S F TL

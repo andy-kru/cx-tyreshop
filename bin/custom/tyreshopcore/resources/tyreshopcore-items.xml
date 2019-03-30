@@ -111,5 +111,22 @@
             </itemtype>
         </typegroup>
 
+        <typegroup name="Tyreshop">
+            <itemtype code="TyreSizeVariantProduct" extends="VariantProduct"
+                      autocreate="true" generate="true"
+                      jaloclass="com.reply.tyreshop.core.jalo.TyreSizeVariantProduct">
+                <description>Tyre size variant type.
+                </description>
+                <attributes>
+                    <attribute qualifier="size" type="localized:java.lang.String"
+                               metatype="VariantAttributeDescriptor">
+                        <description>Size of the product.</description>
+                        <modifiers/>
+                        <persistence type="property"/>
+                    </attribute>
+                </attributes>
+            </itemtype>
+        </typegroup>
+
     </itemtypes>
 </items>

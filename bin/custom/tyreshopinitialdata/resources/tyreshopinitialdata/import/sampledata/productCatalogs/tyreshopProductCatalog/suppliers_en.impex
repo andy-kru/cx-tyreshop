@@ -20,7 +20,7 @@ $catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[defa
 $lang=en
 
 # Create Categories
-UPDATE Category;code[unique=true];$catalogVersion;name[lang=en];description[lang=en]
+UPDATE Category;code[unique=true];$catalogVersion;name[lang=$lang];description[lang=$lang]
                ;brands;;Brands;Brands
                ;nokianBrand;;Nokian;Nokian Tyres
                ;amtelBrand;;Amtel;Amtel Tyres
