@@ -1,0 +1,49 @@
+#
+# Import CMS content for the Tyreshop site
+#
+
+$contentCatalog=tyreshopContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+# Language
+$lang=ru
+
+# Content Pages
+UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+                  ;;add-edit-address;"Добавить/изменить адрес"
+                  ;;address-book;"Адресная книга"
+                  ;;cartPage;"Ваша корзина"
+                  ;;checkout-login;"Оформить заказ"
+                  ;;close-account;"Закрыть аккаунт"
+                  ;;consents;"Разрешение управления"
+                  ;;faq;"Часто задаваемые вопросы"
+                  ;;homepage;"Домашняя страница"
+                  ;;login;"Логин"
+                  ;;multiStepCheckoutSummaryPage;"Выписка"
+                  ;;notFound;"Не найдено"
+                  ;;order;"Детали заказа"
+                  ;;orderConfirmationPage;"Подтверждение заказа"
+                  ;;orderExpired;"Страница с истекшим сроком заказа"
+                  ;;orders;"История заказа"
+                  ;;payment-details;"Детали платежа"
+                  ;;quickOrderPage;"Страница быстрого заказа"
+                  ;;search;"Страница результатов поиска"
+                  ;;searchEmpty;"Нет результатов"
+                  ;;storefinderPage;"Поиск магазина"
+                  ;;termsAndConditions;"Условия и положения"
+                  ;;update-email;"Обновить электронную почту"
+                  ;;update-profile;"Обновить профиль"
+                  ;;updatePassword;"Обновить забытый пароль"
+
+
+# Category Pages
+UPDATE CategoryPage;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+                   ;;category;"Страница категории по умолчанию"
+                   ;;productGrid;"Продуктовая сетка"
+                   ;;productList;"Список продуктов"
+
+
+# Product Pages
+UPDATE ProductPage;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+                  ;;productDetails;"Детали продукта"
+

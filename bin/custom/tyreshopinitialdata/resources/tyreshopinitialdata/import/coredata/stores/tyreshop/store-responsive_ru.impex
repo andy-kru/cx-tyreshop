@@ -1,0 +1,10 @@
+#
+# Import the Tyreshop BaseStore
+#
+
+# Language
+$lang=кг
+
+# Create Base Store
+UPDATE BaseStore;uid[unique=true];name[lang=$lang]
+                ;tyreshop;"Магазин по продаже шин"

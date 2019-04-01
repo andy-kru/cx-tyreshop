@@ -1,0 +1,10 @@
+#
+# Import the CMS Site configuration for the Tyreshop store
+#
+
+# Language
+$lang=ru
+
+# Create CMS Site
+UPDATE CMSSite;uid[unique=true];name[lang=$lang];locale[lang=$lang]
+              ;tyreshop;"Сайт по продаже шин";ru
