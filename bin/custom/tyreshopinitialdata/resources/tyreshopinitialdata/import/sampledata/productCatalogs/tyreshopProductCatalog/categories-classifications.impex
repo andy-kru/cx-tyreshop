@@ -1,0 +1,127 @@
+$productCatalog=tyreshopProductCatalog
+$productCatalogName=Tyre Shop Product Catalog
+$classificationCatalog=tyreshopClassificationCatalog
+$systemVersion=1.0;
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$classCatalogVersion=catalogversion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true,default='$classificationCatalog:1.0']
+$classSystemVersion=systemVersion(catalog(id[default='$classificationCatalog']),version[default='1.0'])[unique=true]
+$class=classificationClass(ClassificationClass.code,$classCatalogVersion)[unique=true]
+$supercategories=source(code, $classCatalogVersion)[unique=true]
+$categories=target(code, $catalogVersion)[unique=true]
+$attribute=classificationAttribute(code,$classSystemVersion)[unique=true]
+$unit=unit(code,$classSystemVersion)
+
+INSERT_UPDATE ClassificationSystem; id[unique=true]; name[lang=en]; name[lang=ru]
+                                  ;$classificationCatalog;Tyre ClassificationSystem;Tyre ClassificationSystem
+
+INSERT_UPDATE ClassificationSystemversion; catalog(id)[unique=true] ; version[unique=true] ; active ; writeprincipals(uid); languages(isocode); inclPacking[virtual=true,default=true]; inclDuty[virtual=true,default=true]; inclFreight[virtual=true,default=true]; inclAssurance[virtual=true,default=true]
+                                         ; $classificationCatalog ; $systemVersion ; true ; employeegroup;en;
+
+# Insert Classifications
+INSERT_UPDATE ClassificationClass;$classCatalogVersion;code[unique=true];allowedPrincipals(uid)[default='customergroup']
+;;carclassification
+;;truckclassification
+;;motoclassification
+# Insert Classification Attributes
+INSERT_UPDATE ClassificationAttribute;$classSystemVersion;code[unique=true]
+;;Width, 100
+;;Height, 101
+;;Diameter, 102
+;;Season, 103
+;;LoadIndex, 104
+;;SpeedIndex, 105
+# Links ClassificationClasses to Categories
+INSERT_UPDATE CategoryCategoryRelation;$categories;$supercategories
+;carTyres;carclassification;
+;truckTyres;truckclassification;
+;motoTyres;motoclassification;
+INSERT_UPDATE ClassAttributeAssignment;$class;$attribute;position;$unit;attributeType(code[default=string]);multiValued[default=false];range[default=false];localized[default=true];attributeValues(code,$classSystemVersion)
+;carclassification;Width, 100;0;101;number;;;false
+;carclassification;Height, 101;1;100;number;;;false
+;carclassification;Diameter, 102;2;102;number;;;false
+;carclassification;Season, 103;3;;enum;;;;Лето, Зима, Всесезонные, Summer, Winter, All Seasons
+;carclassification;LoadIndex, 104;4;;enum;;;false;J,K,L,M,N,P,Q,R,S,T,U,H,V,W,Y,Z
+;carclassification;SpeedIndex, 105;5;;enum;;;false;80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,127/124
+;truckclassification;Width, 100;0;101;number;;;false
+;truckclassification;Height, 101;1;100;number;;;false
+;truckclassification;Diameter, 102;2;102;number;;;false
+;motoclassification;Width, 100;0;101;number;;;false
+;motoclassification;Height, 101;1;100;number;;;false
+;motoclassification;Diameter, 102;2;102;number;;;false
+INSERT_UPDATE ClassificationAttributeValue;code[unique=true];$classSystemVersion
+;Лето
+;Зима
+;Всесезонные
+;Summer
+;Winter
+;All Seasons
+;J
+;K
+;L
+;M
+;N
+;P
+;Q
+;R
+;S
+;T
+;U
+;H
+;V
+;W
+;Y
+;Z
+;80
+;81
+;82
+;83
+;84
+;85
+;86
+;87
+;88
+;89
+;90
+;91
+;92
+;93
+;94
+;95
+;96
+;97
+;98
+;99
+;100
+;101
+;102
+;103
+;104
+;105
+;106
+;107
+;108
+;109
+;110
+;111
+;112
+;113
+;114
+;115
+;116
+;117
+;118
+;119
+;120
+;121
+;122
+;123
+;124
+;125
+;126
+;127
+;128
+;129
+;130
+;131
+;127/124

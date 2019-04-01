@@ -1,0 +1,80 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+# ImpEx for Importing Product Classifications
+
+#% impex.setLocale(Locale.ENGLISH);
+
+# Macros / Replacement Parameter definitions
+$productCatalog=tyreshopProductCatalog
+$productCatalogName=Tyre Shop Product Catalog
+$classificationCatalog=tyreshopClassificationCatalog
+
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$clAttrModifiers=system='$classificationCatalog',version='1.0',translator=de.hybris.platform.catalog.jalo.classification.impex.ClassificationAttributeTranslator
+
+
+# Insert Product Classifications
+
+# replace <string> and <int> with actual values
+$feature1=@Width, 100[$clAttrModifiers];
+$feature2=@Height, 101[$clAttrModifiers];
+$feature3=@Diameter, 102[$clAttrModifiers];
+$feature4=@Season, 103[$clAttrModifiers];
+$feature5=@LoadIndex, 104[$clAttrModifiers];
+$feature6=@SpeedIndex, 105[$clAttrModifiers];
+INSERT_UPDATE Product;code[unique=true];$feature1;$feature2;$feature3;$feature4[lang=en];$feature4[lang=ru];$feature5;$feature6;$catalogVersion
+;100000_91H;205;55;16;Summer;Лето;H;91
+;100000_94R;205;55;16;Winter;Зима;R;94
+;100001_94H;205;55;16;Summer;Лето;H;94
+;100002_82H;175;70;13;Summer;Лето;H;82
+;100002_91W;225;45;17;Winter;Зима;W;91
+;100003_82Q;175;65;14;Summer;Лето;Q;82
+;100004_100V;225;60;18;Summer;Лето;V;100
+;100005_98V;225;55;18;Winter;Зима;V;98
+;100006_95T;195;65;15;Winter;Зима;T;95
+;100006_94H;205;55;16;Winter;Зима;H;94
+;100007_81T;165;70;14;Summer;Лето;T;81
+;100008_91T;205;55;16;Winter;Зима;T;91
+;100009_3HM;205;55;16;Summer;Лето;V;91
+;100009_5HM;205;55;16;Summer;Лето;V;91
+;100010_91T;205;55;16;Winter;Зима;T;91
+;100011_91H;205;55;16;Summer;Лето;H;91
+;100012_91V;205;55;16;Summer;Лето;V;91
+;100013_102T;225;65;17;Winter;Зима;T;102
+;100014_107W;255;50;19;Summer;Лето;W;107
+;100015_124K;315;75;16;Summer;Лето;K;127/124
+;100016_91T;205;55;16;Winter;Зима;T;91
+;100017_94H;205;55;16;Summer;Лето;H;94
+;100018_91V;205;55;16;Summer;Лето;V;91
+;100019_81T;165;70;14;Winter;Зима;T;81
+;100019_88T;175;70;14;Winter;Зима;T;88
+;100019_82T;185;60;14;Winter;Зима;T;82
+;100020_91V;205;55;16;Summer;Лето;V;91
+
+
+$feature1=@Width, 100[$clAttrModifiers];
+$feature2=@Height, 101[$clAttrModifiers];
+$feature3=@Diameter, 102[$clAttrModifiers];
+
+INSERT_UPDATE Product;code[unique=true];$feature1;$feature2;$feature3;$catalogVersion
+;100021_75R;235;75;17.5
+;100021_70R;245;70;17.5
+;100021_80R;295;80;22.5
+;100022_150L;315;80;22.5
+;100023_148L;315;60;22.5
+;100024_148M;295;80;22.5
+;100024_147L;295;60;22.5
+;100024_150K;315;80;22.5
+;100025_62P;130;70;12
+;100025_56P;110;90;13
+;100025_56S;120;70;15
+
+

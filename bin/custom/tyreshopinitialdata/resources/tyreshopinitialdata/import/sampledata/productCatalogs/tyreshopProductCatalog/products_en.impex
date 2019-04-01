@@ -21,41 +21,67 @@ $lang=en
 
 # Update allProducts with localisations
 UPDATE Product;code[unique=true];$catalogVersion;name[lang=$lang];summary[lang=$lang];description[lang=$lang]
-;100000;;Nokian Nordman SX2 205/55R16 91H
-;100001;;Nokian Nordman RS2 205/55R16 94R
-;100002;;Nokian Hakka Green 2 205/55R16 94H
-;100003;;Amtel Planet 2P 175/70R13 82H
-;100004;;Amtel NordMaster K-239 175/65R14 82Q
-;100005;;Amtel Planet FT-705 225/45R17 91W
-;100006;;Antares Ingens A1 225/60R18 100V
-;100007;;Antares Majoris R1 225/55R18 98V
-;100008;;BFGoodrich g-Force Winter 2 195/65R15 95T
-;100009;;BFGoodrich g-Grip 165/70R14 81T
-;100010;;BFGoodrich g-Force Winter 2 205/55R16 94H
-;100011;;Barum Polaris 5 205/55R16 91T
-;100012;;Barum Bravuris 3 HM 205/55R16 91V
-;100013;;Barum Bravuris 5 HM 205/55R16 91V
-;100014;;Continental WinterContact TS 860 205/55R16 91T
-;100015;;Continental PremiumContact 6 205/55R16 91H
-;100016;;Continental ContiPremiumContact 2 205/55R16 91V
-;100017;;Cooper WeatherMaster WSC 225/65R17 102T
-;100018;;Cooper Zeon 4XS Sport 255/50R19 107W
-;100019;;Cooper Discoverer STT PRO 315/75R16 127/124K
-;100020;;Cordiant Polar 2 205/55R16 91T
-;100021;;Cordiant Road Runner 205/55R16 94H
-;100022;;Cordiant Sport 3 205/55R16 91V
-;100023;;Davanti Wintoura 165/70R14 81T
-;100024;;Davanti Wintoura 175/70R14 88T
-;100025;;Davanti Wintoura 185/60R14 82T
-;100026;;Dayton Touring 2 205/55R16 91V
-;100027;;Aurora UF02 235/75R17.5
-;100028;;Aurora UF02 245/70R17.5
-;100029;;Aurora UF20 295/80R22.5
-;100030;;Barum BD 200 R 315/80R22.5 156/150L
-;100031;;Barum BF 200 R 315/60R22.5 152/148L
-;100032;;Cordiant Professional FR-1 295/80R22.5 152/148M
-;100033;;Cordiant Professional FL-1 295/60R22.5 150/147L
-;100034;;Cordiant Professional VM-1 315/80R22.5 156/150K
-;100035;;Michelin City Grip 130/70-12 62P R TL REINF
-;100036;;Michelin City Grip 110/90-13 56P F TL
-;100037;;Michelin City Grip 120/70-15 56S F TL
+;100000;;Nokian Nordman
+;100001;;Nokian Hakka Green
+;100002;;Amtel Planet
+;100003;;Amtel NordMaster
+;100004;;Antares Ingens
+;100005;;Antares Majoris
+;100006;;BFGoodrich g-Force Winter
+;100007;;BFGoodrich g-Grip
+;100008;;Barum Polaris
+;100009;;Barum Bravuris
+;100010;;Continental WinterContact
+;100011;;Continental PremiumContact
+;100012;;Continental ContiPremiumContact
+;100013;;Cooper WeatherMaster WSC
+;100014;;Cooper Zeon 4XS Sport
+;100015;;Cooper Discoverer STT PRO
+;100016;;Cordiant Polar
+;100017;;Cordiant Road Runner
+;100018;;Cordiant Sport
+;100019;;Davanti Wintoura
+;100020;;Dayton Touring
+;100021;;Aurora UF02
+;100022;;Barum BD
+;100023;;Barum BF
+;100024;;Cordiant Professional
+;100025;;Michelin City Grip
+;100000_91H;;Nokian Nordman SX2 205/55R16 91H
+;100000_94R;;Nokian Nordman RS2 205/55R16 94R
+;100001_94H;;Nokian Hakka Green 2 205/55R16 94H
+;100002_82H;;Amtel Planet 2P 175/70R13 82H
+;100002_91W;;Amtel Planet FT-705 225/45R17 91W
+;100003_82Q;;Amtel NordMaster K-239 175/65R14 82Q
+;100004_100V;;Antares Ingens A1 225/60R18 100V
+;100005_98V;;Antares Majoris R1 225/55R18 98V
+;100006_95T;;BFGoodrich g-Force Winter 2 195/65R15 95T
+;100006_94H;;BFGoodrich g-Force Winter 2 205/55R16 94H
+;100007_81T;;BFGoodrich g-Grip 165/70R14 81T
+;100008_91T;;Barum Polaris 5 205/55R16 91T
+;100009_3HM;;Barum Bravuris 3 HM 205/55R16 91V
+;100009_5HM;;Barum Bravuris 5 HM 205/55R16 91V
+;100010_91T;;Continental WinterContact TS 860 205/55R16 91T
+;100011_91H;;Continental PremiumContact 6 205/55R16 91H
+;100012_91V;;Continental ContiPremiumContact 2 205/55R16 91V
+;100013_102T;;Cooper WeatherMaster WSC 225/65R17 102T
+;100014_107W;;Cooper Zeon 4XS Sport 255/50R19 107W
+;100015_124K;;Cooper Discoverer STT PRO 315/75R16 127/124K
+;100016_91T;;Cordiant Polar 2 205/55R16 91T
+;100017_94H;;Cordiant Road Runner 205/55R16 94H
+;100018_91V;;Cordiant Sport 3 205/55R16 91V
+;100019_81T;;Davanti Wintoura 165/70R14 81T
+;100019_88T;;Davanti Wintoura 175/70R14 88T
+;100019_82T;;Davanti Wintoura 185/60R14 82T
+;100020_91V;;Dayton Touring 2 205/55R16 91V
+;100021_75R;;Aurora UF02 235/75R17.5
+;100021_70R;;Aurora UF02 245/70R17.5
+;100021_80R;;Aurora UF02 295/80R22.5
+;100022_150L;;Barum BD 200 R 315/80R22.5 156/150L
+;100023_148L;;Barum BF 200 R 315/60R22.5 152/148L
+;100024_148M;;Cordiant Professional FR-1 295/80R22.5 152/148M
+;100024_147L;;Cordiant Professional FL-1 295/60R22.5 150/147L
+;100024_150K;;Cordiant Professional VM-1 315/80R22.5 156/150K
+;100025_62P;;Michelin City Grip 130/70-12 62P R TL REINF
+;100025_56P;;Michelin City Grip 110/90-13 56P F TL
+;100025_56S;;Michelin City Grip 120/70-15 56S F TL

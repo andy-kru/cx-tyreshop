@@ -22,7 +22,7 @@ $lang=ru
 
 
 # Create Categories
-UPDATE Category;code[unique=true];$catalogVersion;name[lang=en];description[lang=en]
+UPDATE Category;code[unique=true];$catalogVersion;name[lang=$lang];description[lang=$lang]
                ;brands;;Brands;Бренды
                ;nokianBrand;;Nokian;Nokian шины
                ;amtelBrand;;Amtel;Amtel шины
