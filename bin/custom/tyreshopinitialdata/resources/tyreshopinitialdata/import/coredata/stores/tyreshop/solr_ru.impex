@@ -21,6 +21,9 @@ $lang=ru
 # Solr Indexed Property
 UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];displayName[lang=$lang]
                           ;$solrIndexedType;category;"Категория"
+                          ;$solrIndexedType;brand;"Бренд"
+                          ;$solrIndexedType;season;"Сезон"
+                          ;$solrIndexedType;typeTyres;"Тип шин"
                           ;$solrIndexedType;code;"Код"
                           ;$solrIndexedType;name;"Название"
                           ;$solrIndexedType;price;"Цена"
