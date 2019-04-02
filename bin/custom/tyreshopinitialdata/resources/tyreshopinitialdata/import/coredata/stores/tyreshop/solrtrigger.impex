@@ -14,8 +14,8 @@
 
 INSERT_UPDATE Trigger;cronJob(code)[unique=true];second;minute;hour;day;month;year;relative;active;maxAcceptableDelay
 
-# Run the full-electronicsIndex-cronJob at 3:05 AM every day
-;full-electronicsIndex-cronJob;0;5;3;-1;-1;-1;false;false;-1
+# Run the full-tyreshopIndex-cronJob at 3:05 AM every day
+;full-tyreshopIndex-cronJob;0;5;3;-1;-1;-1;false;false;-1
 
-# Run the update-electronicsIndex-cronJob every 1 minutes
-;update-electronicsIndex-cronJob;0;1;-1;-1;-1;-1;true;false;-1
+# Run the update-tyreshopIndex-cronJob every 1 minutes
+;update-tyreshopIndex-cronJob;0;1;-1;-1;-1;-1;true;false;-1
