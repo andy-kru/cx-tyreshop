@@ -552,14 +552,34 @@
 		<property name="ticketBusinessService" ref="ticketBusinessService"/>
 	</bean>
 
-	<bean id="tyreshopCategorySource" parent="abstractCategorySource">
+	<bean id="tyreshopBrandCategorySource" parent="abstractCategorySource">
+		<property name="rootCategory" value="brands"/>
+	</bean>
+	<bean id="tyreshopSeasonCategorySource" parent="abstractCategorySource">
+		<property name="rootCategory" value="seasons"/>
+	</bean>
+	<bean id="tyreshopTypeTyreCategorySource" parent="abstractCategorySource">
+		<property name="rootCategory" value="typeTyres"/>
 	</bean>
 
-	<bean id="tyreshopCategoryCodeValueProvider" parent="abstractCategoryCodeValueProvider">
-		<property name="categorySource" ref="tyreshopCategorySource" />
+	<bean id="tyreshopBrandCodeValueProvider" parent="abstractCategoryCodeValueProvider">
+		<property name="categorySource" ref="tyreshopBrandCategorySource" />
+	</bean>
+	<bean id="tyreshopBrandNameValueProvider" parent="abstractCategoryNameValueProvider">
+		<property name="categorySource" ref="tyreshopBrandCategorySource" />
 	</bean>
 
-	<bean id="tyreshopCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
-		<property name="categorySource" ref="tyreshopCategorySource" />
+	<bean id="tyreshopSeasonCodeValueProvider" parent="abstractCategoryCodeValueProvider">
+		<property name="categorySource" ref="tyreshopSeasonCategorySource" />
+	</bean>
+	<bean id="tyreshopSeasonNameValueProvider" parent="abstractCategoryNameValueProvider">
+		<property name="categorySource" ref="tyreshopSeasonCategorySource" />
+	</bean>
+
+	<bean id="tyreshopTypeTyreCodeValueProvider" parent="abstractCategoryCodeValueProvider">
+		<property name="categorySource" ref="tyreshopTypeTyreCategorySource" />
+	</bean>
+	<bean id="tyreshopTypeTyreNameValueProvider" parent="abstractCategoryNameValueProvider">
+		<property name="categorySource" ref="tyreshopTypeTyreCategorySource" />
 	</bean>
 </beans>
