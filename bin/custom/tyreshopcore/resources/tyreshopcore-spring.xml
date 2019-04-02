@@ -562,4 +562,16 @@
 	<bean id="tyreshopCategoryNameValueProvider" parent="abstractCategoryNameValueProvider">
 		<property name="categorySource" ref="tyreshopCategorySource" />
 	</bean>
+
+	<alias name="defaultTyreshopBYNRatesService" alias="tyreshopBYNRatesService" />
+	<bean id="defaultTyreshopBYNRatesService"
+		  class="com.reply.tyreshop.core.services.impl.DefaultTyreshopBYNRatesService" init-method="init">
+	</bean>
+
+	<bean id="tyreshopUpdateCurrencyRatesJob" class="com.reply.tyreshop.core.job.TyreshopUpdateCurrencyRatesJob"
+		  parent="abstractJobPerformable">
+		<property name="currencyDao" ref="currencyDao" />
+		<property name="currenciesRatesService" ref="tyreshopBYNRatesService" />
+	</bean>
+
 </beans>
