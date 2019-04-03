@@ -114,4 +114,4 @@ INSERT_UPDATE CronJob;code[unique=true];job(code);singleExecutable;sessionLangua
                      ;tyreshopUpdateCurrencyRatesCronJob;tyreshopUpdateCurrencyRatesJob;false;en
 
 INSERT_UPDATE Trigger;cronJob(code)[unique=true];cronExpression
-                     ;tyreshopUpdateCurrencyRatesCronJob;0 0 15 * * ?
+                     ;tyreshopUpdateCurrencyRatesCronJob;0 0 0 * * ?
