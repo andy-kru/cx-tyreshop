@@ -4,6 +4,7 @@ import com.reply.tyreshop.core.dto.ExchangeDTO;
 import com.reply.tyreshop.core.exceptions.ExchangeRateRetrievalException;
 import com.reply.tyreshop.core.services.TyreshopExchangeRateService;
 import de.hybris.platform.servicelayer.config.ConfigurationService;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +22,10 @@ public class DefaultTyreshopExchangeRateService implements TyreshopExchangeRateS
 
     @Override
     public Map<String, Double> getExchangeRates() throws ExchangeRateRetrievalException {
-        String uri = configurationService.getConfiguration().getString("exchangerates.uri");
+        String uri = getConfigurationService().getConfiguration().getString("exchangerates.uri");
         ResponseEntity<Collection<ExchangeDTO>> response;
         try {
-            response = restOperations.exchange(uri, HttpMethod.GET, null,
+            response = getRestOperations().exchange(uri, HttpMethod.GET, null,
                     new ParameterizedTypeReference<Collection<ExchangeDTO>>(){});
         }
         catch (RestClientException ex){
@@ -36,11 +37,21 @@ public class DefaultTyreshopExchangeRateService implements TyreshopExchangeRateS
         return exchangeRates;
     }
 
+    @Required
     public void setConfigurationService(ConfigurationService configurationService) {
         this.configurationService = configurationService;
     }
 
+    @Required
     public void setRestOperations(RestOperations restOperations) {
         this.restOperations = restOperations;
+    }
+
+    public ConfigurationService getConfigurationService() {
+        return configurationService;
+    }
+
+    public RestOperations getRestOperations() {
+        return restOperations;
     }
 }

@@ -69,7 +69,7 @@ public class TyreshopUpdateCurrencyRatesJobTest{
         verifyZeroInteractions(currencyDao);
         verifyZeroInteractions(modelService);
         if(!(performResult.getResult().equals(CronJobResult.FAILURE) &&
-                performResult.getStatus().equals(CronJobStatus.FINISHED) &&
+                performResult.getStatus().equals(CronJobStatus.ABORTED) &&
                 usdCurrencyModel.getConversion().equals(defaultConversion))){
             fail();
         }

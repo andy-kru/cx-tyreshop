@@ -10,6 +10,7 @@ import de.hybris.platform.servicelayer.cronjob.AbstractJobPerformable;
 import de.hybris.platform.servicelayer.cronjob.PerformResult;
 import de.hybris.platform.servicelayer.i18n.daos.CurrencyDao;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Required;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +27,13 @@ public class TyreshopUpdateCurrencyRatesJob extends AbstractJobPerformable<CronJ
     public PerformResult perform(CronJobModel cronJobModel) {
         Map<String, Double> exchangeRates;
         try {
-            exchangeRates = exchangeRateService.getExchangeRates();
+            exchangeRates = getExchangeRateService().getExchangeRates();
         }
         catch (ExchangeRateRetrievalException ex){
             LOG.error("Error receiving exchange rates!");
-            return new PerformResult(CronJobResult.FAILURE, CronJobStatus.FINISHED);
+            return new PerformResult(CronJobResult.FAILURE, CronJobStatus.ABORTED);
         }
-        List<CurrencyModel> currencies = currencyDao.findCurrencies();
+        List<CurrencyModel> currencies = getCurrencyDao().findCurrencies();
         List<CurrencyModel> updated = new ArrayList<>();
         for(CurrencyModel currencyModel : currencies){
             if(exchangeRates.containsKey(currencyModel.getIsocode())){
@@ -44,11 +45,21 @@ public class TyreshopUpdateCurrencyRatesJob extends AbstractJobPerformable<CronJ
         return new PerformResult(CronJobResult.SUCCESS, CronJobStatus.FINISHED);
     }
 
+    @Required
     public void setCurrencyDao(CurrencyDao currencyDao) {
         this.currencyDao = currencyDao;
     }
 
+    @Required
     public void setExchangeRateService(TyreshopExchangeRateService exchangeRateService) {
         this.exchangeRateService = exchangeRateService;
+    }
+
+    public CurrencyDao getCurrencyDao() {
+        return currencyDao;
+    }
+
+    public TyreshopExchangeRateService getExchangeRateService() {
+        return exchangeRateService;
     }
 }
