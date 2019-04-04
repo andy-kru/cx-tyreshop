@@ -22,7 +22,9 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(MockitoJUnitRunner.class)
 @UnitTest
@@ -41,16 +43,14 @@ public class TyreshopUpdateCurrencyRatesJobTest{
     private TyreshopUpdateCurrencyRatesJob tyreshopUpdateCurrencyRatesJob = new TyreshopUpdateCurrencyRatesJob();
 
     private List<CurrencyModel> currencyModelList;
-    private List<CurrencyModel> baseCurrencyModelList;
-    private ExchangeDTO[] exchangeDTOs;
+    private Map<String, Double> exchangeRates;
 
     @Test
     public void testPerformPositive() throws ExchangeRateRetrievalException {
-        double expectedConversion = exchangeDTOs[0].getCurOfficialRate();
+        Double expectedConversion = exchangeRates.get("USD");
         CurrencyModel usdCurrencyModel = currencyModelList.get(1);
-        doReturn(exchangeDTOs).when(exchangeRateService).getExchangeRates();
+        doReturn(exchangeRates).when(exchangeRateService).getExchangeRates();
         doReturn(currencyModelList).when(currencyDao).findCurrencies();
-        doReturn(baseCurrencyModelList).when(currencyDao).findBaseCurrencies();
         PerformResult performResult = tyreshopUpdateCurrencyRatesJob.perform(new CronJobModel());
         verify(modelService).saveAll(anyListOf(ExchangeDTO.class));
         if(!(performResult.getResult().equals(CronJobResult.SUCCESS) &&
@@ -63,7 +63,7 @@ public class TyreshopUpdateCurrencyRatesJobTest{
     @Test
     public void testPerformNegative() throws ExchangeRateRetrievalException {
         CurrencyModel usdCurrencyModel = currencyModelList.get(1);
-        double defaultConversion = usdCurrencyModel.getConversion();
+        Double defaultConversion = usdCurrencyModel.getConversion();
         doThrow(new ExchangeRateRetrievalException()).when(exchangeRateService).getExchangeRates();
         PerformResult performResult = tyreshopUpdateCurrencyRatesJob.perform(new CronJobModel());
         verifyZeroInteractions(currencyDao);
@@ -78,7 +78,6 @@ public class TyreshopUpdateCurrencyRatesJobTest{
     @Before
     public void setUp() {
         currencyModelList = new ArrayList<>();
-        baseCurrencyModelList = new ArrayList<>();
 
         CurrencyModel bynCurrency = new CurrencyModel();
         bynCurrency.setIsocode("BYN");
@@ -86,7 +85,6 @@ public class TyreshopUpdateCurrencyRatesJobTest{
         bynCurrency.setDigits(2);
         bynCurrency.setConversion(0.0);
         currencyModelList.add(bynCurrency);
-        baseCurrencyModelList.add(bynCurrency);
 
         CurrencyModel usdCurrency = new CurrencyModel();
         usdCurrency.setIsocode("USD");
@@ -95,16 +93,9 @@ public class TyreshopUpdateCurrencyRatesJobTest{
         usdCurrency.setConversion(1.0);
         currencyModelList.add(usdCurrency);
 
-        exchangeDTOs = new ExchangeDTO[2];
+        exchangeRates = new HashMap<>();
 
-        ExchangeDTO usdDTO = new ExchangeDTO();
-        usdDTO.setCurAbbreviation("USD");
-        usdDTO.setCurOfficialRate(2.1218);
-        exchangeDTOs[0] = usdDTO;
-
-        ExchangeDTO eurDTO = new ExchangeDTO();
-        eurDTO.setCurAbbreviation("EUR");
-        eurDTO.setCurOfficialRate(2.6182);
-        exchangeDTOs[1] = eurDTO;
+        exchangeRates.put("USD", 2.1218);
+        exchangeRates.put("EUR", 2.6182);
     }
 }

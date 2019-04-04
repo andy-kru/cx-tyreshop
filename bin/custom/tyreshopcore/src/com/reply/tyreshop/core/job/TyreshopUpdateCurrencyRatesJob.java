@@ -1,6 +1,5 @@
 package com.reply.tyreshop.core.job;
 
-import com.reply.tyreshop.core.dto.ExchangeDTO;
 import com.reply.tyreshop.core.exceptions.ExchangeRateRetrievalException;
 import com.reply.tyreshop.core.services.TyreshopExchangeRateService;
 import de.hybris.platform.core.model.c2l.CurrencyModel;
@@ -14,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class TyreshopUpdateCurrencyRatesJob extends AbstractJobPerformable<CronJobModel> {
 
@@ -24,30 +24,20 @@ public class TyreshopUpdateCurrencyRatesJob extends AbstractJobPerformable<CronJ
 
     @Override
     public PerformResult perform(CronJobModel cronJobModel) {
-        ExchangeDTO[] exchangeDTOs;
+        Map<String, Double> exchangeRates;
         try {
-            exchangeDTOs = exchangeRateService.getExchangeRates();
+            exchangeRates = exchangeRateService.getExchangeRates();
         }
         catch (ExchangeRateRetrievalException ex){
             LOG.error("Error receiving exchange rates!");
             return new PerformResult(CronJobResult.FAILURE, CronJobStatus.FINISHED);
         }
-        List<CurrencyModel> allCurrencies = currencyDao.findCurrencies();
-        List<CurrencyModel> currencies = new ArrayList<>(allCurrencies);
-        List<CurrencyModel> baseCurrencies = currencyDao.findBaseCurrencies();
-        currencies.removeAll(baseCurrencies);
+        List<CurrencyModel> currencies = currencyDao.findCurrencies();
         List<CurrencyModel> updated = new ArrayList<>();
-        for(ExchangeDTO exchangeDto : exchangeDTOs){
-            for(CurrencyModel currencyModel : currencies){
-                if(currencyModel.getIsocode().equals(exchangeDto.getCurAbbreviation())){
-                    currencyModel.setConversion(exchangeDto.getCurOfficialRate());
-                    updated.add(currencyModel);
-                    currencies.remove(currencyModel);
-                    break;
-                }
-            }
-            if(currencies.isEmpty()){
-                break;
+        for(CurrencyModel currencyModel : currencies){
+            if(exchangeRates.containsKey(currencyModel.getIsocode())){
+                currencyModel.setConversion(exchangeRates.get(currencyModel.getIsocode()));
+                updated.add(currencyModel);
             }
         }
         modelService.saveAll(updated);

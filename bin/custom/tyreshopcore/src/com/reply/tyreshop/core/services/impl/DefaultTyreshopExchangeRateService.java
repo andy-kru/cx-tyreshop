@@ -4,8 +4,15 @@ import com.reply.tyreshop.core.dto.ExchangeDTO;
 import com.reply.tyreshop.core.exceptions.ExchangeRateRetrievalException;
 import com.reply.tyreshop.core.services.TyreshopExchangeRateService;
 import de.hybris.platform.servicelayer.config.ConfigurationService;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class DefaultTyreshopExchangeRateService implements TyreshopExchangeRateService {
 
@@ -13,16 +20,20 @@ public class DefaultTyreshopExchangeRateService implements TyreshopExchangeRateS
     private RestOperations restOperations;
 
     @Override
-    public ExchangeDTO[] getExchangeRates() throws ExchangeRateRetrievalException {
+    public Map<String, Double> getExchangeRates() throws ExchangeRateRetrievalException {
         String uri = configurationService.getConfiguration().getString("exchangerates.uri");
-        ExchangeDTO[] exchangeDTOs;
+        ResponseEntity<Collection<ExchangeDTO>> response;
         try {
-            exchangeDTOs = restOperations.getForObject(uri, ExchangeDTO[].class);
+            response = restOperations.exchange(uri, HttpMethod.GET, null,
+                    new ParameterizedTypeReference<Collection<ExchangeDTO>>(){});
         }
         catch (RestClientException ex){
             throw new ExchangeRateRetrievalException();
         }
-        return exchangeDTOs;
+        Collection<ExchangeDTO> exchangeDTOCollection = response.getBody();
+        Map<String, Double> exchangeRates = exchangeDTOCollection.stream().collect(
+                Collectors.toMap(ExchangeDTO::getCurAbbreviation, ExchangeDTO::getCurOfficialRate));
+        return exchangeRates;
     }
 
     public void setConfigurationService(ConfigurationService configurationService) {

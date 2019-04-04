@@ -14,8 +14,16 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
@@ -38,7 +46,8 @@ public class DefaultTyreshopExchangeRateServiceTest {
     @InjectMocks
     private TyreshopExchangeRateService tyreshopExchangeRateService = new DefaultTyreshopExchangeRateService();
 
-    private ExchangeDTO[] exchangeDTOs;
+    private Collection<ExchangeDTO> exchangeDTOCollection;
+    private ResponseEntity<Collection<ExchangeDTO>> responseEntity;
 
     @Test
     public void testGetExchangeRatesPositive() throws ExchangeRateRetrievalException {
@@ -46,9 +55,13 @@ public class DefaultTyreshopExchangeRateServiceTest {
         String uri = "";
         doReturn(configuration).when(configurationService).getConfiguration();
         doReturn(uri).when(configuration).getString("exchangerates.uri");
-        doReturn(exchangeDTOs).when(restOperations).getForObject("", ExchangeDTO[].class);
-        ExchangeDTO[] result = tyreshopExchangeRateService.getExchangeRates();
-        Assert.assertArrayEquals(result, exchangeDTOs);
+        doReturn(responseEntity).when(restOperations).exchange(uri, HttpMethod.GET, null,
+                new ParameterizedTypeReference<Collection<ExchangeDTO>>(){});
+        Map<String, Double> result = tyreshopExchangeRateService.getExchangeRates();
+        Assert.assertEquals(result.size(), exchangeDTOCollection.size());
+        for(ExchangeDTO exchangeDTO : exchangeDTOCollection){
+            Assert.assertEquals(exchangeDTO.getCurOfficialRate(), result.get(exchangeDTO.getCurAbbreviation()));
+        }
     }
 
     @Test
@@ -56,7 +69,8 @@ public class DefaultTyreshopExchangeRateServiceTest {
         String uri = "";
         doReturn(configuration).when(configurationService).getConfiguration();
         doReturn(uri).when(configuration).getString("exchangerates.uri");
-        doThrow(new RestClientException("")).when(restOperations).getForObject(uri, ExchangeDTO[].class);
+        doThrow(new RestClientException("")).when(restOperations).exchange(uri, HttpMethod.GET, null,
+                new ParameterizedTypeReference<Collection<ExchangeDTO>>(){});
         try{
             tyreshopExchangeRateService.getExchangeRates();
             fail();
@@ -67,16 +81,18 @@ public class DefaultTyreshopExchangeRateServiceTest {
     }
 
     private void setUp() {
-        exchangeDTOs = new ExchangeDTO[2];
+        exchangeDTOCollection = new ArrayList<>();
 
         ExchangeDTO usdDTO = new ExchangeDTO();
         usdDTO.setCurAbbreviation("USD");
         usdDTO.setCurOfficialRate(2.1218);
-        exchangeDTOs[0] = usdDTO;
+        exchangeDTOCollection.add(usdDTO);
 
         ExchangeDTO eurDTO = new ExchangeDTO();
         eurDTO.setCurAbbreviation("EUR");
         eurDTO.setCurOfficialRate(2.6182);
-        exchangeDTOs[1] = eurDTO;
+        exchangeDTOCollection.add(eurDTO);
+
+        responseEntity = new ResponseEntity<>(exchangeDTOCollection, HttpStatus.OK);
     }
 }

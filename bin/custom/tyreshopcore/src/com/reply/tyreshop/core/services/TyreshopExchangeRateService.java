@@ -1,8 +1,9 @@
 package com.reply.tyreshop.core.services;
 
-import com.reply.tyreshop.core.dto.ExchangeDTO;
 import com.reply.tyreshop.core.exceptions.ExchangeRateRetrievalException;
 
+import java.util.Map;
+
 public interface TyreshopExchangeRateService {
-    ExchangeDTO[] getExchangeRates() throws ExchangeRateRetrievalException;
+    Map<String, Double> getExchangeRates() throws ExchangeRateRetrievalException;
 }
