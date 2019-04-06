@@ -582,4 +582,20 @@
 	<bean id="tyreshopTypeTyreNameValueProvider" parent="abstractCategoryNameValueProvider">
 		<property name="categorySource" ref="tyreshopTypeTyreCategorySource" />
 	</bean>
+
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
+
+	<alias name="defaultTyreshopExchangeRateService" alias="tyreshopExchangeRateService" />
+	<bean id="defaultTyreshopExchangeRateService"
+          class="com.reply.tyreshop.core.services.impl.DefaultTyreshopExchangeRateService">
+		<property name="configurationService" ref="configurationService" />
+		<property name="restOperations" ref="restTemplate" />
+	</bean>
+
+	<bean id="tyreshopUpdateCurrencyRatesJob" class="com.reply.tyreshop.core.job.TyreshopUpdateCurrencyRatesJob"
+		  parent="abstractJobPerformable">
+		<property name="currencyDao" ref="currencyDao" />
+		<property name="exchangeRateService" ref="tyreshopExchangeRateService" />
+	</bean>
+
 </beans>
