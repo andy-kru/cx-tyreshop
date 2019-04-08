@@ -18,7 +18,7 @@ import java.util.List;
 public class TyreshopCallbackJob extends AbstractJobPerformable<CronJobModel> {
     @Override
     public PerformResult perform(CronJobModel cronJobModel) {
-        String query = "SELECT {PK} FROM {Callback} WHERE {Callback.creationtime} < ?date" ;
+        String query = "SELECT {" + CallbackModel.PK + "} FROM {" + CallbackModel._TYPECODE + "} WHERE {" + CallbackModel.CREATIONTIME + "} < ?date" ;
         final Calendar cal = Calendar.getInstance();
         cal.setTime(new Date());
         cal.add(Calendar.MONTH, -1);
