@@ -8,13 +8,10 @@
 # Information and shall use it only in accordance with the terms of the
 # license agreement you entered into with SAP.
 # -----------------------------------------------------------------------
+$productCatalog=electronicsProductCatalog
+$productCatalogName=Electronics Product Catalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$thumbnail=thumbnail(code, $catalogVersion)
+$picture=picture(code, $catalogVersion)
+$siteResource=jar:com.reply.tyreshop.addons.callback.constants.CallbackaddonConstants&/callbackaddon/import/productCatalogs/$productCatalog
 
-# in this file you has possibility to override widget labels
-# syntax:
-# <widgetID>.<labelName>=value
-#
-# Example:
-# yourCustomLabel=value
-hmc.action.confirmpickup.success=Событие вывоза консигнационного материала успешно инициировано
-CallbacksList=Список заявок на звонок
-Call_Center=Call центр

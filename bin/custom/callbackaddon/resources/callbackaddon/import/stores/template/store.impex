@@ -8,13 +8,16 @@
 # Information and shall use it only in accordance with the terms of the
 # license agreement you entered into with SAP.
 # -----------------------------------------------------------------------
+######
+## PARAMETERS REQUIRED FOR THIS SCRIPT
+##
+##   * contentCatalog   - content catalog id
+##   * productCatalog   = product catalog id
+##   * storeUid - site id
+##   * storeUid - id of the store
+##   * channel - site channel
+#######
 
-# in this file you has possibility to override widget labels
-# syntax:
-# <widgetID>.<labelName>=value
-#
-# Example:
-# yourCustomLabel=value
-hmc.action.confirmpickup.success=Событие вывоза консигнационного материала успешно инициировано
-CallbacksList=Список заявок на звонок
-Call_Center=Call центр
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$defaultLanguage=en
+$webServiceSiteUid=$siteUidWS

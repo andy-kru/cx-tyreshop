@@ -1,0 +1,36 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+$contentCatalog=tyreshopContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+INSERT_UPDATE CallbackComponent;$contentCV[unique=true];uid[unique=true];name;headText[lang=en];customerName[lang=en];inputName[lang=en];customerPhone[lang=en];comment[lang=en];inputComment[lang=en];confirmB[lang=en];closeB[lang=en];openB[lang=en];confirmationText[lang=en];&componentRef
+                               ;;callbackComponent;Callback Component;"Callback Form";"Your Name:";"Name";"Your phone number:";"Comment:";"Text";"Confirm";"Close Form";"Callback form";"We will call you!";CallbackComponent
+UPDATE CallbackComponent;$contentCV[unique=true];uid[unique=true];headText[lang=ru];customerName[lang=ru];inputName[lang=ru];customerPhone[lang=ru];comment[lang=ru];inputComment[lang=ru];confirmB[lang=ru];closeB[lang=ru];openB[lang=ru];confirmationText[lang=ru]
+                        ;;callbackComponent;"Обратная связь";"Ваше имя:";"Имя";"Ваш номер телефона:";"Комментарий:";"Текст";"Подтвердить";"Закрыть форму";"Форма обратно связи";"Мы Вам перезвоним!"
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(&componentRef)[mode=append]
+;;BottomHeaderSlot;CallbackComponent
+
+
+
+UPDATE ComponentTypeGroup;code[unique=true];cmsComponentTypes(&componentRef)[mode=append]
+                         ;wide             ;CallbackComponent
+
+INSERT_UPDATE ServicelayerJob;code[unique=true];springId
+                             ;deleteCallbackJob;deleteCallbackJob
+
+# The CronJob itself, referencing the ServiceLayerJob above
+INSERT_UPDATE CronJob;code[unique=true];job(code);singleExecutable;sessionLanguage(isocode)
+                     ;deleteCallbackCronJob;deleteCallbackJob;false;en
+
+# The Trigger, specifying the cron expression (midnight, every day)
+INSERT_UPDATE Trigger;cronjob(code)[unique=true];cronExpression
+                     ;deleteCallbackCronJob; 0 0 0 * * ?
