@@ -28,42 +28,14 @@ $productCatalogVersion=catalogversion(catalog(id[default=$productCatalog]),versi
 
 # Define Range Set
 INSERT_UPDATE SolrValueRangeSet;name[unique=true];qualifier;type;solrValueRanges(&rangeValueRefID)
-;WidthRange;;double;rangeRefWidth100,rangeRefWidth120,rangeRefWidth140,rangeRefWidth160,rangeRefWidth180,rangeRefWidth200,rangeRefWidth220,rangeRefWidth240,rangeRefWidth260,rangeRefWidth280,rangeRefWidth300
-;HeightRange;;double;rangeRefHeight;rangeRefHeight10,rangeRefHeight20,rangeRefHeight30,rangeRefHeight40,rangeRefHeight40,rangeRefHeight50,rangeRefHeight60,rangeRefHeight70,rangeRefHeight80,rangeRefHeight90
-;DiameterRange;;double;rangeRefDiameter;rangeRefDiameter12,rangeRefDiameter14,rangeRefDiameter16,rangeRefDiameter18,rangeRefDiameter20,rangeRefDiameter22
 
 # Define Ranges
 INSERT_UPDATE SolrValueRange;&rangeValueRefID;solrValueRangeSet(name)[unique=true];name[unique=true];from;to
-;rangeRefWidth100;WidthRange;100 - 120;100;120
-;rangeRefWidth120;WidthRange;120 - 140;120;140
-;rangeRefWidth140;WidthRange;140 - 160;140;160
-;rangeRefWidth160;WidthRange;160 - 180;160;180
-;rangeRefWidth180;WidthRange;180 - 200;180;200
-;rangeRefWidth200;WidthRange;200 - 220;200;220
-;rangeRefWidth220;WidthRange;220 - 240;220;240
-;rangeRefWidth240;WidthRange;240 - 260;240;260
-;rangeRefWidth260;WidthRange;260 - 280;260;280
-;rangeRefWidth280;WidthRange;280 - 300;280;300
-;rangeRefWidth300;WidthRange;300 - 320;300;320
-;rangeRefHeight10;HeightRange;10 - 20;10;20
-;rangeRefHeight20;HeightRange;20 - 30;20;30
-;rangeRefHeight30;HeightRange;30 - 40;30;40
-;rangeRefHeight40;HeightRange;40 - 50;40;50
-;rangeRefHeight50;HeightRange;50 - 60;50;60
-;rangeRefHeight60;HeightRange;60 - 70;60;70
-;rangeRefHeight70;HeightRange;70 - 80;70;80
-;rangeRefHeight80;HeightRange;80 - 90;80;90
-;rangeRefDiameter12;DiameterRange;12 - 14;12;14
-;rangeRefDiameter14;DiameterRange;14 - 16;14;16
-;rangeRefDiameter16;DiameterRange;16 - 18;16;18
-;rangeRefDiameter18;DiameterRange;18 - 20;18;20
-;rangeRefDiameter20;DiameterRange;20 - 22;20;22
-;rangeRefDiameter22;DiameterRange;22 - 24;22;24
 
 INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);sortableType(code);currency[default=false];localized[default=false];multiValue[default=false];facet[default=false];facetType(code);facetSort(code);priority;visible;fieldValueProvider;customFacetSortProvider;rangeSets(name);$classAttributeAssignment
-;tyreshopProductType;Width, 100;double;;;;;true;MultiSelectOr;Custom;1000;true;commerceClassificationPropertyValueProvider;numericFacetSortProviderAsc;WidthRange;dimensionclassification:::Width, 100::::
-;tyreshopProductType;Height, 101;double;;;;;true;MultiSelectOr;Custom;900;true;commerceClassificationPropertyValueProvider;numericFacetSortProviderAsc;HeightRange;dimensionclassification:::Height, 101::::
-;tyreshopProductType;Diameter, 102;double;;;;;true;MultiSelectOr;Custom;1100;true;commerceClassificationPropertyValueProvider;numericFacetSortProviderAsc;DiameterRange;dimensionclassification:::Diameter, 102::::
+;tyreshopProductType;Width, 100;string;;;;;true;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;dimensionclassification:::Width, 100::::
+;tyreshopProductType;Height, 101;string;;;;;true;MultiSelectOr;Alpha;900;true;commerceClassificationPropertyValueProvider;;;dimensionclassification:::Height, 101::::
+;tyreshopProductType;Diameter, 102;string;;;;;true;MultiSelectOr;Alpha;1100;true;commerceClassificationPropertyValueProvider;;;dimensionclassification:::Diameter, 102::::
 ;tyreshopProductType;Season, 103;string;;;true;;true;MultiSelectOr;Alpha;1400;true;commerceClassificationPropertyValueProvider;;;carclassification:::Season, 103::::
 ;tyreshopProductType;LoadIndex, 104;string;;;;;true;MultiSelectOr;Alpha;1300;true;commerceClassificationPropertyValueProvider;;;carclassification:::LoadIndex, 104::::
 ;tyreshopProductType;SpeedIndex, 105;string;;;;;true;MultiSelectOr;Alpha;1200;true;commerceClassificationPropertyValueProvider;;;carclassification:::SpeedIndex, 105::::
@@ -87,9 +59,9 @@ INSERT_UPDATE SolrProductRedirect;redirectItem(code,$productCatalogVersion)[uniq
 
 # Classification facets
 INSERT_UPDATE SolrSearchQueryProperty;indexedProperty(name, solrIndexedType(identifier))[unique=true];facet[default=true];facetType(code);priority;facetDisplayNameProvider;facetSortProvider;facetTopValuesProvider;includeInResponse[default=true];searchQueryTemplate(name, indexedType(identifier))[unique=true][default=DEFAULT:$solrIndexedType]
-                                     ;Width, 100:$solrIndexedType			                           ;	                ;MultiSelectOr	 ;1000;	  ;numericFacetSortProviderAsc;;;
-                                     ;Height, 101:$solrIndexedType			                           ;	                ;MultiSelectOr	 ;900 ;	  ;numericFacetSortProviderAsc;;;
-                                     ;Diameter, 102:$solrIndexedType			                       ;	                ;MultiSelectOr	 ;1100;	  ;numericFacetSortProviderAsc;;;
+                                     ;Width, 100:$solrIndexedType			                           ;	                ;MultiSelectOr	 ;1000;;;;;
+                                     ;Height, 101:$solrIndexedType			                           ;	                ;MultiSelectOr	 ;900 ;;;;;
+                                     ;Diameter, 102:$solrIndexedType			                       ;	                ;MultiSelectOr	 ;1100;;;;;
                                      ;Season, 103:$solrIndexedType			                           ;	                ;MultiSelectOr	 ;1400;;;;;
                                      ;LoadIndex, 104:$solrIndexedType			                       ;	                ;MultiSelectOr	 ;1300;;;;;
                                      ;SpeedIndex, 105:$solrIndexedType			                       ;	                ;MultiSelectOr	 ;1200;;;;;
