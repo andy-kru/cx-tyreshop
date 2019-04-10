@@ -10,9 +10,8 @@ $lang=ru
 
 # Insert Classifications
 UPDATE ClassificationClass;code[unique=true];$classCatalogVersion;name[lang=$lang]
-;carclassification;;Width & Height & Diameter & Season & LoadIndex & SpeedIndex;
-;truckclassification;;Width & Height & Diameter
-;motoclassification;;Width & Height & Diameter
+;carclassification;;Ширина & Высота & Диаметр & Сезон & Индекс Нагрузки & Индекс скорости;
+;dimensionclassification;;Ширина & Высота & Диаметр
 # Insert Classification Attributes
 UPDATE ClassificationAttribute;code[unique=true];$classSystemVersion;name[lang=$lang]
 ;Width, 100;;Ширина
