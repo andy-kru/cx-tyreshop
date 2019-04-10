@@ -8,13 +8,19 @@
 # Information and shall use it only in accordance with the terms of the
 # license agreement you entered into with SAP.
 # -----------------------------------------------------------------------
+######
+## PARAMETERS REQUIRED FOR THIS SCRIPT
+##
+##   * productCatalog   = product catalog id
+##   * siteUid - site id
+#######
 
-# in this file you has possibility to override widget labels
-# syntax:
-# <widgetID>.<labelName>=value
-#
-# Example:
-# yourCustomLabel=value
-hmc.action.confirmpickup.success=Событие вывоза консигнационного материала успешно инициировано
-CallbacksList=Список заявок на звонок
-Call_Center=Call центр
+$catalogVersions=catalogVersions(catalog(id),version);
+$serverConfigName=$siteUidSolrServerConfig
+$indexConfigName=$siteUidSolrIndexConfig
+$searchConfigName=$siteUidPageSize
+$facetSearchConfigName=$siteUidIndex
+$facetSearchConfigDescription=$siteUid Solr Index
+$searchIndexNamePrefix=$siteUid
+$solrIndexedType=$siteUidProductType
+$indexBaseSite=$siteUid

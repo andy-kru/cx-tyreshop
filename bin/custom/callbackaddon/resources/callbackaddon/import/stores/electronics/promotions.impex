@@ -8,13 +8,11 @@
 # Information and shall use it only in accordance with the terms of the
 # license agreement you entered into with SAP.
 # -----------------------------------------------------------------------
+#% impex.setLocale( Locale.GERMAN );
 
-# in this file you has possibility to override widget labels
-# syntax:
-# <widgetID>.<labelName>=value
-#
-# Example:
-# yourCustomLabel=value
-hmc.action.confirmpickup.success=Событие вывоза консигнационного материала успешно инициировано
-CallbacksList=Список заявок на звонок
-Call_Center=Call центр
+$defaultPromoGrp=electronicsPromoGrp
+$favCustomers=favoriteCustomers
+$bigSpenders=bigSpenders
+$productCatalog=electronicsProductCatalog
+$catalogVersion=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$productCatalog]),CatalogVersion.version[default=Online])[default=$productCatalog:Online]
+$regulargroup=regulargroup

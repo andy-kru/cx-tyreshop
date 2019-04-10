@@ -8,13 +8,10 @@
 # Information and shall use it only in accordance with the terms of the
 # license agreement you entered into with SAP.
 # -----------------------------------------------------------------------
-
-# in this file you has possibility to override widget labels
-# syntax:
-# <widgetID>.<labelName>=value
-#
-# Example:
-# yourCustomLabel=value
-hmc.action.confirmpickup.success=Событие вывоза консигнационного материала успешно инициировано
-CallbacksList=Список заявок на звонок
-Call_Center=Call центр
+# Macros / Replacement Parameter definitions
+$productCatalog=electronicsProductCatalog
+$productCatalogName=Electronics Product Catalog
+$catalogVersion=catalogversion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$baseProduct=baseProduct(code, catalogVersion(catalog(id[default='$productCatalog']),version[default='Staged']))
+$categories=source(code, $catalogVersion)[unique=true]
+$products=target(code, $catalogVersion)[unique=true]
