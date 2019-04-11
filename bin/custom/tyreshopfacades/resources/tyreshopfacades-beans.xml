@@ -19,4 +19,16 @@
 		<property name="code" type="String"/>
 		<property name="name" type="String"/>
 	</bean>
+
+	<bean class="com.reply.tyreshop.facades.component.data.QuickTyreSearchComponentData">
+		<property name="tyreQuickSearchTitle" type="String"/>
+		<property name="tyreWidth" type="String"/>
+		<property name="tyreHeight" type="String"/>
+		<property name="tyreDiameter" type="String"/>
+		<property name="tyreSeason" type="String"/>
+		<property name="tyreLoadIndex" type="String"/>
+		<property name="tyreSpeedIndex" type="String"/>
+		<property name="quickTyreSearchButton" type="String"/>
+		<property name="tyreAttributes" type="de.hybris.platform.catalog.model.classification.ClassificationClassModel"/>
+	</bean>
 </beans>

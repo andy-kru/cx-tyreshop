@@ -189,4 +189,21 @@
 	</bean>
 
 	<bean id="genderData" class="com.reply.tyreshop.facades.product.data.GenderData" scope="prototype"/>
+
+	<bean id ="defaultQuickTyreSearchComponentPopulator" class="com.reply.tyreshop.facades.populators.QuickTyreSearchComponentPopulator" >
+	</bean>
+
+	<bean id="defaultQuickTyreSearchComponentConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.reply.tyreshop.facades.component.data.QuickTyreSearchComponentData"/>
+		<property name="populators">
+			<list>
+				<ref bean="defaultQuickTyreSearchComponentPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="defaultQuickTyreSearchComponentFacade" class="com.reply.tyreshop.facades.quicktyresearchcomponent.impl.DefaultQuickTyreSearchComponentFacade" >
+		<property name="defaultQuickTyreSearchComponentConverter" ref="defaultQuickTyreSearchComponentConverter"/>
+	</bean>
+
 </beans>
