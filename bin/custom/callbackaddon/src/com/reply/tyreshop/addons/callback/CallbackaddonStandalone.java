@@ -25,29 +25,25 @@ import de.hybris.platform.util.Utilities;
  * </code> From eclipse, just run as Java Application. Note that you maybe need to add all other projects like
  * ext-commerce, ext-pim to the Launch configuration classpath.
  */
-public class CallbackaddonStandalone
-{
-	/**
-	 * Main class to be able to run it directly as a java program.
-	 * 
-	 * @param args
-	 *           the arguments from commandline
-	 */
-	public static void main(final String[] args)
-	{
-		new CallbackaddonStandalone().run();
-	}
+public class CallbackaddonStandalone {
+    /**
+     * Main class to be able to run it directly as a java program.
+     *
+     * @param args the arguments from commandline
+     */
+    public static void main(final String[] args) {
+        new CallbackaddonStandalone().run();
+    }
 
-	public void run()
-	{
-		Registry.activateStandaloneMode();
-		Registry.activateMasterTenant();
+    public void run() {
+        Registry.activateStandaloneMode();
+        Registry.activateMasterTenant();
 
-		final JaloSession jaloSession = JaloSession.getCurrentSession();
-		System.out.println("Session ID: " + jaloSession.getSessionID());
-		System.out.println("User: " + jaloSession.getUser());
-		Utilities.printAppInfo();
+        final JaloSession jaloSession = JaloSession.getCurrentSession();
+        System.out.println("Session ID: " + jaloSession.getSessionID());
+        System.out.println("User: " + jaloSession.getUser());
+        Utilities.printAppInfo();
 
-		RedeployUtilities.shutdown();
-	}
+        RedeployUtilities.shutdown();
+    }
 }
