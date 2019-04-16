@@ -23,7 +23,7 @@ import javax.validation.Valid;
 @RequestMapping(value = "/view/" + CallbackComponentModel._TYPECODE + "Controller")
 public class CallbackComponentController extends AbstractCMSAddOnComponentController<CallbackComponentModel> {
 
-    @Autowired
+    @Resource(name = "callbackComponentFacade")
     private CallbackComponentFacade callbackComponentFacade;
     @Resource(name = "defaultCallbackDataConverter")
     private Converter<CallbackForm, CallbackData> callbackDataConverter;

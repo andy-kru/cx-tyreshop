@@ -43,10 +43,13 @@
 		<property name="extensionName" value="callbackaddon" />
 	</bean>
 
-	<bean id="deleteCallbackJob" class="com.reply.tyreshop.jobs.TyreshopCallbackJob" parent="abstractJobPerformable" />
-
 	<alias alias="tyreshopCallbackJobDao" name="defaultTyreshopCallbackJobDao" />
 	<bean id="defaultTyreshopCallbackJobDao" class="com.reply.tyreshop.jobs.dao.impl.DefaultTyreshopCallbackJobDao">
+		<property name="flexibleSearchService" ref="flexibleSearchService"></property>
+	</bean>
+
+	<bean id="deleteCallbackJob" class="com.reply.tyreshop.jobs.TyreshopCallbackJob" parent="abstractJobPerformable" >
+		<property name="tyreshopCallbackJobDao" ref="tyreshopCallbackJobDao"></property>
 	</bean>
 
 	<bean id ="defaultCallbackDataPopulator" class="com.reply.tyreshop.addons.callback.populators.CallbackDataPopulator" >
@@ -76,6 +79,7 @@
     <alias alias="callbackComponentFacade" name="defaultCallbackComponentFacade" />
     <bean id="defaultCallbackComponentFacade" class="com.reply.tyreshop.addons.callback.facades.impl.DefaultCallbackComponentFacade">
 		<property name="callbackModelReverseConverter" ref="defaultCallbackModelReverseConverter"/>
+		<property name="modelService" ref="modelService"/>
     </bean>
 
 

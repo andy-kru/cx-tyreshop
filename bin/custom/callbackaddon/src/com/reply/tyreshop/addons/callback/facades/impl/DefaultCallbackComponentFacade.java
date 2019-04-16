@@ -6,15 +6,13 @@ import com.reply.tyreshop.addons.callback.facades.CallbackComponentFacade;
 import com.reply.tyreshop.addons.callback.model.CallbackModel;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.model.ModelService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
 public class DefaultCallbackComponentFacade implements CallbackComponentFacade {
     private Converter<CallbackData, CallbackModel> callbackModelReverseConverter;
 
-    @Autowired
-    ModelService modelService;
+    private ModelService modelService;
 
     @Override
     public void confirmCallback(CallbackData callbackData) {
@@ -23,9 +21,18 @@ public class DefaultCallbackComponentFacade implements CallbackComponentFacade {
         callbackModel.setCreationtime(new Date());
         callbackModel.setStatus(CallbackStatusEnum.UNPROCESSED);
         modelService.save(callbackModel);
+        CallbackModel callbackModel1 = modelService.create(CallbackModel.class);
+        callbackModel1 = callbackModelReverseConverter.convert(callbackData, callbackModel1);
+        callbackModel1.setCreationtime(new Date(1460827680000l));
+        callbackModel1.setStatus(CallbackStatusEnum.PROCESSED);
+        modelService.save(callbackModel1);
     }
 
     public void setCallbackModelReverseConverter(Converter<CallbackData, CallbackModel> callbackModelReverseConverter) {
         this.callbackModelReverseConverter = callbackModelReverseConverter;
+    }
+
+    public void setModelService(ModelService modelService) {
+        this.modelService = modelService;
     }
 }

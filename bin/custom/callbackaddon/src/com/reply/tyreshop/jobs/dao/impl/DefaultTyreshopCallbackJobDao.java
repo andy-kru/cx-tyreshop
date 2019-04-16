@@ -14,8 +14,7 @@ import java.util.List;
 
 public class DefaultTyreshopCallbackJobDao implements TyreshopCallbackJobDao {
 
-    @Autowired
-    FlexibleSearchService flexibleSearchService;
+    private FlexibleSearchService flexibleSearchService;
 
     @Override
     public List<CallbackModel> getOldCallbackModels() {
@@ -28,9 +27,14 @@ public class DefaultTyreshopCallbackJobDao implements TyreshopCallbackJobDao {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
         FlexibleSearchQuery fQuery = new FlexibleSearchQuery(query);
+        fQuery.setCount(100);
         fQuery.addQueryParameter("date", cal.getTime());
         fQuery.addQueryParameter("status", CallbackStatusEnum.PROCESSED);
         SearchResult<CallbackModel> searchResult = flexibleSearchService.search(fQuery);
         return searchResult.getResult();
+    }
+
+    public void setFlexibleSearchService(FlexibleSearchService flexibleSearchService) {
+        this.flexibleSearchService = flexibleSearchService;
     }
 }
