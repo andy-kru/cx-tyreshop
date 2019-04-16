@@ -21,11 +21,6 @@ public class DefaultCallbackComponentFacade implements CallbackComponentFacade {
         callbackModel.setCreationtime(new Date());
         callbackModel.setStatus(CallbackStatusEnum.UNPROCESSED);
         modelService.save(callbackModel);
-        CallbackModel callbackModel1 = modelService.create(CallbackModel.class);
-        callbackModel1 = callbackModelReverseConverter.convert(callbackData, callbackModel1);
-        callbackModel1.setCreationtime(new Date(1460827680000l));
-        callbackModel1.setStatus(CallbackStatusEnum.PROCESSED);
-        modelService.save(callbackModel1);
     }
 
     public void setCallbackModelReverseConverter(Converter<CallbackData, CallbackModel> callbackModelReverseConverter) {
