@@ -108,18 +108,18 @@ INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[
 # Create the queries that will be used to extract data for Solr
 INSERT_UPDATE SolrIndexerQuery;solrIndexedType(identifier)[unique=true];identifier[unique=true];type(code);injectCurrentDate[default=true];injectCurrentTime[default=true];injectLastIndexTime[default=true];query;user(uid)
 ;$solrIndexedType;$searchIndexNamePrefix-fullQuery;full;;;false;"
-SELECT {PK} FROM {Product}";anonymous
+SELECT {PK} FROM {VariantProduct}";anonymous
 
 ;$solrIndexedType;$searchIndexNamePrefix-updateQuery;update;;;;"
 SELECT DISTINCT tbl.pk, tbl.code FROM (
 	{{
 		SELECT DISTINCT {p:PK} AS pk, {p:code} AS code
-		FROM {Product AS p LEFT JOIN CustomerReview AS cr ON {cr:product}={p:PK} }
+		FROM {VariantProduct AS p LEFT JOIN CustomerReview AS cr ON {cr:product}={p:PK} }
 		WHERE {p:modifiedtime} >= ?lastIndexTime OR {cr:modifiedtime} >= ?lastIndexTime
 	}}
 	UNION
 	{{
-		SELECT {p:PK}  AS pk, {p:code} AS code FROM {Product AS p} WHERE {p:code} IN (
+		SELECT {p:PK}  AS pk, {p:code} AS code FROM {VariantProduct AS p} WHERE {p:code} IN (
 			{{
 				SELECT DISTINCT {sl:productCode} FROM {StockLevel AS sl} WHERE {sl:modifiedtime} >= ?lastIndexTime
 			}}
