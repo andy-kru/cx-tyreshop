@@ -1,0 +1,21 @@
+$storePrefix=tyreshop
+$siteUid=$storePrefix
+$productCatalog=$storePrefixProductCatalog
+$defaultPromoGrp=$storePrefixPromoGrp
+
+INSERT_UPDATE CatalogVersionToRuleEngineContextMapping;context(name)[unique=true];catalogVersion(catalog(id),version)[unique=true]
+                                                      ;promotions-context;$productCatalog:Online
+                                                      ;promotions-preview-context;$productCatalog:Staged
+
+INSERT_UPDATE PromotionGroup;Identifier[unique=true];
+                            ;$defaultPromoGrp;
+
+INSERT_UPDATE CMSSite;uid[unique=true];defaultPromotionGroup(Identifier)
+                     ;$siteUid;$defaultPromoGrp
+
+INSERT PromotionPriceRow;&thresholdId;Currency(isocode);price
+                        ;threshold1BYN;BYN;800
+                        ;threshold1USD;USD;400
+
+INSERT_UPDATE PromotionSourceRule;code[unique=true];priority;maxAllowedRuns;ruleGroup(code);conditions;actions;website(Identifier)[default=$defaultPromoGrp]
+;freeStandardShipping;1000;1000;orderPromotionRuleGroup;"[{""definitionId"":""y_cart_total"",""parameters"":{""value"":{""uuid"":""e5dd4529-775e-4242-bdcb-8813976070c9"",""type"":""Map(ItemType(Currency),java.math.BigDecimal)"",""value"":{""BYN"":800,""USD"":400}},""operator"":{""uuid"":""77e2cf61-86c6-4224-bc68-5c0d6c3bcfe9"",""type"":""Enum(de.hybris.platform.ruledefinitions.AmountOperator)"",""value"":""GREATER_THAN_OR_EQUAL""}},""children"":[]}]";"[{""definitionId"":""y_change_delivery_mode"",""parameters"":{""delivery_mode"":{""uuid"":""d822c03a-1a69-4251-a2b0-40681b50340a"",""type"":""ItemType(DeliveryMode)"",""value"":""free-standard-shipping""}}}]"
