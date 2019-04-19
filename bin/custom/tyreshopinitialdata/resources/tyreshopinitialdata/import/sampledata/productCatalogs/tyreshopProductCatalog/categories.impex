@@ -20,20 +20,13 @@ $categories=target(code, $catalogVersion)[unique=true]
 
 # Insert Categories
 INSERT_UPDATE Category;code[unique=true];allowedPrincipals(uid)[default='customergroup'];$catalogVersion
-                      ;seasons
                       ;typeTyres
-                      ;summerSeason
-                      ;winterSeason
-                      ;allSeasons
                       ;truckTyres
                       ;carTyres
                       ;motoTyres
 
 # Insert Category Structure
 INSERT_UPDATE CategoryCategoryRelation;$categories;$supercategories
-                                      ;summerSeason;seasons
-                                      ;winterSeason;seasons
-                                      ;allSeasons;seasons
                                       ;truckTyres;typeTyres
                                       ;carTyres;typeTyres
                                       ;motoTyres;typeTyres

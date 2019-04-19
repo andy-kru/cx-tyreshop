@@ -35,41 +35,41 @@ INSERT_UPDATE Product;code[unique=true];$supercategories;manufacturerName;manufa
                      ;100025;michelinBrand, motoTyres;Michelin;;;;TyreSizeVariantProduct
 
 INSERT_UPDATE TyreSizeVariantProduct;code[unique=true];$baseProduct;ean;unit(code);supercategories(code,$catalogVersion);size;$approved;$catalogVersion
-;100000_91H;100000;;;nokianBrand, summerSeason, carTyres;SX2 205/55R16 91H
-;100000_94R;100000;;;nokianBrand, winterSeason, carTyres;RS2 205/55R16 94R
-;100001_94H;100001;;;nokianBrand, summerSeason, carTyres;205/55R16 94H
-;100002_82H;100002;;;amtelBrand, summerSeason, carTyres;175/70R13 82H
-;100002_91W;100002;;;amtelBrand, winterSeason, carTyres;225/45R17 91W
-;100003_82Q;100003;;;amtelBrand, summerSeason, carTyres;175/65R14 82Q
-;100004_100V;100004;;;antaresBrand, summerSeason, carTyres;225/60R18 100V
-;100005_98V;100005;;;antaresBrand, winterSeason, carTyres;225/55R18 98V
-;100006_95T;100006;;;bfGoodrichBrand, winterSeason, carTyres;195/65R15 95T
-;100006_94H;100006;;;bfGoodrichBrand, winterSeason, carTyres;205/55R16 94H
-;100007_81T;100007;;;bfGoodrichBrand, summerSeason, carTyres;165/70R14 81T
-;100008_91T;100008;;;barumBrand, winterSeason, carTyres;205/55R16 91T
-;100009_3HM;100009;;;barumBrand, summerSeason, carTyres;205/55R16 91V
-;100009_5HM;100009;;;barumBrand, summerSeason, carTyres;205/55R16 91V
-;100010_91T;100010;;;continentalBrand, winterSeason, carTyres;205/55R16 91T
-;100011_91H;100011;;;continentalBrand, summerSeason, carTyres;205/55R16 91H
-;100012_91V;100012;;;continentalBrand, summerSeason, carTyres;205/55R16 91V
-;100013_102T;100013;;;cooperBrand, winterSeason, carTyres;225/65R17 102T
-;100014_107W;100014;;;cooperBrand, summerSeason, carTyres;255/50R19 107W
-;100015_124K;100015;;;cooperBrand, summerSeason, carTyres;315/75R16 127/124K
-;100016_91T;100016;;;cordiantBrand, winterSeason, carTyres;205/55R16 91T
-;100017_94H;100017;;;cordiantBrand, summerSeason, carTyres;205/55R16 94H
-;100018_91V;100018;;;cordiantBrand, summerSeason, carTyres;205/55R16 91V
-;100019_81T;100019;;;davantiBrand, winterSeason, carTyres;165/70R14 81T
-;100019_88T;100019;;;davantiBrand, winterSeason, carTyres;175/70R14 88T
-;100019_82T;100019;;;davantiBrand, winterSeason, carTyres;185/60R14 82T
-;100020_91V;100020;;;daytonBrand, summerSeason, carTyres;205/55R16 91V
-;100021_75R;100021;;;auroraBrand, allSeasons, truckTyres;235/75R17.5
-;100021_70R;100021;;;auroraBrand, allSeasons, truckTyres;245/70R17.5
-;100021_80R;100021;;;auroraBrand, allSeasons, truckTyres;295/80R22.5
-;100022_150L;100022;;;barumBrand, allSeasons, truckTyres;315/80R22.5 156/150L
-;100023_148L;100023;;;barumBrand, allSeasons, truckTyres;315/60R22.5 152/148L
-;100024_148M;100024;;;cordiantBrand, allSeasons, truckTyres;295/80R22.5 152/148M
-;100024_147L;100024;;;cordiantBrand, allSeasons, truckTyres;295/60R22.5 150/147L
-;100024_150K;100024;;;cordiantBrand, allSeasons, truckTyres;315/80R22.5 156/150K
-;100025_62P;100025;;;michelinBrand, allSeasons, motoTyres;130/70-12 62P R TL REINF
-;100025_56P;100025;;;michelinBrand, allSeasons, motoTyres;110/90-13 56P F TL
-;100025_56S;100025;;;michelinBrand, allSeasons, motoTyres;120/70-15 56S F TL
+;100000_91H;100000;;;nokianBrand, carTyres;SX2 205/55R16 91H
+;100000_94R;100000;;;nokianBrand, carTyres;RS2 205/55R16 94R
+;100001_94H;100001;;;nokianBrand, carTyres;205/55R16 94H
+;100002_82H;100002;;;amtelBrand, carTyres;175/70R13 82H
+;100002_91W;100002;;;amtelBrand, carTyres;225/45R17 91W
+;100003_82Q;100003;;;amtelBrand, carTyres;175/65R14 82Q
+;100004_100V;100004;;;antaresBrand, carTyres;225/60R18 100V
+;100005_98V;100005;;;antaresBrand, carTyres;225/55R18 98V
+;100006_95T;100006;;;bfGoodrichBrand, carTyres;195/65R15 95T
+;100006_94H;100006;;;bfGoodrichBrand, carTyres;205/55R16 94H
+;100007_81T;100007;;;bfGoodrichBrand, carTyres;165/70R14 81T
+;100008_91T;100008;;;barumBrand, carTyres;205/55R16 91T
+;100009_3HM;100009;;;barumBrand, carTyres;205/55R16 91V
+;100009_5HM;100009;;;barumBrand, carTyres;205/55R16 91V
+;100010_91T;100010;;;continentalBrand, carTyres;205/55R16 91T
+;100011_91H;100011;;;continentalBrand, carTyres;205/55R16 91H
+;100012_91V;100012;;;continentalBrand, carTyres;205/55R16 91V
+;100013_102T;100013;;;cooperBrand, carTyres;225/65R17 102T
+;100014_107W;100014;;;cooperBrand, carTyres;255/50R19 107W
+;100015_124K;100015;;;cooperBrand, carTyres;315/75R16 127/124K
+;100016_91T;100016;;;cordiantBrand, carTyres;205/55R16 91T
+;100017_94H;100017;;;cordiantBrand, carTyres;205/55R16 94H
+;100018_91V;100018;;;cordiantBrand, carTyres;205/55R16 91V
+;100019_81T;100019;;;davantiBrand, carTyres;165/70R14 81T
+;100019_88T;100019;;;davantiBrand, carTyres;175/70R14 88T
+;100019_82T;100019;;;davantiBrand, carTyres;185/60R14 82T
+;100020_91V;100020;;;daytonBrand, carTyres;205/55R16 91V
+;100021_75R;100021;;;auroraBrand, truckTyres;235/75R17.5
+;100021_70R;100021;;;auroraBrand, truckTyres;245/70R17.5
+;100021_80R;100021;;;auroraBrand, truckTyres;295/80R22.5
+;100022_150L;100022;;;barumBrand, truckTyres;315/80R22.5 156/150L
+;100023_148L;100023;;;barumBrand, truckTyres;315/60R22.5 152/148L
+;100024_148M;100024;;;cordiantBrand, truckTyres;295/80R22.5 152/148M
+;100024_147L;100024;;;cordiantBrand, truckTyres;295/60R22.5 150/147L
+;100024_150K;100024;;;cordiantBrand, truckTyres;315/80R22.5 156/150K
+;100025_62P;100025;;;michelinBrand, motoTyres;130/70-12 62P R TL REINF
+;100025_56P;100025;;;michelinBrand, motoTyres;110/90-13 56P F TL
+;100025_56S;100025;;;michelinBrand, motoTyres;120/70-15 56S F TL
