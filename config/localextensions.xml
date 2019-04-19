@@ -61,5 +61,8 @@
     <extension name='tyreshopstorefront' />
     <extension name='tyreshopwebservices' />
     <extension name='tyreshopwebservicestest' />
+	
+	<extension name="addonsupport"/>
+	<extension name="callbackaddon"/>
   </extensions>
 </hybrisconfig>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+           
+    <context:annotation-config/> 
+
+	<bean id="callbackaddonCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">
+		<property name="supportedChannels">
+			<list value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
+				<value>B2C</value>
+				<!--
+								<value>B2B</value>
+				-->
+			</list>
+		</property>
+		<property name="addonExtensionMetadata">
+			<bean class="de.hybris.platform.addonsupport.data.AddonExtensionMetadata">
+				<property name="suffixChannel" value="false"/>
+				<property name="baseExtensionName" value="callbackaddon"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="callbackaddonSampleDataEventListener" parent="abstractGenericAddOnSampleDataEventListener"  >
+		<property name="extensionName" value="callbackaddon" />
+	</bean>
+
+	<alias alias="tyreshopCallbackJobDao" name="defaultTyreshopCallbackJobDao" />
+	<bean id="defaultTyreshopCallbackJobDao" class="com.reply.tyreshop.jobs.dao.impl.DefaultTyreshopCallbackJobDao">
+		<property name="flexibleSearchService" ref="flexibleSearchService"></property>
+	</bean>
+
+	<bean id="deleteCallbackJob" class="com.reply.tyreshop.jobs.TyreshopCallbackJob" parent="abstractJobPerformable" >
+		<property name="tyreshopCallbackJobDao" ref="tyreshopCallbackJobDao"></property>
+	</bean>
+
+	<bean id ="defaultCallbackDataPopulator" class="com.reply.tyreshop.addons.callback.populators.CallbackDataPopulator" >
+	</bean>
+
+	<bean id="defaultCallbackDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.reply.tyreshop.addons.callback.data.CallbackData"/>
+		<property name="populators">
+			<list>
+				<ref bean="defaultCallbackDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id ="defaultCallbackModelReversePopulator" class="com.reply.tyreshop.addons.callback.populators.CallbackModelReversePopulator" >
+	</bean>
+
+	<bean id="defaultCallbackModelReverseConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.reply.tyreshop.addons.callback.model.CallbackModel"/>
+		<property name="populators">
+			<list>
+				<ref bean="defaultCallbackModelReversePopulator"/>
+			</list>
+		</property>
+	</bean>
+
+    <alias alias="callbackComponentFacade" name="defaultCallbackComponentFacade" />
+    <bean id="defaultCallbackComponentFacade" class="com.reply.tyreshop.addons.callback.facades.impl.DefaultCallbackComponentFacade">
+		<property name="callbackModelReverseConverter" ref="defaultCallbackModelReverseConverter"/>
+		<property name="modelService" ref="modelService"/>
+    </bean>
+
+
+
+
+</beans>
