@@ -1,0 +1,4 @@
+$lang=ru
+
+INSERT_UPDATE PromotionSourceRule;code[unique=true];name[lang=$lang];description[lang=$lang];messageFired[lang=$lang]
+                                 ;freeStandardShipping;Бесплатная доставка свыше 800 BYN;Бесплатная доставка для заказов с суммой корзины выше 800 BYN;Купи на сумму свыше {e5dd4529-775e-4242-bdcb-8813976070c9} и получи бесплатную доставку

@@ -1,0 +1,4 @@
+$lang=en
+
+INSERT_UPDATE PromotionSourceRule;code[unique=true];name[lang=$lang];description[lang=$lang];messageFired[lang=$lang]
+;freeStandardShipping;Free standart shipping over 800 BYN;Free standart shipping for orders with cart total over 800 BYN;Buy over {e5dd4529-775e-4242-bdcb-8813976070c9} and get free shipping
