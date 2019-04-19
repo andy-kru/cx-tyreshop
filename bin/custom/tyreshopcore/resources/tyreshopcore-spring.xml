@@ -598,4 +598,14 @@
 		<property name="exchangeRateService" ref="tyreshopExchangeRateService" />
 	</bean>
 
+	<alias alias="quickTyreSearchComponentDao" name="defaultQuickTyreSearchComponentDao" />
+	<bean id="defaultQuickTyreSearchComponentDao" class="com.reply.tyreshop.core.daos.impl.DefaultQuickTyreSearchComponentDao"
+		  parent="abstractItemDao">
+	</bean>
+
+	<alias alias="quickTyreSearchComponentService" name="defaultQuickTyreSearchComponentService" />
+	<bean id="defaultQuickTyreSearchComponentService" class="com.reply.tyreshop.core.services.impl.DefaultQuickTyreSearchComponentService">
+		<property name="quickTyreSearchComponentDao" ref="quickTyreSearchComponentDao" />
+	</bean>
+
 </beans>

@@ -26,23 +26,23 @@ INSERT_UPDATE ClassificationClass;$classCatalogVersion;code[unique=true];allowed
                                  ;;carclassification
 # Insert Classification Attributes
 INSERT_UPDATE ClassificationAttribute;$classSystemVersion;code[unique=true]
-                                     ;;Width, 100
-                                     ;;Height, 101
-                                     ;;Diameter, 102
-                                     ;;Season, 103
-                                     ;;LoadIndex, 104
-                                     ;;SpeedIndex, 105
+                                     ;;Width
+                                     ;;Height
+                                     ;;Diameter
+                                     ;;Season
+                                     ;;LoadIndex
+                                     ;;SpeedIndex
 # Links ClassificationClasses
 INSERT_UPDATE CategoryCategoryRelation;$categories;$supercategories
                                       ;carclassification;dimensionclassification
 
 INSERT_UPDATE ClassAttributeAssignment;$class;$attribute;position;$unit;attributeType(code[default=string]);multiValued[default=false];range[default=false];localized[default=true];attributeValues(code,$classSystemVersion)
-                                      ;dimensionclassification;Width, 100;0;101;enum;;;false;30,31,32,33,35,37,125,135,145,155,165,175,185,195,205,215,225,235,245,255,265,275,285,295,305,315,325,335,345
-                                      ;dimensionclassification;Height, 101;1;100;enum;;;false;9.5,10.5,11.5,12.5,25,30,35,40,45,50,55,60,65,70,75,80,85,90
-                                      ;dimensionclassification;Diameter, 102;2;102;enum;;;false;12,12C,13,13C,14,14C,15,15C,16,16C,17,17.5,17C,18,19,20,20C,21,22,23,24
-                                      ;carclassification;Season, 103;3;;enum;;;false;Summer, Winter, All Seasons
-                                      ;carclassification;LoadIndex, 104;4;;enum;;;false;J,K,L,M,N,P,Q,R,S,T,U,H,V,W,Y,Z
-                                      ;carclassification;SpeedIndex, 105;5;;enum;;;false;65,68,69,70,71,72,73,74,75,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,124,125,126,127,131,127/124
+                                      ;dimensionclassification;Width;0;101;enum;;;false;30,31,32,33,35,37,125,135,145,155,165,175,185,195,205,215,225,235,245,255,265,275,285,295,305,315,325,335,345
+                                      ;dimensionclassification;Height;1;100;enum;;;false;9.5,10.5,11.5,12.5,25,30,35,40,45,50,55,60,65,70,75,80,85,90
+                                      ;dimensionclassification;Diameter;2;102;enum;;;false;12,12C,13,13C,14,14C,15,15C,16,16C,17,17.5,17C,18,19,20,20C,21,22,23,24
+                                      ;carclassification;Season;3;;enum;;;false;Summer, Winter, All Seasons
+                                      ;carclassification;LoadIndex;4;;enum;;;false;J,K,L,M,N,P,Q,R,S,T,U,H,V,W,Y,Z
+                                      ;carclassification;SpeedIndex;5;;enum;;;false;65,68,69,70,71,72,73,74,75,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,124,125,126,127,131,127/124
 
 INSERT_UPDATE ClassificationAttributeValue;code[unique=true];$classSystemVersion
                                           ;Summer

@@ -190,20 +190,24 @@
 
 	<bean id="genderData" class="com.reply.tyreshop.facades.product.data.GenderData" scope="prototype"/>
 
-	<bean id ="defaultQuickTyreSearchComponentPopulator" class="com.reply.tyreshop.facades.populators.QuickTyreSearchComponentPopulator" >
+	<alias name="defaultClassAttributeAssignmentPopulator" alias="classAttributeAssignmentPopulatorPopulator" />
+	<bean id ="defaultClassAttributeAssignmentPopulator" class="com.reply.tyreshop.facades.populators.ClassAttributeAssignmentPopulator" >
 	</bean>
 
-	<bean id="defaultQuickTyreSearchComponentConverter" parent="abstractPopulatingConverter">
-		<property name="targetClass" value="com.reply.tyreshop.facades.component.data.QuickTyreSearchComponentData"/>
+	<alias name="defaultClassAttributeAssignmentConverter" alias="classAttributeAssignmentConverter" />
+	<bean id="defaultClassAttributeAssignmentConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.reply.tyreshop.facades.component.data.ClassAttributeAssignmentData"/>
 		<property name="populators">
 			<list>
-				<ref bean="defaultQuickTyreSearchComponentPopulator"/>
+				<ref bean="classAttributeAssignmentPopulatorPopulator"/>
 			</list>
 		</property>
 	</bean>
 
+	<alias name="defaultQuickTyreSearchComponentFacade" alias="quickTyreSearchComponentFacade" />
 	<bean id="defaultQuickTyreSearchComponentFacade" class="com.reply.tyreshop.facades.quicktyresearchcomponent.impl.DefaultQuickTyreSearchComponentFacade" >
-		<property name="defaultQuickTyreSearchComponentConverter" ref="defaultQuickTyreSearchComponentConverter"/>
+		<property name="classAttributeAssignmentConverter" ref="classAttributeAssignmentConverter"/>
+		<property name="quickTyreSearchComponentService" ref="quickTyreSearchComponentService"/>
 	</bean>
 
 </beans>

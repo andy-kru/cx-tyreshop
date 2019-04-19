@@ -1,72 +1,61 @@
 package com.reply.tyreshop.storefront.controllers.cms;
 
 import com.reply.tyreshop.core.model.QuickTyreSearchComponentModel;
+import com.reply.tyreshop.core.services.QuickTyreSearchComponentService;
+import com.reply.tyreshop.facades.component.data.ClassAttributeAssignmentData;
 import com.reply.tyreshop.facades.quicktyresearchcomponent.QuickTyreSearchComponentFacade;
 import com.reply.tyreshop.storefront.controllers.ControllerConstants;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.cms.AbstractCMSComponentController;
+import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
 import de.hybris.platform.catalog.model.classification.ClassAttributeAssignmentModel;
-import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
-import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 @Controller("QuickTyreSearchComponentController")
-@RequestMapping(value = ControllerConstants.Actions.Cms.QuickTyreSearchComponent)
-public class QuickTyreSearchComponentController extends AbstractCMSComponentController<QuickTyreSearchComponentModel>
+public class QuickTyreSearchComponentController extends AbstractPageController
 {
 
-    @Resource(name = "defaultQuickTyreSearchComponentFacade")
-    private QuickTyreSearchComponentFacade defaultQuickTyreSearchComponentFacade;
-
     @Autowired
-    FlexibleSearchService flexibleSearchService;
+    private QuickTyreSearchComponentFacade quickTyreSearchComponentFacade;
 
-    protected void fillModel(final HttpServletRequest request, final Model model, final QuickTyreSearchComponentModel component)
+    @RequestMapping(value = ControllerConstants.Actions.Cms.QuickTyreSearchComponent)
+    protected String fillModel(Model model)
     {
-        model.addAttribute("quickTyreSearchData", defaultQuickTyreSearchComponentFacade.getQuickTyreSearchComponentData(component));
+        List<ClassAttributeAssignmentData> classAttributeAssignmentDataList = new ArrayList<>();
+        QuickTyreSearchComponentModel component = quickTyreSearchComponentFacade.getQuickTyreSearchComponentModel();
 
         for (ClassAttributeAssignmentModel classAttributeAssignment : component.getTyreAttributes().getAllClassificationAttributeAssignments()) {
-            model.addAttribute(classAttributeAssignment.getClassificationAttribute().getName(Locale.ENGLISH).replaceAll("\\s",""), classAttributeAssignment.getAttributeValues());
+            ClassAttributeAssignmentData data = quickTyreSearchComponentFacade.getClassAttributeAssignmentData(classAttributeAssignment);
+            classAttributeAssignmentDataList.add(data);
         }
+        model.addAttribute("dataList", classAttributeAssignmentDataList);
+
+        return ControllerConstants.Views.Cms.ComponentPrefix + StringUtils.lowerCase(QuickTyreSearchComponentModel._TYPECODE);
     }
 
-    @Override
-    protected String getView(QuickTyreSearchComponentModel component) {
-        return ControllerConstants.Views.Cms.ComponentPrefix + StringUtils.lowerCase(getTypeCode(component));
-    }
+    @RequestMapping(value = "/quicktyresearch", method = {RequestMethod.POST})
+    protected String quickTyreSearchForm(HttpServletRequest request) throws UnsupportedEncodingException {
 
-    @RequestMapping(value = "/quicktyresearch")
-    private @ResponseBody String quickTyreSearchForm(@RequestParam Map<String, String> requestParams)
-    {
-        String value, code;
-        String result = "?q=%3Aprice-asc";
+        QuickTyreSearchComponentModel component = quickTyreSearchComponentFacade.getQuickTyreSearchComponentModel();
+        String partUrl = "";
 
-        String fsq = "SELECT {" + ClassAttributeAssignmentModel.PK + "} FROM {" + ClassAttributeAssignmentModel._TYPECODE + "}";
-        FlexibleSearchQuery query = new FlexibleSearchQuery(fsq);
-        List<ClassAttributeAssignmentModel> classAttributeAssignmentList = flexibleSearchService.<ClassAttributeAssignmentModel>search(query).getResult();
-
-        for (ClassAttributeAssignmentModel classAttributeAssignment :classAttributeAssignmentList) {
-            value = requestParams.get(classAttributeAssignment.getClassificationAttribute().getName(Locale.ENGLISH).replaceAll("\\s",""));
-            if (!value.isEmpty() && value != null ){
-                code = classAttributeAssignment.getClassificationAttribute().getCode();
-                result += getPath(value, code);
+        for (ClassAttributeAssignmentModel classAttributeAssignment : component.getTyreAttributes().getAllClassificationAttributeAssignments()) {
+            String value = request.getParameter(classAttributeAssignment.getClassificationAttribute().getCode());
+            if (value != null && !value.isEmpty()){
+                String code = classAttributeAssignment.getClassificationAttribute().getCode();
+                partUrl += ":" + code + ":" + value;
             }
         }
-        return "/tyreshopstorefront/tyreshop/en/Tyre-type/c/typeTyres" + result + "&text=#";
+        return "redirect:/Tyre-type/c/typeTyres?q=" + URLEncoder.encode(":price-asc" + partUrl, "UTF-8") + "&text=#";
     }
 
-    private String getPath(String value, String code) {
-        return "%3A" + code.replace(", ", "%2C+") + "%3A" + value;
-    }
 }

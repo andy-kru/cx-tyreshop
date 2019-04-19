@@ -166,8 +166,8 @@ INSERT_UPDATE SimpleResponsiveBannerComponent;$contentCV[unique=true];uid[unique
                                              ;;TyreshopHompageBannerComponent;tyreshop-homepage-banner-en
 
 # Home page slot 2A
-INSERT_UPDATE QuickTyreSearchComponent;$contentCV[unique=true];uid[unique=true];name;tyreQuickSearchTitle[lang=$lang];tyreWidth[lang=$lang];tyreHeight[lang=$lang];tyreDiameter[lang=$lang];tyreSeason[lang=$lang];tyreLoadIndex[lang=$lang];tyreSpeedIndex[lang=$lang];quickTyreSearchButton[lang=$lang]
-                                      ;;QuickTyreSearchComponent;Quick Tyre Search Component;"Быстрый поиск шин";"Ширина";"Высота";"Диаметр";"Сезон";"Индекс загрузки";"Индекс скорости";"Поиск"
+INSERT_UPDATE QuickTyreSearchComponent;$contentCV[unique=true];uid[unique=true];name
+                                      ;;QuickTyreSearchComponent;Quick Tyre Search Component
 
 # Media Content
 INSERT_UPDATE Media;mediaFormat(qualifier);$contentCV[unique=true];code[unique=true];@media[translator=de.hybris.platform.impex.jalo.media.MediaDataTranslator][forceWrite=true];mime[default='image/jpeg'];realfilename;folder(qualifier)[default='images'];altText

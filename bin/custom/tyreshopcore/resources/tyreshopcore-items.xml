@@ -130,38 +130,6 @@
                       jaloclass="com.reply.tyreshop.core.jalo.QuickTyreSearchComponent">
                 <description>Used to display quick tyre search on homepage</description>
                 <attributes>
-                    <attribute type="localized:java.lang.String" qualifier="tyreQuickSearchTitle">
-                        <modifiers read="true" write="true"/>
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="localized:java.lang.String" qualifier="tyreWidth">
-                        <modifiers read="true" write="true"/>
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="localized:java.lang.String" qualifier="tyreHeight">
-                        <modifiers read="true" write="true"/>
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="localized:java.lang.String" qualifier="tyreDiameter">
-                        <modifiers read="true" write="true"/>
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="localized:java.lang.String" qualifier="tyreSeason">
-                        <modifiers read="true" write="true"/>
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="localized:java.lang.String" qualifier="tyreLoadIndex">
-                        <modifiers read="true" write="true"/>
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="localized:java.lang.String" qualifier="tyreSpeedIndex">
-                        <modifiers read="true" write="true"/>
-                        <persistence type="property" />
-                    </attribute>
-                    <attribute type="localized:java.lang.String" qualifier="quickTyreSearchButton">
-                        <modifiers read="true" write="true"/>
-                        <persistence type="property" />
-                    </attribute>
                     <attribute type="ClassificationClass" qualifier="tyreAttributes">
                         <modifiers read="true" write="true" />
                         <persistence type="property" />

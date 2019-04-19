@@ -14,12 +14,12 @@ UPDATE ClassificationClass;code[unique=true];$classCatalogVersion;name[lang=$lan
 ;dimensionclassification;;Ширина & Высота & Диаметр
 # Insert Classification Attributes
 UPDATE ClassificationAttribute;code[unique=true];$classSystemVersion;name[lang=$lang]
-;Width, 100;;Ширина
-;Height, 101;;Высота
-;Diameter, 102;;Диаметр
-;Season, 103;;Сезон
-;LoadIndex, 104;;Индекс нагрузки
-;SpeedIndex, 105;;Индекс скорости
+;Width;;Ширина
+;Height;;Высота
+;Diameter;;Диаметр
+;Season;;Сезон
+;LoadIndex;;Индекс нагрузки
+;SpeedIndex;;Индекс скорости
 
 INSERT_UPDATE ClassificationAttributeValue; code[unique = true]; name[lang = ru]; $classSystemVersion
                                           ; Summer             ; Лето
