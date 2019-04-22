@@ -38,15 +38,15 @@ function confirmCallback() {
     var customerPhone = document.getElementById("inputPhone").value.toString();
     var customerName = document.getElementById("inputName").value.toString();
     var customerComment = document.getElementById("inputComment").value.toString();
+    var pathName = location.pathname.split("/")[1];
     $.ajax({
         type: "POST",
-        url : 'view/CallbackComponentController/confirm-callback',
+        url : location.protocol + "//" + location.host + "/" + pathName + '/view/CallbackComponentController/confirm-callback',
         data: {
             phone: customerPhone,
             name: customerName,
             comment: customerComment
         },
-
         success : function(data) {
             if(data == true) {
                 document.getElementById("headText").style.display = "none";
