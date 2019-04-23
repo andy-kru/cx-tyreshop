@@ -27,6 +27,10 @@ INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url
                               ;;StoreFinderLink;Store Finder Link;/store-finder;StoreFinderLink;StoreFinderLink;;;;
                               ;;LoginLink;Login Link;/login;LoginLink;LoginLink;;;;
                               ;;AllBrandsCategoryLink;All Brands Link;/Brands/c/brands;AllBrandsCategoryLink;AllBrandsCategoryLink;;brands;;
+                              ;;AllSeasonsTypesCategoryLink;Seasons Link;/Seasons/c/seasons;AllSeasonsTypesCategoryLink;AllSeasonsTypesCategoryLink;;carTyres;;
+                              ;;SummerSeasonCategoryLink;Summer Season Category Link;/Tyre-type/Car-tyres/c/carTyres?q=%3Aprice-asc%3ASeason%2C+103%3ASummer&text=#;SummerSeasonCategoryLink;SummerSeasonCategoryLink;;;;
+                              ;;WinterSeasonCategoryLink;Winter Season Category Link;/Tyre-type/Car-tyres/c/carTyres?q=%3Aprice-asc%3ASeason%2C+103%3AWinter&text=#;WinterSeasonCategoryLink;WinterSeasonCategoryLink;;;;
+                              ;;AllSeasonsCategoryLink;All Seasons Category Link;/Tyre-type/Car-tyres/c/carTyres?q=%3Aprice-asc%3ASeason%2C+103%3AAll Seasons&text=#;AllSeasonsCategoryLink;AllSeasonsnCategoryLink;;;;
                               ;;AllTypeTyresCategoryLink;Type Tyres Link;/Type-Tyres/c/typeTyres;AllTypeTyresCategoryLink;AllTypeTyresCategoryLink;;typeTyres;;
                               ;;CarTyresCategoryLink;Car Tyres Link;/Type-Tyres/car/carTyres;CarTyresCategoryLink;CarTyresCategoryLink;;carTyres;;
                               ;;MotoTyresCategoryLink;Moto Tyres Link;/Type-Tyres/moto/motoTyres;MotoTyresCategoryLink;MotoTyresCategoryLink;;motoTyres;;
@@ -156,6 +160,8 @@ INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;pa
                                ;TyreshopNavNode;;Tyreshop Site;SiteRootNode;HomepageNavLink;TyreshopNavNode
                                ;BrandsNavNode;;Brand Links;TyreshopNavNode;AllBrandsCategoryLink;BrandsNavNode
                                ;BrandLinksNavNode;;Brand Links;BrandsNavNode;nokianBrandCategoryLink,amtelBrandCategoryLink,antaresBrandCategoryLink,bfGoodrichBrandCategoryLink,barumBrandCategoryLink,continentalBrandCategoryLink;BrandLinksNavNode
+                               ;SeasonsNavNode;;Seasons Links;TyreshopNavNode;AllSeasonsTypesCategoryLink;SeasonsNavNode
+                               ;SeasonsTypesLinksNavNode;;Seasons Type Links;SeasonsNavNode;SummerSeasonCategoryLink,WinterSeasonCategoryLink,AllSeasonsCategoryLink;SeasonsTypesLinksNavNode
                                ;TypeTyresNavNode;;Type Tyres Links;TyreshopNavNode;AllTypeTyresCategoryLink;TypeTyresNavNode
                                ;TyresTypesLinksNavNode;;Type Tyres Links;TypeTyresNavNode;CarTyresCategoryLink,MotoTyresCategoryLink;TyresTypesLinksNavNode
                                ;SAPCommerceNavNode;;SAP Commerce Cloud Pages;TyreshopNavNode;AboutSAPCommerceLink,FAQLink;SAPCommerceNavNode
@@ -871,16 +877,18 @@ INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents
 ## level 2. children of SiteRoot ##
 # the following order of children is the display order on the site
 INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);&nodeRef;children(uid,$contentCV)
-                               ;TyreshopCategoryNavNode;;Categories;TyreshopNavNode;TyreshopCategoryNavNode;BrandsNavNode,TypeTyresNavNode
+                               ;TyreshopCategoryNavNode;;Categories;TyreshopNavNode;TyreshopCategoryNavNode;BrandsNavNode,SeasonsNavNode,TypeTyresNavNode
 
 ## level 3. children of Category Nav ##
 INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef);
                                ;BrandsNavNode;;Brand Links;BrandsNavNode;BrandLinksNavNode
+                               ;SeasonsNavNode;;Seasons Category;SeasonsNavNode;SummerSeasonTyresNavNode,WinterSeasonTyresNavNode,AllSeasonsTyresNavNode
                                ;TypeTyresNavNode;;Tyre Types Category;TypeTyresNavNode;CarTypeTyresNavNode,MotoTypeTyresNavNode
 
 ## entries of the above navigation nodes ##
 INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(CMSLinkComponent.uid,CMSLinkComponent.$contentCV);
                                 ;BrandsNavNodeEntry;;Brands Navigation Node Entry;BrandsNavNode;AllBrandsCategoryLink;
+                                ;SeasonsNavNodeEntry;;Seasons Navigation Node Entry;SeasonsNavNode;AllSeasonsTypesCategoryLink;
                                 ;TypeTyresNavNodeEntry;;Type Tyres Navigation Node Entry;TypeTyresNavNode;AllTypeTyresCategoryLink;
 
 
@@ -888,6 +896,10 @@ INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;n
 INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef);
 ## children of BrandsNavNode
                                ;BrandLinksNavNode;;Brand Links;BrandLinksNavNode;nokianBrandNavNode,amtelBrandNavNode,antaresBrandNavNode,bfGoodrichBrandNavNode,barumBrandNavNode,continentalBrandNavNode
+## children of SeasonsNavNode
+                               ;SummerSeasonTyresNavNode;;Summer Season Tyres Links;SummerSeasonTyresNavNode;
+                               ;WinterSeasonTyresNavNode;;Winter Season Tyres Links;WinterSeasonTyresNavNode;
+                               ;AllSeasonsTyresNavNode;;All Seasons Tyres Links;AllSeasonsTyresNavNode;
 ## children of TypeTyresNavNode
                                ;CarTypeTyresNavNode;;Car Type Tyres Links;CarTypeTyresNavNode;
                                ;MotoTypeTyresNavNode;;Moto Type Tyres Links;MotoTypeTyresNavNode;
@@ -911,6 +923,10 @@ INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;n
                                 ;bfGoodrichBrandNavNodeEntry;;BfGoodrich Brand Navigation Node Entry;bfGoodrichBrandNavNode;bfGoodrichBrandCategoryLink;
                                 ;barumBrandNavNodeEntry;;Barum Brand Navigation Node Entry;barumBrandNavNode;barumBrandCategoryLink;
                                 ;continentalBrandNavNodeEntry;;Continental Brand Navigation Node Entry;continentalBrandNavNode;continentalBrandCategoryLink;
+## Seasons
+                                ;SummerSeasonTyresNavNodeEntry;;Summer Season Tyres Links;SummerSeasonTyresNavNode;SummerSeasonCategoryLink;
+                                ;WinterSeasonTyresNavNodeEntry;;Winter Season Tyres Links;WinterSeasonTyresNavNode;WinterSeasonCategoryLink;
+                                ;AllSeasonsTyresNavNodeEntry;;All Seasons Tyres Links;AllSeasonsTyresNavNode;AllSeasonsCategoryLink;
 ## Tyre Types
                                 ;CarTypeTyresNavNodeEntry;;Car Type Tyres Links;CarTypeTyresNavNode;CarTyresCategoryLink;
                                 ;MotoTypeTyresNavNodeEntry;;Moto Type Tyres Links;MotoTypeTyresNavNode;MotoTyresCategoryLink;
