@@ -86,3 +86,15 @@ INSERT_UPDATE PriceRow;productId[unique=true];unit(code[unique=true,default=piec
 ;100025_62P;pieces;USD;199;1;false
 ;100025_56P;pieces;USD;92;1;false
 ;100025_56S;pieces;USD;90;1;false
+
+
+INSERT_UPDATE UserPriceGroup;code[unique=true];
+;whaleCustomerPriceGroup;
+
+INSERT_UPDATE UserGroup;UID[unique=true];groups(uid)[mode=append];userPriceGroup(code)
+;whaleGroup;customergroup;whaleCustomerPriceGroup
+
+INSERT_UPDATE PriceRow;productId[unique=true];unit(code[unique=true,default=pieces]);currency(isocode)[unique=true];price;unitFactor;net;$ug
+;100000_91H;pieces;USD;39;1;false
+;100000_94R;pieces;USD;103;1;false
+;100001_94H;pieces;USD;183;1;false
