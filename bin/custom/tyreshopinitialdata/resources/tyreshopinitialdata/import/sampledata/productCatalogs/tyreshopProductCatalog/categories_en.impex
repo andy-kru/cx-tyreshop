@@ -21,10 +21,6 @@ $lang=en
 
 # Create Categories
 UPDATE Category;code[unique=true];$catalogVersion;name[lang=$lang]
-               ;seasons;;Seasons
-               ;summerSeason;;Summer season
-               ;winterSeason;;Winter season
-               ;allSeasons;;All seasons
                ;typeTyres;;Tyre type
                ;truckTyres;;Truck tyres
                ;carTyres;;Car tyres
