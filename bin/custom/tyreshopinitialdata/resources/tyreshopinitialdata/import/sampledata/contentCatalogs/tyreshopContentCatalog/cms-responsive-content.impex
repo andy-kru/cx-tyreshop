@@ -27,10 +27,10 @@ INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url
                               ;;StoreFinderLink;Store Finder Link;/store-finder;StoreFinderLink;StoreFinderLink;;;;
                               ;;LoginLink;Login Link;/login;LoginLink;LoginLink;;;;
                               ;;AllBrandsCategoryLink;All Brands Link;/Brands/c/brands;AllBrandsCategoryLink;AllBrandsCategoryLink;;brands;;
-                              ;;AllSeasonsTypesCategoryLink;Seasons Link;/Seasons/c/seasons;AllSeasonsTypesCategoryLink;AllSeasonsTypesCategoryLink;;seasons;;
-                              ;;SummerSeasonCategoryLink;Summer Season Category Link;/Seasons/summer/summerSeason;SummerSeasonCategoryLink;SummerSeasonCategoryLink;;summerSeason;;
-                              ;;WinterSeasonCategoryLink;Winter Season Category Link;/Seasons/winter/winterSeason;WinterSeasonCategoryLink;WinterSeasonCategoryLink;;winterSeason;;
-                              ;;AllSeasonsCategoryLink;All Seasons Category Link;/Seasons/all/allSeasons;AllSeasonsCategoryLink;AllSeasonsnCategoryLink;;allSeasons;;
+                              ;;AllSeasonsTypesCategoryLink;Seasons Link;/Seasons/c/seasons;AllSeasonsTypesCategoryLink;AllSeasonsTypesCategoryLink;;carTyres;;
+                              ;;SummerSeasonCategoryLink;Summer Season Category Link;/Tyre-type/Car-tyres/c/carTyres?q=%3Aprice-asc%3ASeason%2C+103%3ASummer&text=#;SummerSeasonCategoryLink;SummerSeasonCategoryLink;;;;
+                              ;;WinterSeasonCategoryLink;Winter Season Category Link;/Tyre-type/Car-tyres/c/carTyres?q=%3Aprice-asc%3ASeason%2C+103%3AWinter&text=#;WinterSeasonCategoryLink;WinterSeasonCategoryLink;;;;
+                              ;;AllSeasonsCategoryLink;All Seasons Category Link;/Tyre-type/Car-tyres/c/carTyres?q=%3Aprice-asc%3ASeason%2C+103%3AAll Seasons&text=#;AllSeasonsCategoryLink;AllSeasonsnCategoryLink;;;;
                               ;;AllTypeTyresCategoryLink;Type Tyres Link;/Type-Tyres/c/typeTyres;AllTypeTyresCategoryLink;AllTypeTyresCategoryLink;;typeTyres;;
                               ;;TruckTyresCategoryLink;Truck Tyres Link;/Type-Tyres/car/truckTyres;TruckTyresCategoryLink;TruckTyresCategoryLink;;truckTyres;;
                               ;;CarTyresCategoryLink;Car Tyres Link;/Type-Tyres/car/carTyres;CarTyresCategoryLink;CarTyresCategoryLink;;carTyres;;
