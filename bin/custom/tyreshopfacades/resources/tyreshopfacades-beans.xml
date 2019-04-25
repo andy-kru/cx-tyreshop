@@ -20,9 +20,15 @@
 		<property name="name" type="String"/>
 	</bean>
 
-	<bean class="com.reply.tyreshop.facades.component.data.ClassAttributeAssignmentData">
-		<property name="classificationAttribute" type="de.hybris.platform.catalog.model.classification.ClassificationAttributeModel"/>
-		<property name="attributeValues" type="java.util.List&lt;de.hybris.platform.catalog.model.classification.ClassificationAttributeValueModel>"/>
+	<bean class="com.reply.tyreshop.facades.component.data.ClassAttributeData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+		<property name="attributesList" type="java.util.List&lt;com.reply.tyreshop.facades.component.data.ClassificationAttributeValueData>" />
+	</bean>
+
+	<bean class="com.reply.tyreshop.facades.component.data.ClassificationAttributeValueData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
 	</bean>
 
 </beans>

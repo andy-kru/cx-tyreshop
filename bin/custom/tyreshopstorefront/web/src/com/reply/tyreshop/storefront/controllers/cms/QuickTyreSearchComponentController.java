@@ -1,61 +1,48 @@
 package com.reply.tyreshop.storefront.controllers.cms;
 
+import com.reply.tyreshop.core.dto.QuickTyreSearchAttributes;
 import com.reply.tyreshop.core.model.QuickTyreSearchComponentModel;
-import com.reply.tyreshop.core.services.QuickTyreSearchComponentService;
-import com.reply.tyreshop.facades.component.data.ClassAttributeAssignmentData;
-import com.reply.tyreshop.facades.quicktyresearchcomponent.QuickTyreSearchComponentFacade;
+import com.reply.tyreshop.facades.component.data.ClassAttributeData;
 import com.reply.tyreshop.storefront.controllers.ControllerConstants;
-import de.hybris.platform.acceleratorstorefrontcommons.controllers.pages.AbstractPageController;
+import de.hybris.platform.acceleratorstorefrontcommons.controllers.cms.AbstractCMSComponentController;
 import de.hybris.platform.catalog.model.classification.ClassAttributeAssignmentModel;
+import de.hybris.platform.servicelayer.dto.converter.Converter;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller("QuickTyreSearchComponentController")
-public class QuickTyreSearchComponentController extends AbstractPageController
+@RequestMapping(value = ControllerConstants.Actions.Cms.QuickTyreSearchComponent)
+public class QuickTyreSearchComponentController extends AbstractCMSComponentController<QuickTyreSearchComponentModel>
 {
 
-    @Autowired
-    private QuickTyreSearchComponentFacade quickTyreSearchComponentFacade;
+    @Resource(name = "classAttributeAssignmentConverter")
+    private Converter<ClassAttributeAssignmentModel, ClassAttributeData> classAttributeAssignmentConverter;
 
-    @RequestMapping(value = ControllerConstants.Actions.Cms.QuickTyreSearchComponent)
-    protected String fillModel(Model model)
-    {
-        List<ClassAttributeAssignmentData> classAttributeAssignmentDataList = new ArrayList<>();
-        QuickTyreSearchComponentModel component = quickTyreSearchComponentFacade.getQuickTyreSearchComponentModel();
-
-        for (ClassAttributeAssignmentModel classAttributeAssignment : component.getTyreAttributes().getAllClassificationAttributeAssignments()) {
-            ClassAttributeAssignmentData data = quickTyreSearchComponentFacade.getClassAttributeAssignmentData(classAttributeAssignment);
-            classAttributeAssignmentDataList.add(data);
-        }
-        model.addAttribute("dataList", classAttributeAssignmentDataList);
-
-        return ControllerConstants.Views.Cms.ComponentPrefix + StringUtils.lowerCase(QuickTyreSearchComponentModel._TYPECODE);
+    @ModelAttribute("quickTyreSearchAttributes")
+    public QuickTyreSearchAttributes getQuickTyreSearchAttributes() {
+        return new QuickTyreSearchAttributes();
     }
 
-    @RequestMapping(value = "/quicktyresearch", method = {RequestMethod.POST})
-    protected String quickTyreSearchForm(HttpServletRequest request) throws UnsupportedEncodingException {
-
-        QuickTyreSearchComponentModel component = quickTyreSearchComponentFacade.getQuickTyreSearchComponentModel();
-        String partUrl = "";
-
+    @Override
+    protected void fillModel(HttpServletRequest request, Model model, QuickTyreSearchComponentModel component) {
+        List<ClassAttributeData> classAttributeDataList = new ArrayList<>();
         for (ClassAttributeAssignmentModel classAttributeAssignment : component.getTyreAttributes().getAllClassificationAttributeAssignments()) {
-            String value = request.getParameter(classAttributeAssignment.getClassificationAttribute().getCode());
-            if (value != null && !value.isEmpty()){
-                String code = classAttributeAssignment.getClassificationAttribute().getCode();
-                partUrl += ":" + code + ":" + value;
-            }
+            classAttributeDataList.add(classAttributeAssignmentConverter.convert(classAttributeAssignment));
         }
-        return "redirect:/Tyre-type/c/typeTyres?q=" + URLEncoder.encode(":price-asc" + partUrl, "UTF-8") + "&text=#";
+        model.addAttribute("dataList", classAttributeDataList);
+    }
+
+    @Override
+    protected String getView(QuickTyreSearchComponentModel component) {
+        return ControllerConstants.Views.Cms.ComponentPrefix + StringUtils.lowerCase(getTypeCode(component));
     }
 
 }

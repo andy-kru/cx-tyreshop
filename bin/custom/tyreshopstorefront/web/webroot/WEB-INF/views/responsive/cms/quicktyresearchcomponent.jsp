@@ -5,22 +5,24 @@
 
 <body>
     <div class="tab-pane active">
-        <form:form action="quicktyresearch" method="POST" class="form-container col-sm-offset-3">
-            <label class="text-center text-uppercase h4 col-sm-1"><spring:message code="tyreQuickSearchTitle"/></label>
+        <%--@elvariable id="quickTyreSearchAttributes" type="com.reply.tyreshop.core.dto.QuickTyreSearchAttributes"--%>
+        <form:form action="quicktyresearch" method="POST" class="form-container col-sm-offset-3" modelAttribute="quickTyreSearchAttributes">
+            <label class="text-center text-uppercase h4 col-sm-1" id="param"><spring:message code="tyreQuickSearchTitle"/></label>
             <c:forEach var="attribute" items="${dataList}">
                 <div class="form-group col-sm-1">
-                    <label class="control-label">${attribute.getClassificationAttribute().name}</label>
-                    <select class="form-control" name=${attribute.getClassificationAttribute().code}>
-                        <option value="">&mdash;</option>
-                        <c:forEach var="attributeValue" items="${attribute.getAttributeValues()}">
-                            <option value="${attributeValue.code}">${attributeValue.code}</option>
+                    <c:set var="attributeKey" value="${attribute.code}"/>
+                    <label class="control-label">${attributeKey}</label>
+                    <form:select path="redirectAttributesMap['${attributeKey}']" class="form-control" multiple="false">
+                        <form:option value="" label="-"/>
+                        <c:forEach var="attributeValue" items="${attribute.attributesList}">
+                            <form:option value="${attributeValue.code}">${attributeValue.code}</form:option>
                         </c:forEach>
-                    </select>
+                    </form:select>
                 </div>
             </c:forEach>
             <div>
                 <div class="button btn">
-                    <button type="submit" class="btn btn-lg btn-default" id="confirmButton"><spring:message code="quickTyreSearchButton"/></button>
+                    <form:button type="submit" class="btn btn-lg btn-default" id="confirmButton"><spring:message code="quickTyreSearchButton"/></form:button>
                 </div>
             </div>
         </form:form>
