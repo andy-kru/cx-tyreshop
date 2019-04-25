@@ -11,11 +11,11 @@
             <c:forEach var="attribute" items="${dataList}">
                 <div class="form-group col-sm-1">
                     <c:set var="attributeKey" value="${attribute.code}"/>
-                    <label class="control-label">${attributeKey}</label>
+                    <label class="control-label">${attribute.name}</label>
                     <form:select path="redirectAttributesMap['${attributeKey}']" class="form-control" multiple="false">
                         <form:option value="" label="-"/>
                         <c:forEach var="attributeValue" items="${attribute.attributesList}">
-                            <form:option value="${attributeValue.code}">${attributeValue.code}</form:option>
+                            <form:option value="${attributeValue.code}">${attributeValue.name}</form:option>
                         </c:forEach>
                     </form:select>
                 </div>
