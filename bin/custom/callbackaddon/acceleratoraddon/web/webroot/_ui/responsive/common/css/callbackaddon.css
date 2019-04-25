@@ -1,7 +1,7 @@
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
 
-.open-button {
+.open-form {
     background-color: #555;
     color: white;
     padding: 16px 20px;
@@ -24,13 +24,13 @@ body {font-family: Arial, Helvetica, sans-serif;}
     z-index: 9;
 }
 
-.form-container {
+.form-callback {
     max-width: 300px;
     padding: 10px;
     background-color: white;
 }
 
-.form-container input[type=text] {
+.form-callback input[type=text] {
     width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;
@@ -38,13 +38,13 @@ body {font-family: Arial, Helvetica, sans-serif;}
     background: #f1f1f1;
 }
 
-.form-container input[type=text]:focus {
+.form-callback input[type=text]:focus {
     background-color: #ddd;
 
     outline: none;
 }
 
-.form-container .btn {
+.form-callback .btn {
     background-color: #4CAF50;
     color: white;
     padding: 16px 20px;
@@ -55,10 +55,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
     opacity: 0.8;
 }
 
-.form-container .cancel {
+.form-callback .cancel {
     background-color: red;
 }
 
-.form-container .btn:hover, .open-button:hover {
+.form-callback .btn:hover, .open-form:hover {
     opacity: 1;
 }
