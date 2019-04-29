@@ -10,12 +10,10 @@
 <%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>
 
-<link href="../../../../_ui/responsive/common/css/callbackaddon.css" rel="stylesheet">
-<script src="../../../../_ui/responsive/common/js/callbackaddon.js"></script>
 <meta http-equiv="content-type" content="text/html; charset=cp1251">
-<button class="open-button" onclick="openForm()" id="openButton"><spring:message code="openB"/></button>
+<button class="open-form" onclick="openForm()" id="openButton"><spring:message code="openB"/></button>
 <div class="form-popup" id="myForm">
-    <form action="javascript:submitForm()" class="form-container">
+    <form action="javascript:submitForm()" class="form-callback">
         <meta http-equiv="content-type" content="text/html; charset=cp1251">
         <span id="headText"><h1><spring:message code="headText"/></h1></span>
         <label for="inputName" id="textForInputName"><b><spring:message code="customerName"/></b><br></label>
