@@ -23,12 +23,12 @@ $productCatalogVersion=catalogVersion(CatalogVersion.catalog(Catalog.id[default=
 $lang=ru
 
 UPDATE SolrIndexedProperty;name[unique=true];$solrIndexedType;displayName[lang=$lang]
-;Width, 100;;"Ширина"
-;Height, 101;;"Высота"
-;Diameter, 102;;"Диаметр"
-;Season, 103;;"Сезон"
-;LoadIndex, 104;;"Индекс Нагрузки"
-;SpeedIndex, 105;;"Индекс Скорости"
+;Width;;"Ширина"
+;Height;;"Высота"
+;Diameter;;"Диаметр"
+;Season;;"Сезон"
+;LoadIndex;;"Индекс Нагрузки"
+;SpeedIndex;;"Индекс Скорости"
 
 # Redirect page URL (Must use INSERT_UPDATE here)
 UPDATE SolrURIRedirect;url[unique=true];&redirectRefID

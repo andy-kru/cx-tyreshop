@@ -32,6 +32,7 @@ INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url
                               ;;WinterSeasonCategoryLink;Winter Season Category Link;/Tyre-type/Car-tyres/c/carTyres?q=%3Aprice-asc%3ASeason%2C+103%3AWinter&text=#;WinterSeasonCategoryLink;WinterSeasonCategoryLink;;;;
                               ;;AllSeasonsCategoryLink;All Seasons Category Link;/Tyre-type/Car-tyres/c/carTyres?q=%3Aprice-asc%3ASeason%2C+103%3AAll Seasons&text=#;AllSeasonsCategoryLink;AllSeasonsnCategoryLink;;;;
                               ;;AllTypeTyresCategoryLink;Type Tyres Link;/Type-Tyres/c/typeTyres;AllTypeTyresCategoryLink;AllTypeTyresCategoryLink;;typeTyres;;
+                              ;;TruckTyresCategoryLink;Truck Tyres Link;/Type-Tyres/car/truckTyres;TruckTyresCategoryLink;TruckTyresCategoryLink;;truckTyres;;
                               ;;CarTyresCategoryLink;Car Tyres Link;/Type-Tyres/car/carTyres;CarTyresCategoryLink;CarTyresCategoryLink;;carTyres;;
                               ;;MotoTyresCategoryLink;Moto Tyres Link;/Type-Tyres/moto/motoTyres;MotoTyresCategoryLink;MotoTyresCategoryLink;;motoTyres;;
                               ;;nokianBrandCategoryLink;Nokian Link;/Brands/Nokian/c/nokianBrand;nokianBrandCategoryLink;nokianBrandCategoryLink;;nokianBrand;;
@@ -163,7 +164,7 @@ INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;pa
                                ;SeasonsNavNode;;Seasons Links;TyreshopNavNode;AllSeasonsTypesCategoryLink;SeasonsNavNode
                                ;SeasonsTypesLinksNavNode;;Seasons Type Links;SeasonsNavNode;SummerSeasonCategoryLink,WinterSeasonCategoryLink,AllSeasonsCategoryLink;SeasonsTypesLinksNavNode
                                ;TypeTyresNavNode;;Type Tyres Links;TyreshopNavNode;AllTypeTyresCategoryLink;TypeTyresNavNode
-                               ;TyresTypesLinksNavNode;;Type Tyres Links;TypeTyresNavNode;CarTyresCategoryLink,MotoTyresCategoryLink;TyresTypesLinksNavNode
+                               ;TyresTypesLinksNavNode;;Type Tyres Links;TypeTyresNavNode;TruckTyresCategoryLink,CarTyresCategoryLink,MotoTyresCategoryLink;TyresTypesLinksNavNode
                                ;SAPCommerceNavNode;;SAP Commerce Cloud Pages;TyreshopNavNode;AboutSAPCommerceLink,FAQLink;SAPCommerceNavNode
                                ;SAPCustomerExperienceNavNode;;SAP Customer Experience Pages;TyreshopNavNode;VisitSAPLink,ContactUsLink;SAPCustomerExperienceNavNode
                                ;FollowUsNavNode;;Follow Us Pages;TyreshopNavNode;AgileCommerceBlogLink,LinkedInLink,FacebookLink,TwitterLink;FollowUsNavNode
@@ -173,8 +174,8 @@ UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];linkComponents(&link
                   ;;login;LoginLink
 
 ###### Tyreshop Homepage ######
-
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);
+                         ;;Section1Slot-Homepage;Section1 Slot for Homepage;true;
                          ;;Section2ASlot-Homepage;Section2A Slot for Homepage;true;
                          ;;Section2BSlot-Homepage;Section2B Slot for Homepage;true;
                          ;;Section2CSlot-Homepage;Section2C Slot for Homepage;true;
@@ -183,6 +184,7 @@ INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;c
                          ;;Section5Slot-Homepage;Section5 Slot for Homepage;true;
 
 INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='homepage'];contentSlot(uid,$contentCV)[unique=true]
+                                ;;Section1-Homepage;Section1;;Section1Slot-Homepage
                                 ;;Section2A-Homepage;Section2A;;Section2ASlot-Homepage
                                 ;;Section2B-Homepage;Section2B;;Section2BSlot-Homepage
                                 ;;Section2C-Homepage;Section2C;;Section2CSlot-Homepage
@@ -540,36 +542,36 @@ INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents
 
 ###  Home page splash Slot 1  #######
 # ContentSlot
-INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(uid,$contentCV);;;
-                         ;;Section1Slot-Homepage;Section1 Slot for Homepage;true;TyreshopHompageBannerComponent;;;
-
-# ContentSlotForPage
-INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='homepage'];contentSlot(uid,$contentCV)[unique=true];;;
-                                ;;Section1-Homepage;Section1;;Section1Slot-Homepage
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV);;;
+                         ;;Section1Slot-Homepage;TyreshopHompageBannerComponent;;;
 
 INSERT_UPDATE SimpleResponsiveBannerComponent;$contentCV[unique=true];uid[unique=true];name;urlLink;&componentRef
                                              ;;TyreshopHompageBannerComponent;Tyreshop Homepage Banner Component;"/";TyreshopHompageBannerComponent
 
 
 ###  Home page slot 2A  ####
-INSERT_UPDATE SimpleResponsiveBannerComponent;$contentCV[unique=true];uid[unique=true];name;urlLink;&componentRef
+### Quick Tire Search Component
 
-INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];active;cmsComponents(&componentRef)
+## Home section 2A
 
-#### Home section 2B #######
+## Home section 2B
 INSERT_UPDATE SimpleResponsiveBannerComponent;$contentCV[unique=true];uid[unique=true];name;urlLink;&componentRef
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];active;cmsComponents(&componentRef)
 
 ## Home section 2C
-INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(&componentRef)
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(uid,$contentCV);;;
+                         ;;Section2CSlot-Homepage;QuickTyreSearchComponent;;;
+
+INSERT_UPDATE QuickTyreSearchComponent;$contentCV[unique=true];uid[unique=true];name;tyreAttributes(code);&componentRef
+                                      ;;QuickTyreSearchComponent;Quick Tyre Search Component;carclassification;QuickTyreSearchComponent
 
 ## Home section 3
-INSERT_UPDATE ProductCarouselComponent;$contentCV[unique=true];uid[unique=true];&componentRef
-
 INSERT_UPDATE ProductCarouselComponent;$contentCV[unique=true];uid[unique=true];name;products(code,$productCV);scroll(code);popup;&componentRef
+                                      ;;NewTyreshopHomepageProductCarouselComponent;What's New Tyreshop Homepage Product Carousel;100000,100001,100002,100003,100004,100005,100006,100007,100008,100009,100010,100011,100012,100013,100014,100015,100016,100017,100018,100019,100020,100021,100022,100023,100024,100025;allVisible;false;NewTyreshopHomepageProductCarouselComponent
 
 INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];cmsComponents(&componentRef)
+                         ;;Section3Slot-Homepage;NewTyreshopHomepageProductCarouselComponent
 
 #### Section 4
 INSERT_UPDATE SimpleResponsiveBannerComponent;$contentCV[unique=true];uid[unique=true];name;urlLink;&componentRef
@@ -883,7 +885,7 @@ INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;pa
 INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&nodeRef;children(uid,$contentCV);links(&linkRef);
                                ;BrandsNavNode;;Brand Links;BrandsNavNode;BrandLinksNavNode
                                ;SeasonsNavNode;;Seasons Category;SeasonsNavNode;SummerSeasonTyresNavNode,WinterSeasonTyresNavNode,AllSeasonsTyresNavNode
-                               ;TypeTyresNavNode;;Tyre Types Category;TypeTyresNavNode;CarTypeTyresNavNode,MotoTypeTyresNavNode
+                               ;TypeTyresNavNode;;Tyre Types Category;TypeTyresNavNode;TruckTypeTyresNavNode,CarTypeTyresNavNode,MotoTypeTyresNavNode
 
 ## entries of the above navigation nodes ##
 INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(CMSLinkComponent.uid,CMSLinkComponent.$contentCV);
@@ -901,6 +903,7 @@ INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;&n
                                ;WinterSeasonTyresNavNode;;Winter Season Tyres Links;WinterSeasonTyresNavNode;
                                ;AllSeasonsTyresNavNode;;All Seasons Tyres Links;AllSeasonsTyresNavNode;
 ## children of TypeTyresNavNode
+                               ;TruckTypeTyresNavNode;;Truck Type Tyres Links;TruckTypeTyresNavNode;
                                ;CarTypeTyresNavNode;;Car Type Tyres Links;CarTypeTyresNavNode;
                                ;MotoTypeTyresNavNode;;Moto Type Tyres Links;MotoTypeTyresNavNode;
 
@@ -928,6 +931,7 @@ INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;n
                                 ;WinterSeasonTyresNavNodeEntry;;Winter Season Tyres Links;WinterSeasonTyresNavNode;WinterSeasonCategoryLink;
                                 ;AllSeasonsTyresNavNodeEntry;;All Seasons Tyres Links;AllSeasonsTyresNavNode;AllSeasonsCategoryLink;
 ## Tyre Types
+                                ;TruckTypeTyresNavNodeEntry;;Truck Type Tyres Links;TruckTypeTyresNavNode;TruckTyresCategoryLink;
                                 ;CarTypeTyresNavNodeEntry;;Car Type Tyres Links;CarTypeTyresNavNode;CarTyresCategoryLink;
                                 ;MotoTypeTyresNavNodeEntry;;Moto Type Tyres Links;MotoTypeTyresNavNode;MotoTyresCategoryLink;
 

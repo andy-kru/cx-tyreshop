@@ -24,12 +24,12 @@ $clAttrModifiers = system='$classificationCatalog', version='1.0', translator=de
 # Insert Product Classifications
 
 # replace <string> and <int> with actual values
-$feature1 = @Width, 100[$clAttrModifiers];
-$feature2 = @Height, 101[$clAttrModifiers];
-$feature3 = @Diameter, 102[$clAttrModifiers];
-$feature4 = @Season, 103[$clAttrModifiers];
-$feature5 = @LoadIndex, 104[$clAttrModifiers];
-$feature6 = @SpeedIndex, 105[$clAttrModifiers];
+$feature1 = @Width[$clAttrModifiers];
+$feature2 = @Height[$clAttrModifiers];
+$feature3 = @Diameter[$clAttrModifiers];
+$feature4 = @Season[$clAttrModifiers];
+$feature5 = @LoadIndex[$clAttrModifiers];
+$feature6 = @SpeedIndex[$clAttrModifiers];
 INSERT_UPDATE Product; code[unique = true]; $feature1; $feature2; $feature3; $feature4; $feature5; $feature6; $catalogVersion
                      ; 100000_91H         ; 205      ; 55       ; 16       ; Summer   ; H        ; 91
                      ; 100000_94R         ; 205      ; 55       ; 16       ; Winter   ; R        ; 94
@@ -61,9 +61,9 @@ INSERT_UPDATE Product; code[unique = true]; $feature1; $feature2; $feature3; $fe
 
 
 
-$feature1 = @Width, 100[$clAttrModifiers];
-$feature2 = @Height, 101[$clAttrModifiers];
-$feature3 = @Diameter, 102[$clAttrModifiers];
+$feature1 = @Width[$clAttrModifiers];
+$feature2 = @Height[$clAttrModifiers];
+$feature3 = @Diameter[$clAttrModifiers];
 
 INSERT_UPDATE Product; code[unique = true]; $feature1; $feature2; $feature3; $catalogVersion
                      ; 100021_75R         ; 235      ; 75       ; 17.5

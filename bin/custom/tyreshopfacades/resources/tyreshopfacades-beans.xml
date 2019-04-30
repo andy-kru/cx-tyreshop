@@ -19,4 +19,16 @@
 		<property name="code" type="String"/>
 		<property name="name" type="String"/>
 	</bean>
+
+	<bean class="com.reply.tyreshop.facades.component.data.ClassAttributeData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+		<property name="attributesList" type="java.util.List&lt;com.reply.tyreshop.facades.component.data.ClassificationAttributeValueData>" />
+	</bean>
+
+	<bean class="com.reply.tyreshop.facades.component.data.ClassificationAttributeValueData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+
 </beans>

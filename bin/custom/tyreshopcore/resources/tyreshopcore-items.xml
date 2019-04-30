@@ -126,6 +126,16 @@
                     </attribute>
                 </attributes>
             </itemtype>
+            <itemtype code="QuickTyreSearchComponent" extends="SimpleCMSComponent" generate="true" autocreate="true"
+                      jaloclass="com.reply.tyreshop.core.jalo.QuickTyreSearchComponent">
+                <description>Used to display quick tyre search on homepage</description>
+                <attributes>
+                    <attribute type="ClassificationClass" qualifier="tyreAttributes">
+                        <modifiers read="true" write="true" />
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype>
         </typegroup>
 
     </itemtypes>

@@ -189,4 +189,33 @@
 	</bean>
 
 	<bean id="genderData" class="com.reply.tyreshop.facades.product.data.GenderData" scope="prototype"/>
+
+	<alias name="defaultClassAttributeAssignmentPopulator" alias="classAttributeAssignmentPopulator" />
+	<bean id ="defaultClassAttributeAssignmentPopulator" class="com.reply.tyreshop.facades.populators.ClassAttributeAssignmentPopulator" >
+	</bean>
+
+	<alias name="defaultClassAttributeAssignmentConverter" alias="classAttributeAssignmentConverter" />
+	<bean id="defaultClassAttributeAssignmentConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.reply.tyreshop.facades.component.data.ClassAttributeData"/>
+		<property name="populators">
+			<list>
+				<ref bean="classAttributeAssignmentPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultClassificationAttributeValuePopulator" alias="classificationAttributeValuePopulator" />
+	<bean id ="defaultClassificationAttributeValuePopulator" class="com.reply.tyreshop.facades.populators.ClassificationAttributeValuePopulator" >
+	</bean>
+
+	<alias name="defaultClassificationAttributeValueConverter" alias="classificationAttributeValueConverter" />
+	<bean id="defaultClassificationAttributeValueConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.reply.tyreshop.facades.component.data.ClassificationAttributeValueData"/>
+		<property name="populators">
+			<list>
+				<ref bean="classificationAttributeValuePopulator"/>
+			</list>
+		</property>
+	</bean>
+
 </beans>

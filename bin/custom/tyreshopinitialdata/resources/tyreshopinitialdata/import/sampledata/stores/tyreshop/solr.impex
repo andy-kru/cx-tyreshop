@@ -33,12 +33,12 @@ INSERT_UPDATE SolrValueRangeSet;name[unique=true];qualifier;type;solrValueRanges
 INSERT_UPDATE SolrValueRange;&rangeValueRefID;solrValueRangeSet(name)[unique=true];name[unique=true];from;to
 
 INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);sortableType(code);currency[default=false];localized[default=false];multiValue[default=false];facet[default=false];facetType(code);facetSort(code);priority;visible;fieldValueProvider;customFacetSortProvider;rangeSets(name);$classAttributeAssignment
-;tyreshopProductType;Width, 100;string;;;;;true;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;dimensionclassification:::Width, 100::::
-;tyreshopProductType;Height, 101;string;;;;;true;MultiSelectOr;Alpha;900;true;commerceClassificationPropertyValueProvider;;;dimensionclassification:::Height, 101::::
-;tyreshopProductType;Diameter, 102;string;;;;;true;MultiSelectOr;Alpha;1100;true;commerceClassificationPropertyValueProvider;;;dimensionclassification:::Diameter, 102::::
-;tyreshopProductType;Season, 103;string;;;true;;true;MultiSelectOr;Alpha;1400;true;commerceClassificationPropertyValueProvider;;;carclassification:::Season, 103::::
-;tyreshopProductType;LoadIndex, 104;string;;;;;true;MultiSelectOr;Alpha;1300;true;commerceClassificationPropertyValueProvider;;;carclassification:::LoadIndex, 104::::
-;tyreshopProductType;SpeedIndex, 105;string;;;;;true;MultiSelectOr;Alpha;1200;true;commerceClassificationPropertyValueProvider;;;carclassification:::SpeedIndex, 105::::
+;tyreshopProductType;Width;string;;;;;true;MultiSelectOr;Alpha;1000;true;commerceClassificationPropertyValueProvider;;;dimensionclassification:::Width::::
+;tyreshopProductType;Height;string;;;;;true;MultiSelectOr;Alpha;900;true;commerceClassificationPropertyValueProvider;;;dimensionclassification:::Height::::
+;tyreshopProductType;Diameter;string;;;;;true;MultiSelectOr;Alpha;1100;true;commerceClassificationPropertyValueProvider;;;dimensionclassification:::Diameter::::
+;tyreshopProductType;Season;string;;;true;;true;MultiSelectOr;Alpha;1400;true;commerceClassificationPropertyValueProvider;;;carclassification:::Season::::
+;tyreshopProductType;LoadIndex;string;;;;;true;MultiSelectOr;Alpha;1300;true;commerceClassificationPropertyValueProvider;;;carclassification:::LoadIndex::::
+;tyreshopProductType;SpeedIndex;string;;;;;true;MultiSelectOr;Alpha;1200;true;commerceClassificationPropertyValueProvider;;;carclassification:::SpeedIndex::::
 
 INSERT_UPDATE SolrIndexedProperty;solrIndexedType(identifier)[unique=true];name[unique=true];type(code);localized[default=true];multiValue[default=false];fieldValueProvider;$classAttributeAssignment
 
@@ -59,9 +59,9 @@ INSERT_UPDATE SolrProductRedirect;redirectItem(code,$productCatalogVersion)[uniq
 
 # Classification facets
 INSERT_UPDATE SolrSearchQueryProperty;indexedProperty(name, solrIndexedType(identifier))[unique=true];facet[default=true];facetType(code);priority;facetDisplayNameProvider;facetSortProvider;facetTopValuesProvider;includeInResponse[default=true];searchQueryTemplate(name, indexedType(identifier))[unique=true][default=DEFAULT:$solrIndexedType]
-                                     ;Width, 100:$solrIndexedType			                           ;	                ;MultiSelectOr	 ;1000;;;;;
-                                     ;Height, 101:$solrIndexedType			                           ;	                ;MultiSelectOr	 ;900 ;;;;;
-                                     ;Diameter, 102:$solrIndexedType			                       ;	                ;MultiSelectOr	 ;1100;;;;;
-                                     ;Season, 103:$solrIndexedType			                           ;	                ;MultiSelectOr	 ;1400;;;;;
-                                     ;LoadIndex, 104:$solrIndexedType			                       ;	                ;MultiSelectOr	 ;1300;;;;;
-                                     ;SpeedIndex, 105:$solrIndexedType			                       ;	                ;MultiSelectOr	 ;1200;;;;;
+                                     ;Width:$solrIndexedType			                           ;	                ;MultiSelectOr	 ;1000;;;;;
+                                     ;Height:$solrIndexedType			                           ;	                ;MultiSelectOr	 ;900 ;;;;;
+                                     ;Diameter:$solrIndexedType			                       ;	                ;MultiSelectOr	 ;1100;;;;;
+                                     ;Season:$solrIndexedType			                           ;	                ;MultiSelectOr	 ;1400;;;;;
+                                     ;LoadIndex:$solrIndexedType			                       ;	                ;MultiSelectOr	 ;1300;;;;;
+                                     ;SpeedIndex:$solrIndexedType			                       ;	                ;MultiSelectOr	 ;1200;;;;;
