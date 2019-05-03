@@ -88,6 +88,7 @@ UPDATE Tax;code[unique=true];name[lang=$lang]
  ;uk-vat-full;"UK VAT full"
  ;uk-vat-half;"UK VAT half"
  ;us-sales-tax-full;"Sales Tax"
+ ;by-vat-full;"BY VAT full"
 
 # Consginment statuses
 UPDATE ConsignmentStatus;code[unique=true];name[lang=$lang]
