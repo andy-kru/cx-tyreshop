@@ -107,6 +107,7 @@ INSERT_UPDATE Tax;code[unique=true];value;currency(isocode)
 ;uk-vat-half;5
 ;us-sales-tax-full;0
 ;ca-sales-tax-full;0
+;by-vat-full;0
 
 INSERT_UPDATE ServicelayerJob;code[unique=true];springId[unique=true]
 ;cartRemovalJob;cartRemovalJob
