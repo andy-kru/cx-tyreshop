@@ -126,6 +126,25 @@
                     </attribute>
                 </attributes>
             </itemtype>
+
+            <itemtype code="BankTransferPaymentMode"
+                      extends="PaymentMode"
+                      jaloclass="com.reply.tyreshop.core.jalo.BankTransferPaymentMode"
+                      autocreate="true"
+                      generate="true">
+            </itemtype>
+            <itemtype code="CardPaymentMode"
+                      extends="PaymentMode"
+                      jaloclass="com.reply.tyreshop.core.jalo.CardPaymentMode"
+                      autocreate="true"
+                      generate="true">
+            </itemtype>
+            <itemtype code="PaypalPaymentMode"
+                      extends="PaymentMode"
+                      jaloclass="com.reply.tyreshop.core.jalo.PaypalPaymentMode"
+                      autocreate="true"
+                      generate="true">
+            </itemtype>
         </typegroup>
 
     </itemtypes>

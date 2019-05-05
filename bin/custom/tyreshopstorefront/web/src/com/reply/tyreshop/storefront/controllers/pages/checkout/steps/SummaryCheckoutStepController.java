@@ -10,6 +10,13 @@
  */
 package com.reply.tyreshop.storefront.controllers.pages.checkout.steps;
 
+import com.reply.tyreshop.core.hooks.BankTransferHook;
+import com.reply.tyreshop.core.jalo.PaypalPaymentMode;
+import com.reply.tyreshop.core.model.BankTransferPaymentModeModel;
+import com.reply.tyreshop.core.model.PaypalPaymentModeModel;
+import com.reply.tyreshop.facades.order.PaymentCheckoutFacade;
+import com.sun.xml.internal.bind.v2.TODO;
+import de.hybris.platform.acceleratorfacades.order.AcceleratorCheckoutFacade;
 import de.hybris.platform.acceleratorservices.enums.CheckoutPciOptionEnum;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.PreValidateCheckoutStep;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.PreValidateQuoteCheckoutStep;
@@ -24,14 +31,17 @@ import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.order.data.OrderData;
 import de.hybris.platform.commercefacades.order.data.OrderEntryData;
 import de.hybris.platform.commercefacades.product.ProductOption;
+import de.hybris.platform.commercefacades.product.data.PriceData;
 import de.hybris.platform.commercefacades.product.data.ProductData;
 import de.hybris.platform.commerceservices.order.CommerceCartModificationException;
+import de.hybris.platform.core.model.order.payment.PaymentModeModel;
 import de.hybris.platform.order.InvalidCartException;
 import de.hybris.platform.payment.AdapterException;
 import com.reply.tyreshop.storefront.controllers.ControllerConstants;
 
 import java.util.Arrays;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -51,6 +61,12 @@ public class SummaryCheckoutStepController extends AbstractCheckoutStepControlle
 	private static final Logger LOGGER = Logger.getLogger(SummaryCheckoutStepController.class);
 
 	private static final String SUMMARY = "summary";
+
+	@Resource(name = "paymentCheckoutFacade")
+	private PaymentCheckoutFacade paymentCheckoutFacade;
+
+	@Resource(name = "bankTransferHook")
+	private BankTransferHook bankTransferHook;
 
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	@RequireHardLogIn
@@ -76,7 +92,7 @@ public class SummaryCheckoutStepController extends AbstractCheckoutStepControlle
 		model.addAttribute("allItems", cartData.getEntries());
 		model.addAttribute("deliveryAddress", cartData.getDeliveryAddress());
 		model.addAttribute("deliveryMode", cartData.getDeliveryMode());
-		model.addAttribute("paymentInfo", cartData.getPaymentInfo());
+		model.addAttribute("paymentInfo", cartData.getCommonPaymentInfo());
 
 		// Only request the security code if the SubscriptionPciOption is set to Default.
 		final boolean requestSecurityCode = CheckoutPciOptionEnum.DEFAULT
@@ -100,49 +116,34 @@ public class SummaryCheckoutStepController extends AbstractCheckoutStepControlle
 	@RequireHardLogIn
 	public String placeOrder(@ModelAttribute("placeOrderForm") final PlaceOrderForm placeOrderForm, final Model model,
 			final HttpServletRequest request, final RedirectAttributes redirectModel) throws CMSItemNotFoundException, // NOSONAR
-			InvalidCartException, CommerceCartModificationException
-	{
-		if (validateOrderForm(placeOrderForm, model))
-		{
-			return enterStep(model, redirectModel);
-		}
+			InvalidCartException, CommerceCartModificationException {
+		final CartData cartData = getCheckoutFacade().getCheckoutCart();
 
-		//Validate the cart
-		if (validateCart(redirectModel))
-		{
-			// Invalid cart. Bounce back to the cart page.
-			return REDIRECT_PREFIX + "/cart";
+		PaymentModeModel paymentModeModel = paymentCheckoutFacade.getPaymentModeForCode(cartData.getPaymentModeCode());
+        if (validateOrderForm(placeOrderForm, model)) {
+            return enterStep(model, redirectModel);
+        }
+		if (paymentModeModel instanceof BankTransferPaymentModeModel) {
+			bankTransferHook.beforePlaceOrder();
 		}
-
-		// authorize, if failure occurs don't allow to place the order
-		boolean isPaymentUthorized = false;
-		try
-		{
-			isPaymentUthorized = getCheckoutFacade().authorizePayment(placeOrderForm.getSecurityCode());
+		else if(paymentModeModel instanceof PaypalPaymentModeModel){
+			//TODO Paypal
 		}
-		catch (final AdapterException ae)
-		{
-			// handle a case where a wrong paymentProvider configurations on the store see getCommerceCheckoutService().getPaymentProvider()
-			LOGGER.error(ae.getMessage(), ae);
-		}
-		if (!isPaymentUthorized)
-		{
-			GlobalMessages.addErrorMessage(model, "checkout.error.authorization.failed");
-			return enterStep(model, redirectModel);
-		}
-
+		else {
+            //Validate the cart
+            if (validateCart(redirectModel)) {
+                // Invalid cart. Bounce back to the cart page.
+                return REDIRECT_PREFIX + "/cart";
+            }
+        }
 		final OrderData orderData;
-		try
-		{
+		try {
 			orderData = getCheckoutFacade().placeOrder();
-		}
-		catch (final Exception e)
-		{
+		} catch (final Exception e) {
 			LOGGER.error("Failed to place Order", e);
 			GlobalMessages.addErrorMessage(model, "checkout.placeOrder.failed");
 			return enterStep(model, redirectModel);
 		}
-
 		return redirectToOrderConfirmationPage(orderData);
 	}
 
@@ -172,7 +173,7 @@ public class SummaryCheckoutStepController extends AbstractCheckoutStepControlle
 			invalid = true;
 		}
 
-		if (getCheckoutFlowFacade().hasNoPaymentInfo())
+		if (getCheckoutFacade().hasNoPaymentInfo())
 		{
 			GlobalMessages.addErrorMessage(model, "checkout.paymentMethod.notSelected");
 			invalid = true;
@@ -196,14 +197,14 @@ public class SummaryCheckoutStepController extends AbstractCheckoutStepControlle
 		}
 		final CartData cartData = getCheckoutFacade().getCheckoutCart();
 
-		if (!getCheckoutFacade().containsTaxValues())
-		{
-			LOGGER.error(String.format(
-					"Cart %s does not have any tax values, which means the tax cacluation was not properly done, placement of order can't continue",
-					cartData.getCode()));
-			GlobalMessages.addErrorMessage(model, "checkout.error.tax.missing");
-			invalid = true;
-		}
+//		if (!getCheckoutFacade().containsTaxValues())
+//		{
+//			LOGGER.error(String.format(
+//					"Cart %s does not have any tax values, which means the tax cacluation was not properly done, placement of order can't continue",
+//					cartData.getCode()));
+//			GlobalMessages.addErrorMessage(model, "checkout.error.tax.missing");
+//			invalid = true;
+//		}
 
 		if (!cartData.isCalculated())
 		{
@@ -237,5 +238,8 @@ public class SummaryCheckoutStepController extends AbstractCheckoutStepControlle
 		return getCheckoutStep(SUMMARY);
 	}
 
-
+	@Override
+	protected AcceleratorCheckoutFacade getCheckoutFacade() {
+		return paymentCheckoutFacade;
+	}
 }

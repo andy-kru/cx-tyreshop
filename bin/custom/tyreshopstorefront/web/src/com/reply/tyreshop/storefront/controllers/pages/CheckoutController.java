@@ -95,6 +95,9 @@ public class CheckoutController extends AbstractCheckoutController
 	@Resource(name = "orderFacade")
 	private OrderFacade orderFacade;
 
+	@Resource(name = "defaultTyreshopOrderFacade")
+	private OrderFacade tyreshopOrderFacade;
+
 	@Resource(name = "checkoutFacade")
 	private CheckoutFacade checkoutFacade;
 
@@ -240,7 +243,7 @@ public class CheckoutController extends AbstractCheckoutController
 
 		try
 		{
-			orderDetails = orderFacade.getOrderDetailsForCode(orderCode);
+			orderDetails = tyreshopOrderFacade.getOrderDetailsForCode(orderCode);
 		}
 		catch (final UnknownIdentifierException e)
 		{
@@ -272,7 +275,7 @@ public class CheckoutController extends AbstractCheckoutController
 		model.addAttribute("allItems", orderDetails.getEntries());
 		model.addAttribute("deliveryAddress", orderDetails.getDeliveryAddress());
 		model.addAttribute("deliveryMode", orderDetails.getDeliveryMode());
-		model.addAttribute("paymentInfo", orderDetails.getPaymentInfo());
+		model.addAttribute("paymentInfo", orderDetails.getCommonPaymentInfo());
 		model.addAttribute("pageType", PageType.ORDERCONFIRMATION.name());
 
 		final List<CouponData> giftCoupons = orderDetails.getAppliedOrderPromotions().stream()
@@ -306,7 +309,7 @@ public class CheckoutController extends AbstractCheckoutController
 		{
 			final GuestRegisterForm guestRegisterForm = new GuestRegisterForm();
 			guestRegisterForm.setOrderCode(orderDetails.getGuid());
-			uid = orderDetails.getPaymentInfo().getBillingAddress().getEmail();
+			uid = orderDetails.getCommonPaymentInfo().getBillingAddress().getEmail();
 			guestRegisterForm.setUid(uid);
 			model.addAttribute(guestRegisterForm);
 		}

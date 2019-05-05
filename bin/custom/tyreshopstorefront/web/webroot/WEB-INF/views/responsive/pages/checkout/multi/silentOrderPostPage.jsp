@@ -29,8 +29,12 @@
                             <div class="headline"><spring:theme code="checkout.multi.paymentMethod"/></div>
 
 							    <ycommerce:testId code="paymentDetailsForm">
-							
+
 								<form:form id="silentOrderPostForm" name="silentOrderPostForm" commandName="sopPaymentDetailsForm" action="${paymentFormUrl}" method="POST">
+									<form:radiobutton path="paymentMethod" value="${paypal.code}" label="${paypal.name}" onclick="setVisibleCardForm(false);"/><br>
+									<form:radiobutton path="paymentMethod" value="${bankTransfer.code}" label="${bankTransfer.name}" onclick="$('#cardType, #nameOnCard, #accountNumber, #startDate, #cardDate, #cvNumber, #issueNumber').hide();"/><br>
+									<form:radiobutton path="paymentMethod" value="${card.code}" label="${card.name}" onclick="$('#cardType, #nameOnCard, #accountNumber, #startDate, #cardDate, #cvNumber, #issueNumber').show();"/><br>
+
 									<input type="hidden" name="orderPage_receiptResponseURL" value="${fn:escapeXml(silentOrderPageData.parameters['orderPage_receiptResponseURL'])}"/>
 									<input type="hidden" name="orderPage_declineResponseURL" value="${fn:escapeXml(silentOrderPageData.parameters['orderPage_declineResponseURL'])}"/>
 									<input type="hidden" name="orderPage_cancelResponseURL" value="${fn:escapeXml(silentOrderPageData.parameters['orderPage_cancelResponseURL'])}"/>
@@ -42,25 +46,25 @@
 									</c:forEach>
 									<input type="hidden" value="${fn:escapeXml(silentOrderPageData.parameters['billTo_email'])}" name="billTo_email" id="billTo_email">
 						
-									<div class="form-group">
+									<div class="form-group" id="useSavedCard" style="display: none">
 										<c:if test="${not empty paymentInfos}">
 											<button type="button" class="btn btn-default btn-block js-saved-payments"><spring:theme code="checkout.multi.paymentMethod.addPaymentDetails.useSavedCard"/></button>
 										</c:if>	
 									</div>
 
-									<div class="form-group">
+									<div class="form-group" id="cardType" style="display: none">
 										<formElement:formSelectBox idKey="card_cardType" labelKey="payment.cardType" path="card_cardType" selectCSSClass="form-control" mandatory="true" skipBlank="false" skipBlankMessageKey="payment.cardType.pleaseSelect" items="${sopCardTypes}" tabindex="1"/>
 									</div>
 	
-									<div class="form-group">
+									<div class="form-group" id="nameOnCard" style="display: none">
 										<formElement:formInputBox idKey="card_nameOnCard" labelKey="payment.nameOnCard" path="card_nameOnCard" inputCSS="form-control" tabindex="2" mandatory="false" />
 									</div>
 	 
-									<div class="form-group">
+									<div class="form-group" id="accountNumber" style="display: none">
 										<formElement:formInputBox idKey="card_accountNumber" labelKey="payment.cardNumber" path="card_accountNumber" inputCSS="form-control" mandatory="true" tabindex="3" autocomplete="off" />
 									</div>
 	
-									<fieldset id="startDate">
+									<fieldset id="startDate" style="display: none">
 										<label for="" class="control-label"><spring:theme code="payment.startDate"/></label>
 										<div class="row">
 											<div class="col-xs-6">
@@ -73,7 +77,7 @@
 									</fieldset>
 
 
-									<fieldset id="cardDate">
+									<fieldset id="cardDate" style="display: none">
 										<label for="" class="control-label"><spring:theme code="payment.expiryDate"/></label>
 										<div class="row">
 											<div class="col-xs-6">
@@ -85,13 +89,13 @@
 										</div>
 									</fieldset>
 
-									<div class="row">
+									<div class="row" id="cvNumber" style="display: none">
 										<div class="col-xs-6">
 											<formElement:formInputBox idKey="card_cvNumber" labelKey="payment.cvn" path="card_cvNumber" inputCSS="form-control" mandatory="true" tabindex="8" />
 										</div>
 									</div>
 									
-									<div class="row">
+									<div class="row" id="issueNumber" style="display: none">
 										<div class="col-xs-6">
 											<div id="issueNum">
 												<formElement:formInputBox idKey="card_issueNumber" labelKey="payment.issueNumber" path="card_issueNumber" inputCSS="text" mandatory="false" tabindex="9"/>
@@ -99,10 +103,12 @@
 										</div>
 									</div>
 
-									<sec:authorize access="!hasAnyRole('ROLE_ANONYMOUS')">
-										<formElement:formCheckbox idKey="savePaymentMethod" labelKey="checkout.multi.sop.savePaymentInfo" path="savePaymentInfo"
-					                          inputCSS="" labelCSS="" mandatory="false" tabindex="10"/>
-									</sec:authorize>
+									<div id="savePaymentMethod" style="display: none">
+										<sec:authorize access="!hasAnyRole('ROLE_ANONYMOUS')">
+											<formElement:formCheckbox idKey="savePaymentMethod" labelKey="checkout.multi.sop.savePaymentInfo" path="savePaymentInfo"
+												  inputCSS="" labelCSS="" mandatory="false" tabindex="10"/>
+										</sec:authorize>
+									</div>
 									
                                     <hr/>
                                     <div class="headline">

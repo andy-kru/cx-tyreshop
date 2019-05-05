@@ -11,6 +11,12 @@
 -->
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
 
-	
+    <bean class="de.hybris.platform.commercefacades.order.data.AbstractOrderData">
+        <property name="commonPaymentInfo" type="de.hybris.platform.acceleratorservices.payment.data.PaymentInfoData"/>
+        <property name="paymentModeCode" type="String"/>
+        <property name="bankTransferReference" type="String"/>
+    </bean>
+
+
 
 </beans>
