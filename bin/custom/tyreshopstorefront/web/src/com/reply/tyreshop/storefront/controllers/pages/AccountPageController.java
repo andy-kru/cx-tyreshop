@@ -155,7 +155,7 @@ public class AccountPageController extends AbstractSearchPageController
 
 	private static final Logger LOG = Logger.getLogger(AccountPageController.class);
 
-	@Resource(name = "orderFacade")
+	@Resource(name = "defaultTyreshopOrderFacade")
 	private OrderFacade orderFacade;
 
 	@Resource(name = "acceleratorCheckoutFacade")
