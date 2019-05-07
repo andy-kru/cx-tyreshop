@@ -112,3 +112,13 @@ INSERT_UPDATE Tax;code[unique=true];value;currency(isocode)
 INSERT_UPDATE ServicelayerJob;code[unique=true];springId[unique=true]
 ;cartRemovalJob;cartRemovalJob
 ;siteMapMediaJob;siteMapMediaJob
+
+INSERT_UPDATE BankTransferPaymentMode; code[unique = true]; name[lang = ru]    ; name[lang = en]; description[lang = ru]; description[lang = en]    ; active; paymentinfotype(code)
+                                     ; bankTransfer       ; Банковский перевод ; Bank Transer   ; Оплата заказа в банке ; Payment order in the bank ; true  ; PaymentInfo
+
+INSERT_UPDATE CardPaymentMode; code[unique = true]; name[lang = ru]    ; name[lang = en]; description[lang = ru]; description[lang = en]    ; active; paymentinfotype(code)
+                             ; card       ; Оплата картой ; Card   ; Оплата заказа картой ; Payment order by card ; true  ; PaymentInfo
+
+INSERT_UPDATE PaypalPaymentMode; code[unique = true]; name[lang = ru]    ; name[lang = en]; description[lang = ru]; description[lang = en]    ; active; paymentinfotype(code)
+                               ; paypal       ; Paypal ; Paypal   ; Оплата заказа при помощи сервиса Paypal ; Payment order by Paypal ; true  ; PaymentInfo
+

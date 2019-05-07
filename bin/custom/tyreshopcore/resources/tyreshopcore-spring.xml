@@ -599,4 +599,25 @@
 		<property name="exchangeRateService" ref="tyreshopExchangeRateService" />
 	</bean>
 
+	<bean id="bankTransferCodeGenerator" class="de.hybris.platform.servicelayer.keygenerator.impl.PersistentKeyGenerator">
+		<property name="key" value="bankTransfer_code"/>
+		<property name="digits" value="12"/>
+		<property name="start" value="100000000000"/>
+		<property name="type" value="numeric"/>
+		<property name="template" value="$"/>
+	</bean>
+
+	<alias alias="bankTransferHook" name="defaultBankTransferHook"/>
+	<bean id="defaultBankTransferHook" class="com.reply.tyreshop.core.hooks.impl.DefaultBankTransferHook">
+		<property name="modelService" ref="modelService"/>
+		<property name="cartService" ref="cartService"/>
+		<property name="generateMerchantTransactionCodeStrategy" ref="generateMerchantTransactionCodeStrategy"/>
+		<property name="bankTransferPaymentService" ref="bankTransferPaymentService"/>
+	</bean>
+
+	<alias alias="bankTransferPaymentService" name="defaultBankTransferPaymentService"/>
+	<bean id="defaultBankTransferPaymentService" class="com.reply.tyreshop.core.services.impl.DefaultBankTransferPaymentService">
+		<property name="bankTransferCodeGenerator" ref="bankTransferCodeGenerator"/>
+	</bean>
+
 </beans>

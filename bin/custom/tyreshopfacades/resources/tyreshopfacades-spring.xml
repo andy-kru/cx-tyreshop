@@ -218,4 +218,81 @@
 		</property>
 	</bean>
 
+
+	<bean id ="paypalPaymentModeDataPopulator" class="com.reply.tyreshop.facades.populators.PaypalPaymentModeDataPopulator" >
+	</bean>
+
+	<bean id="defaultPaypalPaymentModeDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.reply.tyreshop.facades.product.data.PaypalPaymentModeData"/>
+		<property name="populators">
+			<list>
+				<ref bean="paypalPaymentModeDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id ="cardPaymentModeDataPopulator" class="com.reply.tyreshop.facades.populators.CardPaymentModeDataPopulator" >
+	</bean>
+
+	<bean id="defaultCardPaymentModeDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.reply.tyreshop.facades.product.data.CardPaymentModeData"/>
+		<property name="populators">
+			<list>
+				<ref bean="cardPaymentModeDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id ="bankTransferPaymentModeDataPopulator" class="com.reply.tyreshop.facades.populators.BankTransferPaymentModeDataPopulator" >
+	</bean>
+
+	<bean id="defaultBankTransferPaymentModeDataConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.reply.tyreshop.facades.product.data.BankTransferPaymentModeData"/>
+		<property name="populators">
+			<list>
+				<ref bean="bankTransferPaymentModeDataPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultPaymentCheckoutFacade" alias="paymentCheckoutFacade" />
+	<bean id ="defaultPaymentCheckoutFacade" class="com.reply.tyreshop.facades.order.impl.DefaultPaymentCheckoutFacade" parent="defaultAcceleratorCheckoutFacade" >
+	</bean>
+
+	<bean id ="defaultPaymentInfoDPopulator" class="com.reply.tyreshop.facades.populators.DefaultPaymentInfoDataPopulator" >
+		<property name="addressConverter" ref="addressConverter"/>
+	</bean>
+
+	<bean id="defaultPaymentInfoDConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.acceleratorservices.payment.data.PaymentInfoData"/>
+		<property name="populators">
+			<list>
+				<ref bean="defaultPaymentInfoDPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<bean id ="tyreshopOrderPopulator" class="com.reply.tyreshop.facades.populators.TyreshopOrderPopulator" parent="orderPopulator">
+		<property name="paymentInfoDataConverter" ref="defaultPaymentInfoDConverter"/>
+	</bean>
+
+	<bean id="defaultTyreshopOrderConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.commercefacades.order.data.OrderData"/>
+		<property name="populators">
+			<list>
+				<ref bean="tyreshopOrderPopulator"/>
+				<ref bean="orderAppliedVouchersPopulator"/>
+				<ref bean="pickupOrderEntryGroupPopulator"/>
+				<ref bean="deliveryOrderEntryGroupPopulator"/>
+                <ref bean="groupOrderEntryPopulator"/>
+				<ref bean="orderConsignmentPopulator"/>
+				<ref bean="groupOrderConsignmentEntryPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias name="defaultPaymentCheckoutFacade" alias="tyreshopOrderFacade" />
+	<bean id ="defaultTyreshopOrderFacade" class="com.reply.tyreshop.facades.order.impl.TyreshopOrderFacade" parent="defaultOrderFacade" >
+		<property name="orderDataConverter" ref="defaultTyreshopOrderConverter"/>
+	</bean>
 </beans>

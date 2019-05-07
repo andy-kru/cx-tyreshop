@@ -11,9 +11,23 @@
 package com.reply.tyreshop.storefront.controllers.pages.checkout.steps;
 
 
+import com.reply.tyreshop.core.jalo.PaypalPaymentMode;
+import com.reply.tyreshop.core.model.BankTransferPaymentModeModel;
+import com.reply.tyreshop.core.model.CardPaymentModeModel;
+import com.reply.tyreshop.core.model.PaypalPaymentModeModel;
+import com.reply.tyreshop.facades.order.PaymentCheckoutFacade;
+import com.reply.tyreshop.facades.order.impl.DefaultPaymentCheckoutFacade;
+import com.reply.tyreshop.facades.product.data.BankTransferPaymentModeData;
+import com.reply.tyreshop.facades.product.data.CardPaymentModeData;
+import com.reply.tyreshop.facades.product.data.PaypalPaymentModeData;
+import com.reply.tyreshop.storefront.forms.TyreshopPaymentDetailsForm;
+import de.hybris.platform.acceleratorfacades.order.AcceleratorCheckoutFacade;
+import de.hybris.platform.acceleratorfacades.payment.impl.DefaultPaymentFacade;
 import de.hybris.platform.acceleratorservices.enums.CheckoutPciOptionEnum;
 import de.hybris.platform.acceleratorservices.payment.constants.PaymentConstants;
 import de.hybris.platform.acceleratorservices.payment.data.PaymentData;
+import de.hybris.platform.acceleratorservices.payment.data.PaymentInfoData;
+import de.hybris.platform.acceleratorservices.urlresolver.SiteBaseUrlResolutionService;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.PreValidateCheckoutStep;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.PreValidateQuoteCheckoutStep;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.RequireHardLogIn;
@@ -25,6 +39,7 @@ import de.hybris.platform.acceleratorstorefrontcommons.forms.AddressForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.PaymentDetailsForm;
 import de.hybris.platform.acceleratorstorefrontcommons.forms.SopPaymentDetailsForm;
 import de.hybris.platform.acceleratorstorefrontcommons.util.AddressDataUtil;
+import de.hybris.platform.basecommerce.model.site.BaseSiteModel;
 import de.hybris.platform.cms2.exceptions.CMSItemNotFoundException;
 import de.hybris.platform.cms2.model.pages.ContentPageModel;
 import de.hybris.platform.commercefacades.order.data.CCPaymentInfoData;
@@ -35,19 +50,23 @@ import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.commerceservices.enums.CountryType;
 import com.reply.tyreshop.storefront.controllers.ControllerConstants;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import de.hybris.platform.core.model.order.CartModel;
+import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
+import de.hybris.platform.core.model.order.payment.PaymentModeModel;
+import de.hybris.platform.core.model.user.AddressModel;
+import de.hybris.platform.core.model.user.CustomerModel;
+import de.hybris.platform.order.CartService;
+import de.hybris.platform.servicelayer.dto.converter.Converter;
+import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,6 +74,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -68,8 +89,26 @@ public class PaymentMethodCheckoutStepController extends AbstractCheckoutStepCon
 
 	private static final Logger LOGGER = Logger.getLogger(PaymentMethodCheckoutStepController.class);
 
+	@Resource(name = "defaultBankTransferPaymentModeDataConverter")
+	private Converter<BankTransferPaymentModeModel, BankTransferPaymentModeData> bankTransferPaymentModeDataConverter;
+
+	@Resource(name = "paymentCheckoutFacade")
+	private PaymentCheckoutFacade paymentCheckoutFacade;
+
+	@Resource(name = "defaultPaypalPaymentModeDataConverter")
+	private Converter<PaypalPaymentModeModel, PaypalPaymentModeData> paypalPaymentModeDataConverter;
+
+	@Resource(name = "defaultCardPaymentModeDataConverter")
+	private Converter<CardPaymentModeModel, CardPaymentModeData> cardPaymentModeDataConverter;
+
 	@Resource(name = "addressDataUtil")
 	private AddressDataUtil addressDataUtil;
+
+	@Resource(name = "defaultSiteBaseUrlResolutionService")
+	private SiteBaseUrlResolutionService siteBaseUrlResolutionService;
+
+	@Resource(name = "commonI18NService")
+	private CommonI18NService commonI18NService;
 
 	@ModelAttribute("billingCountries")
 	public Collection<CountryData> getBillingCountries()
@@ -170,6 +209,15 @@ public class PaymentMethodCheckoutStepController extends AbstractCheckoutStepCon
 		{
 			// Build up the SOP form data and render page containing form
 			final SopPaymentDetailsForm sopPaymentDetailsForm = new SopPaymentDetailsForm();
+			BankTransferPaymentModeData bankTransferPaymentModeData = new BankTransferPaymentModeData();
+			CardPaymentModeData cardPaymentModeData = new CardPaymentModeData();
+			PaypalPaymentModeData paypalPaymentModeData = new PaypalPaymentModeData();
+			bankTransferPaymentModeDataConverter.convert((BankTransferPaymentModeModel) getCheckoutFacade().getPaymentModeForCode("bankTransfer"), bankTransferPaymentModeData);
+			cardPaymentModeDataConverter.convert((CardPaymentModeModel) getCheckoutFacade().getPaymentModeForCode("card"), cardPaymentModeData);
+			paypalPaymentModeDataConverter.convert((PaypalPaymentModeModel) getCheckoutFacade().getPaymentModeForCode("paypal"), paypalPaymentModeData);
+			model.addAttribute("bankTransfer", bankTransferPaymentModeData);
+			model.addAttribute("card", cardPaymentModeData);
+			model.addAttribute("paypal", paypalPaymentModeData);
 			try
 			{
 				setupSilentOrderPostPage(sopPaymentDetailsForm, model);
@@ -342,6 +390,42 @@ public class PaymentMethodCheckoutStepController extends AbstractCheckoutStepCon
 		return cardTypeData;
 	}
 
+	@RequestMapping(value = "/confirm-pay", method = RequestMethod.POST)
+	@RequireHardLogIn
+	public ModelAndView confirmPay(final HttpServletRequest request, @Valid final TyreshopPaymentDetailsForm tyreshopPaymentDetailsForm,
+								   final BindingResult bindingResult, final Model model, final RedirectAttributes redirectAttributes) {
+		if(tyreshopPaymentDetailsForm.getPaymentMethod() == null) return new ModelAndView("redirect:/checkout/multi/payment-method/add");
+		PaymentModeModel paymentModeModel = getCheckoutFacade().getPaymentModeForCode(tyreshopPaymentDetailsForm.getPaymentMethod());
+		if(paymentModeModel instanceof BankTransferPaymentModeModel || paymentModeModel instanceof PaypalPaymentModeModel){
+			final AddressModel billingAddress = getCheckoutFacade().getModelService().create(AddressModel.class);
+			final CustomerModel currentUserForCheckout = getCheckoutFacade().getCurrentUserForCheckout();
+			billingAddress.setFirstname(tyreshopPaymentDetailsForm.getBillTo_firstName());
+			billingAddress.setLastname(tyreshopPaymentDetailsForm.getBillTo_lastName());
+			billingAddress.setLine1(tyreshopPaymentDetailsForm.getBillTo_street1());
+			billingAddress.setLine2(tyreshopPaymentDetailsForm.getBillTo_street2());
+			billingAddress.setTown(tyreshopPaymentDetailsForm.getBillTo_city());
+			billingAddress.setPostalcode(tyreshopPaymentDetailsForm.getBillTo_postalCode());
+			billingAddress.setCountry(commonI18NService.getCountry(tyreshopPaymentDetailsForm.getBillTo_country()));
+			billingAddress.setPhone1(tyreshopPaymentDetailsForm.getBillTo_phoneNumber());
+			billingAddress.setEmail(tyreshopPaymentDetailsForm.getBillTo_email());
+			billingAddress.setOwner(currentUserForCheckout);
+			getCheckoutFacade().changeCart(billingAddress,paymentModeModel,Boolean.TRUE);
+			return new ModelAndView("redirect:/checkout/multi/summary/view");
+		}
+		else {
+			getCheckoutFacade().changePaymentModeForCart(paymentModeModel);
+			redirectAttributes.addFlashAttribute("sopPaymentDetailsForm", tyreshopPaymentDetailsForm);
+			redirectAttributes.addFlashAttribute("request", request);
+			redirectAttributes.addFlashAttribute("bindingResult", bindingResult);
+			redirectAttributes.addFlashAttribute("model", model);
+			request.setAttribute(View.RESPONSE_STATUS_ATTRIBUTE, HttpStatus.TEMPORARY_REDIRECT);
+			final PaymentData silentOrderPageData = getPaymentFacade().beginSopCreateSubscription("/checkout/multi/sop/response",
+					"/integration/merchant_callback");
+			return new ModelAndView("redirect:" + silentOrderPageData.getPostUrl());
+		}
+	}
+
+
 	protected void setupAddPaymentPage(final Model model) throws CMSItemNotFoundException
 	{
 		model.addAttribute("metaRobots", "noindex,nofollow");
@@ -363,7 +447,8 @@ public class PaymentMethodCheckoutStepController extends AbstractCheckoutStepCon
 					"/integration/merchant_callback");
 			model.addAttribute("silentOrderPageData", silentOrderPageData);
 			sopPaymentDetailsForm.setParameters(silentOrderPageData.getParameters());
-			model.addAttribute("paymentFormUrl", silentOrderPageData.getPostUrl());
+			final BaseSiteModel currentBaseSite = getBaseSiteService().getCurrentBaseSite();
+			model.addAttribute("paymentFormUrl", siteBaseUrlResolutionService.getWebsiteUrlForSite(currentBaseSite, true, "/checkout/multi/payment-method/confirm-pay"));
 		}
 		catch (final IllegalArgumentException e)
 		{
@@ -377,7 +462,8 @@ public class PaymentMethodCheckoutStepController extends AbstractCheckoutStepCon
 		model.addAttribute("silentOrderPostForm", new PaymentDetailsForm());
 		model.addAttribute(CART_DATA_ATTR, cartData);
 		model.addAttribute("deliveryAddress", cartData.getDeliveryAddress());
-		model.addAttribute("sopPaymentDetailsForm", sopPaymentDetailsForm);
+		TyreshopPaymentDetailsForm tyreshopPaymentDetailsForm = new TyreshopPaymentDetailsForm();
+		model.addAttribute("sopPaymentDetailsForm", tyreshopPaymentDetailsForm);
 		model.addAttribute("paymentInfos", getUserFacade().getCCPaymentInfos(true));
 		model.addAttribute("sopCardTypes", getSopCardTypes());
 		if (StringUtils.isNotBlank(sopPaymentDetailsForm.getBillTo_country()))
@@ -419,4 +505,8 @@ public class PaymentMethodCheckoutStepController extends AbstractCheckoutStepCon
 		CYBERSOURCE_SOP_CARD_TYPES.put("maestro", "024");
 	}
 
+	@Override
+	protected PaymentCheckoutFacade getCheckoutFacade() {
+		return paymentCheckoutFacade;
+	}
 }

@@ -8,5 +8,5 @@
     <spring:theme code="text.account.paymentDetails.billingAddress"/>
 </div>
 <div class="value-order">
-    <order:addressItem address="${order.paymentInfo.billingAddress}"/>
+    <order:addressItem address="${order.commonPaymentInfo.billingAddress}"/>
 </div>    

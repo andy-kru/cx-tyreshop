@@ -10,17 +10,24 @@
  */
 package com.reply.tyreshop.storefront.checkout.steps.validation.impl;
 
+import com.reply.tyreshop.facades.order.PaymentCheckoutFacade;
 import de.hybris.platform.acceleratorstorefrontcommons.checkout.steps.validation.AbstractCheckoutStepValidator;
 import de.hybris.platform.acceleratorstorefrontcommons.checkout.steps.validation.ValidationResults;
 import de.hybris.platform.acceleratorstorefrontcommons.controllers.util.GlobalMessages;
+import de.hybris.platform.commercefacades.order.CheckoutFacade;
 import de.hybris.platform.commercefacades.order.data.CartData;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.Resource;
+
 
 public class ResponsiveSummaryCheckoutStepValidator extends AbstractCheckoutStepValidator
 {
+    @Resource(name = "paymentCheckoutFacade")
+    private PaymentCheckoutFacade paymentCheckoutFacade;
+
 	private static final Logger LOGGER = Logger.getLogger(ResponsiveSummaryCheckoutStepValidator.class);
 
 	@Override
@@ -40,14 +47,13 @@ public class ResponsiveSummaryCheckoutStepValidator extends AbstractCheckoutStep
 	}
 
 	protected ValidationResults checkPaymentMethodAndPickup(RedirectAttributes redirectAttributes) {
-		if (getCheckoutFlowFacade().hasNoPaymentInfo())
+		final CartData cartData = getCheckoutFacade().getCheckoutCart();
+		if (cartData == null || cartData.getCommonPaymentInfo() == null)
 		{
 			GlobalMessages.addFlashMessage(redirectAttributes, GlobalMessages.INFO_MESSAGES_HOLDER,
 					"checkout.multi.paymentDetails.notprovided");
 			return ValidationResults.REDIRECT_TO_PAYMENT_METHOD;
 		}
-
-		final CartData cartData = getCheckoutFacade().getCheckoutCart();
 
 		if (!getCheckoutFacade().hasShippingItems())
 		{
@@ -83,4 +89,9 @@ public class ResponsiveSummaryCheckoutStepValidator extends AbstractCheckoutStep
 		}
 		return null;
 	}
+
+    @Override
+    public CheckoutFacade getCheckoutFacade() {
+        return paymentCheckoutFacade;
+    }
 }

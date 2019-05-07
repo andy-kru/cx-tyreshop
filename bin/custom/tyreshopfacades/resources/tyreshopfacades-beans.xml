@@ -31,4 +31,29 @@
 		<property name="name" type="String"/>
 	</bean>
 
+
+	<bean class="com.reply.tyreshop.facades.product.data.BankTransferPaymentModeData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+
+	<bean class="com.reply.tyreshop.facades.product.data.PaypalPaymentModeData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+
+	<bean class="com.reply.tyreshop.facades.product.data.CardPaymentModeData">
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+	</bean>
+
+	<bean class="de.hybris.platform.acceleratorservices.payment.data.PaymentInfoData">
+		<property name="user" type="de.hybris.platform.core.model.user.UserModel"/>
+		<property name="billingAddress" type="de.hybris.platform.commercefacades.user.data.AddressData"/>
+		<property name="reference" type="String"/>
+	</bean>
+
+
+
+
 </beans>
