@@ -64,5 +64,7 @@
 	
 	<extension name="addonsupport"/>
 	<extension name="callbackaddon"/>
+
+    <extension name="paypal" />
   </extensions>
 </hybrisconfig>
