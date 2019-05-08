@@ -11,22 +11,18 @@
 package com.reply.tyreshop.storefront.controllers.pages.checkout.steps;
 
 
-import com.reply.tyreshop.core.jalo.PaypalPaymentMode;
 import com.reply.tyreshop.core.model.BankTransferPaymentModeModel;
 import com.reply.tyreshop.core.model.CardPaymentModeModel;
 import com.reply.tyreshop.core.model.PaypalPaymentModeModel;
 import com.reply.tyreshop.facades.order.PaymentCheckoutFacade;
-import com.reply.tyreshop.facades.order.impl.DefaultPaymentCheckoutFacade;
 import com.reply.tyreshop.facades.product.data.BankTransferPaymentModeData;
 import com.reply.tyreshop.facades.product.data.CardPaymentModeData;
 import com.reply.tyreshop.facades.product.data.PaypalPaymentModeData;
+import com.reply.tyreshop.storefront.controllers.ControllerConstants;
 import com.reply.tyreshop.storefront.forms.TyreshopPaymentDetailsForm;
-import de.hybris.platform.acceleratorfacades.order.AcceleratorCheckoutFacade;
-import de.hybris.platform.acceleratorfacades.payment.impl.DefaultPaymentFacade;
 import de.hybris.platform.acceleratorservices.enums.CheckoutPciOptionEnum;
 import de.hybris.platform.acceleratorservices.payment.constants.PaymentConstants;
 import de.hybris.platform.acceleratorservices.payment.data.PaymentData;
-import de.hybris.platform.acceleratorservices.payment.data.PaymentInfoData;
 import de.hybris.platform.acceleratorservices.urlresolver.SiteBaseUrlResolutionService;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.PreValidateCheckoutStep;
 import de.hybris.platform.acceleratorstorefrontcommons.annotations.PreValidateQuoteCheckoutStep;
@@ -48,20 +44,9 @@ import de.hybris.platform.commercefacades.order.data.CartData;
 import de.hybris.platform.commercefacades.user.data.AddressData;
 import de.hybris.platform.commercefacades.user.data.CountryData;
 import de.hybris.platform.commerceservices.enums.CountryType;
-import com.reply.tyreshop.storefront.controllers.ControllerConstants;
-
-import java.util.*;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import de.hybris.platform.core.model.order.CartModel;
-import de.hybris.platform.core.model.order.payment.PaymentInfoModel;
 import de.hybris.platform.core.model.order.payment.PaymentModeModel;
 import de.hybris.platform.core.model.user.AddressModel;
 import de.hybris.platform.core.model.user.CustomerModel;
-import de.hybris.platform.order.CartService;
 import de.hybris.platform.servicelayer.dto.converter.Converter;
 import de.hybris.platform.servicelayer.i18n.CommonI18NService;
 import org.apache.commons.lang.StringUtils;
@@ -77,6 +62,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.*;
 
 
 @Controller
@@ -396,7 +386,7 @@ public class PaymentMethodCheckoutStepController extends AbstractCheckoutStepCon
 								   final BindingResult bindingResult, final Model model, final RedirectAttributes redirectAttributes) {
 		if(tyreshopPaymentDetailsForm.getPaymentMethod() == null) return new ModelAndView("redirect:/checkout/multi/payment-method/add");
 		PaymentModeModel paymentModeModel = getCheckoutFacade().getPaymentModeForCode(tyreshopPaymentDetailsForm.getPaymentMethod());
-		if(paymentModeModel instanceof BankTransferPaymentModeModel || paymentModeModel instanceof PaypalPaymentModeModel){
+		if(paymentModeModel instanceof BankTransferPaymentModeModel){
 			final AddressModel billingAddress = getCheckoutFacade().getModelService().create(AddressModel.class);
 			final CustomerModel currentUserForCheckout = getCheckoutFacade().getCurrentUserForCheckout();
 			billingAddress.setFirstname(tyreshopPaymentDetailsForm.getBillTo_firstName());
@@ -412,6 +402,10 @@ public class PaymentMethodCheckoutStepController extends AbstractCheckoutStepCon
 			getCheckoutFacade().changeCart(billingAddress,paymentModeModel,Boolean.TRUE);
 			return new ModelAndView("redirect:/checkout/multi/summary/view");
 		}
+		if(paymentModeModel instanceof PaypalPaymentModeModel){
+            getCheckoutFacade().changeCart(null,paymentModeModel,Boolean.TRUE);
+            return new ModelAndView("redirect:/checkout/multi/summary/view");
+        }
 		else {
 			getCheckoutFacade().changePaymentModeForCart(paymentModeModel);
 			redirectAttributes.addFlashAttribute("sopPaymentDetailsForm", tyreshopPaymentDetailsForm);

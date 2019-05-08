@@ -14,8 +14,8 @@ public class PaymentCreationCommandImpl extends AbstractPaymentCommand implement
     @Override
     public Payment perform(Amount amount){
 
-        final String RETURN_URL = "https://tyreshop:9002/tyreshopstorefront/checkout/returnPayPal";
-        final String CANCEL_URL = "https://tyreshop:9002/tyreshopstorefront/checkout/cancelPayPal";
+        final String RETURN_URL = "https://tyreshop.local:9002/tyreshopstorefront/payPal/returnPayment";
+        final String CANCEL_URL = "https://tyreshop.local:9002/tyreshopstorefront/payPal/cancelPayment";
 
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);

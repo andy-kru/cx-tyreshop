@@ -1,5 +1,7 @@
 package com.reply.tyreshop.facades.populators;
 
+import com.reply.tyreshop.core.jalo.BankTransferPaymentMode;
+import com.reply.tyreshop.core.model.BankTransferPaymentModeModel;
 import de.hybris.platform.acceleratorservices.payment.data.PaymentInfoData;
 import de.hybris.platform.commercefacades.order.converters.populator.OrderPopulator;
 import de.hybris.platform.commercefacades.order.data.AbstractOrderData;
@@ -31,7 +33,9 @@ public class TyreshopOrderPopulator extends OrderPopulator {
         checkForGuestCustomer(source, target);
         addDeliveryStatus(source, target);
         addPrincipalInformation(source, target);
-        addBankTrasferReference(source, target);
+        if(source.getPaymentMode() instanceof BankTransferPaymentModeModel){
+            addBankTrasferReference(source, target);
+        }
 
         if (source.getQuoteReference() != null)
         {

@@ -3,6 +3,7 @@ package com.reply.tyreshop.paypal.facades.impl;
 import com.reply.tyreshop.paypal.facades.PayPalFacade;
 import com.reply.tyreshop.paypal.dto.PaymentApprovalData;
 import com.reply.tyreshop.paypal.service.PayPalPaymentService;
+import de.hybris.platform.core.model.user.AddressModel;
 import org.springframework.beans.factory.annotation.Required;
 
 public class DefaultPayPalFacade implements PayPalFacade {
@@ -15,9 +16,9 @@ public class DefaultPayPalFacade implements PayPalFacade {
     }
 
     @Override
-    public String executePayment(PaymentApprovalData paymentApprovalData) {
+    public String executePayment(PaymentApprovalData paymentApprovalData, AddressModel billingAddress) {
 
-        return paymentService.capturePayment(paymentApprovalData);
+        return paymentService.capturePayment(paymentApprovalData, billingAddress);
     }
 
     public PayPalPaymentService getPaymentService() {

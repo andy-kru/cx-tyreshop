@@ -139,6 +139,7 @@
         <property name="cartService" ref="cartService" />
         <property name="modelService" ref="modelService" />
         <property name="billingAddressConverter" ref="defaultBillingAddressConverter" />
+        <property name="userService" ref="userService"/>
     </bean>
 
     <alias alias="payPalFacade" name="defaultPayPalFacade" />

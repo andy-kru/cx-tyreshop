@@ -127,7 +127,7 @@ public class SummaryCheckoutStepController extends AbstractCheckoutStepControlle
 			bankTransferHook.beforePlaceOrder();
 		}
 		else if(paymentModeModel instanceof PaypalPaymentModeModel){
-			//TODO Paypal
+			return REDIRECT_PREFIX + "/payPal/checkoutWithPayPal";
 		}
 		else {
             //Validate the cart
